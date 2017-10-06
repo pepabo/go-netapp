@@ -6,16 +6,11 @@ import (
 )
 
 type VServer struct {
-	XMLName     xml.Name `xml:"netapp"`
-	Version     string   `xml:"version,attr"`
-	XMLNs       string   `xml:"xmlsns,attr"`
-	VServerName string   `xml:"vfiler,attr"`
-
+	Base
 	Params struct {
 		XMLName xml.Name
 		*VServerOptions
 	}
-	client *Client
 }
 
 type VServerInfo struct {
@@ -66,6 +61,7 @@ type VServerListResponse struct {
 		AttributesList struct {
 			VserverInfo []VServerInfo `xml:"vserver-info"`
 		} `xml:"attributes-list"`
+		NumRecords string `json:"num-records"`
 	} `xml:"results"`
 }
 
@@ -79,36 +75,20 @@ type VServerResponse struct {
 	} `xml:"results"`
 }
 
-func (v *VServer) get(options *VServerOptions, vr interface{}) (*http.Response, error) {
-	v.Version = v.client.Version
-	v.XMLNs = v.client.XMLNs
-	v.Params.VServerOptions = options
-	req, err := v.client.NewRequest("POST", v)
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := v.client.Do(req, vr)
-	if err != nil {
-		return nil, err
-	}
-
-	return res, nil
-}
-
 func (v *VServer) Get(name string, options *VServerOptions) (*VServerResponse, *http.Response, error) {
-	v.VServerName = name
+	v.Name = name
 	v.Params.XMLName = xml.Name{Local: "vserver-get"}
-
+	v.Params.VServerOptions = options
 	r := VServerResponse{}
-	res, err := v.get(options, &r)
+	res, err := v.get(v, &r)
 	return &r, res, err
 }
 
 func (v *VServer) List(options *VServerOptions) (*VServerListResponse, *http.Response, error) {
 	v.Params.XMLName = xml.Name{Local: "vserver-get-iter"}
+	v.Params.VServerOptions = options
 
 	r := VServerListResponse{}
-	res, err := v.get(options, &r)
+	res, err := v.get(v, &r)
 	return &r, res, err
 }

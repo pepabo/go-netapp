@@ -25,9 +25,8 @@ type Client struct {
 	BaseURL   *url.URL
 	UserAgent string
 	options   *ClientOptions
-	Version   string
-	XMLNs     string
 	VServer   *VServer
+	Quota     *Quota
 }
 
 type ClientOptions struct {
@@ -62,11 +61,19 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 		BaseURL:   baseURL,
 		UserAgent: userAgent,
 		options:   options,
-		XMLNs:     XMLNs,
-		Version:   version,
 	}
+
+	b := Base{
+		client:  c,
+		XMLNs:   XMLNs,
+		Version: version,
+	}
+
 	c.VServer = &VServer{
-		client: c,
+		Base: b,
+	}
+	c.Quota = &Quota{
+		Base: b,
 	}
 
 	return c
