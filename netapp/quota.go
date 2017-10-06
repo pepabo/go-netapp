@@ -22,18 +22,18 @@ type QuotaOptions struct {
 }
 
 type QuotaEntry struct {
-	DiskLimit          string `xml:"disk-limit,omitempty"`
-	FileLimit          string `xml:"file-limit,omitempty"`
-	PerformUserMapping string `xml:"perform-user-mapping,omitempty"`
-	Policy             string `xml:"policy,omitempty"`
-	Qtree              string `xml:"qtree"`
-	QuotaTarget        string `xml:"quota-target,omitempty"`
-	QuotaType          string `xml:"quota-type,omitempty"`
-	SoftDiskLimit      string `xml:"soft-disk-limit,omitempty"`
-	SoftFileLimit      string `xml:"soft-file-limit,omitempty"`
-	Threshold          string `xml:"threshold,omitempty"`
-	Volume             string `xml:"volume,omitempty"`
-	Vserver            string `xml:"vserver,omitempty"`
+	DiskLimit          string  `xml:"disk-limit,omitempty"`
+	FileLimit          string  `xml:"file-limit,omitempty"`
+	PerformUserMapping string  `xml:"perform-user-mapping,omitempty"`
+	Policy             string  `xml:"policy,omitempty"`
+	Qtree              *string `xml:"qtree,omitempty"`
+	QuotaTarget        string  `xml:"quota-target,omitempty"`
+	QuotaType          string  `xml:"quota-type,omitempty"`
+	SoftDiskLimit      string  `xml:"soft-disk-limit,omitempty"`
+	SoftFileLimit      string  `xml:"soft-file-limit,omitempty"`
+	Threshold          string  `xml:"threshold,omitempty"`
+	Volume             string  `xml:"volume,omitempty"`
+	Vserver            string  `xml:"vserver,omitempty"`
 }
 
 type QuotaResponse struct {
