@@ -57,18 +57,17 @@ type VServerOptions struct {
 type VServerListResponse struct {
 	XMLName xml.Name `xml:"netapp"`
 	Results struct {
-		Status         string `xml:"status,attr"`
+		ResultBase
 		AttributesList struct {
 			VserverInfo []VServerInfo `xml:"vserver-info"`
 		} `xml:"attributes-list"`
-		NumRecords string `json:"num-records"`
 	} `xml:"results"`
 }
 
 type VServerResponse struct {
 	XMLName xml.Name `xml:"netapp"`
 	Results struct {
-		Status         string `xml:"status,attr"`
+		ResultBase
 		AttributesList struct {
 			VserverInfo []VServerInfo `xml:"vserver-info"`
 		} `xml:"attributes"`

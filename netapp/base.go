@@ -13,6 +13,16 @@ type Base struct {
 	client  *Client
 }
 
+type ResultBase struct {
+	Status     string `xml:"status,attr"`
+	Reason     string `xml:"reason,attr"`
+	NumRecords string `json:"num-records"`
+}
+
+func (r *ResultBase) Passed() bool {
+	return r.Status == "passed"
+}
+
 func (b *Base) get(base interface{}, r interface{}) (*http.Response, error) {
 	req, err := b.client.NewRequest("POST", &base)
 	if err != nil {

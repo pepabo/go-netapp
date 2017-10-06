@@ -39,20 +39,29 @@ type QuotaEntry struct {
 type QuotaResponse struct {
 	XMLName xml.Name `xml:"netapp"`
 	Results struct {
-		Status string `xml:"status,attr"`
+		ResultBase
 		QuotaEntry
-		NumRecords string `xml:"num-records"`
 	} `xml:"results"`
 }
 
 type QuotaListResponse struct {
 	XMLName xml.Name `xml:"netapp"`
 	Results struct {
-		Status         string `xml:"status,attr"`
+		ResultBase
 		AttributesList struct {
 			QuotaEntry QuotaEntry `xml:"quota-entry"`
 		} `xml:"attributes-list"`
-		NumRecords string `xml:"num-records"`
+	} `xml:"results"`
+}
+
+type QuotaStatusResponse struct {
+	XMLName xml.Name `xml:"netapp"`
+	Results struct {
+		ResultBase
+		QuotaStatus    string `xml:"status"`
+		QuotaSubStatus string `xml:"substatus"`
+		ResultJobid    string `xml:"result-jobid"`
+		ResultStatus   string `xml:"result-status"`
 	} `xml:"results"`
 }
 
@@ -70,6 +79,54 @@ func (q *Quota) List(options *QuotaOptions) (*QuotaListResponse, *http.Response,
 	q.Params.QuotaOptions = options
 
 	r := QuotaListResponse{}
+	res, err := q.get(q, &r)
+	return &r, res, err
+}
+
+func (q *Quota) Update(options *QuotaOptions) (*QuotaListResponse, *http.Response, error) {
+	q.Params.XMLName = xml.Name{Local: "quota-modify-entry"}
+	q.Params.QuotaOptions = options
+
+	r := QuotaListResponse{}
+	res, err := q.get(q, &r)
+	return &r, res, err
+}
+
+func (q *Quota) Off(name string) (*QuotaStatusResponse, *http.Response, error) {
+	q.Params.XMLName = xml.Name{Local: "quota-off"}
+	q.Params.QuotaOptions = &QuotaOptions{
+		QuotaEntry: &QuotaEntry{
+			Volume: name,
+		},
+	}
+
+	r := QuotaStatusResponse{}
+	res, err := q.get(q, &r)
+	return &r, res, err
+}
+
+func (q *Quota) On(name string) (*QuotaStatusResponse, *http.Response, error) {
+	q.Params.XMLName = xml.Name{Local: "quota-on"}
+	q.Params.QuotaOptions = &QuotaOptions{
+		QuotaEntry: &QuotaEntry{
+			Volume: name,
+		},
+	}
+
+	r := QuotaStatusResponse{}
+	res, err := q.get(q, &r)
+	return &r, res, err
+}
+
+func (q *Quota) Status(name string) (*QuotaStatusResponse, *http.Response, error) {
+	q.Params.XMLName = xml.Name{Local: "quota-status"}
+	q.Params.QuotaOptions = &QuotaOptions{
+		QuotaEntry: &QuotaEntry{
+			Volume: name,
+		},
+	}
+
+	r := QuotaStatusResponse{}
 	res, err := q.get(q, &r)
 	return &r, res, err
 }
