@@ -29,6 +29,7 @@ type Client struct {
 	Quota     *Quota
 	Job       *Job
 	Qtree     *Qtree
+	Volume    *Volume
 }
 
 type ClientOptions struct {
@@ -83,6 +84,10 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 	}
 
 	c.Qtree = &Qtree{
+		Base: b,
+	}
+
+	c.Volume = &Volume{
 		Base: b,
 	}
 
