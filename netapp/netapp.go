@@ -27,6 +27,8 @@ type Client struct {
 	options   *ClientOptions
 	VServer   *VServer
 	Quota     *Quota
+	Job       *Job
+	Qtree     *Qtree
 }
 
 type ClientOptions struct {
@@ -73,6 +75,14 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 		Base: b,
 	}
 	c.Quota = &Quota{
+		Base: b,
+	}
+
+	c.Job = &Job{
+		Base: b,
+	}
+
+	c.Qtree = &Qtree{
 		Base: b,
 	}
 

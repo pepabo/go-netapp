@@ -5,6 +5,18 @@ import (
 	"net/http"
 )
 
+const (
+	QuotaStatusCorrupt      = "corrupt"
+	QuotaStatusInitializing = "initializing"
+	QuotaStatusMixed        = "mixed"
+	QuotaStatusOff          = "off"
+	QuotaStatusOn           = "on"
+	QuotaStatusResizing     = "resizing"
+	QuotaStatusReverting    = "reverting"
+	QuotaStatusUnknown      = "unknown"
+	QuotaStatusUpgrading    = "upgrading"
+)
+
 type Quota struct {
 	Base
 	Params struct {
@@ -83,9 +95,22 @@ func (q *Quota) List(options *QuotaOptions) (*QuotaListResponse, *http.Response,
 	return &r, res, err
 }
 
-func (q *Quota) Update(options *QuotaOptions) (*QuotaListResponse, *http.Response, error) {
+func (q *Quota) Create(entry *QuotaEntry) (*QuotaListResponse, *http.Response, error) {
+	q.Params.XMLName = xml.Name{Local: "quota-add-entry"}
+	q.Params.QuotaOptions = &QuotaOptions{
+		QuotaEntry: entry,
+	}
+
+	r := QuotaListResponse{}
+	res, err := q.get(q, &r)
+	return &r, res, err
+}
+
+func (q *Quota) Update(entry *QuotaEntry) (*QuotaListResponse, *http.Response, error) {
 	q.Params.XMLName = xml.Name{Local: "quota-modify-entry"}
-	q.Params.QuotaOptions = options
+	q.Params.QuotaOptions = &QuotaOptions{
+		QuotaEntry: entry,
+	}
 
 	r := QuotaListResponse{}
 	res, err := q.get(q, &r)
