@@ -244,3 +244,69 @@ func (v *Volume) List(options *VolumeOptions) (*VolumeListResponse, *http.Respon
 	res, err := v.get(v, &r)
 	return &r, res, err
 }
+
+type VolumeSpaceInfo struct {
+	FilesystemMetadata         string `xml:"filesystem-metadata"`
+	FilesystemMetadataPercent  string `xml:"filesystem-metadata-percent"`
+	Inodes                     string `xml:"inodes"`
+	InodesPercent              string `xml:"inodes-percent"`
+	PerformanceMetadata        string `xml:"performance-metadata"`
+	PerformanceMetadataPercent string `xml:"performance-metadata-percent"`
+	PhysicalUsed               string `xml:"physical-used"`
+	PhysicalUsedPercent        string `xml:"physical-used-percent"`
+	SnapshotReserve            string `xml:"snapshot-reserve"`
+	SnapshotReservePercent     string `xml:"snapshot-reserve-percent"`
+	TotalUsed                  string `xml:"total-used"`
+	TotalUsedPercent           string `xml:"total-used-percent"`
+	UserData                   string `xml:"user-data"`
+	UserDataPercent            string `xml:"user-data-percent"`
+	Volume                     string `xml:"volume"`
+	Vserver                    string `xml:"vserver"`
+}
+type VolumeSpacesInfo []VolumeSpaceInfo
+
+func (v VolumeSpacesInfo) Len() int {
+	return len(v)
+}
+
+func (v VolumeSpacesInfo) Swap(i, j int) {
+	v[i], v[j] = v[j], v[i]
+}
+
+func (p VolumeSpacesInfo) Less(i, j int) bool {
+	return p[i].TotalUsedPercent < p[j].TotalUsedPercent
+}
+
+type VolumeSpace struct {
+	Base
+	Params struct {
+		XMLName xml.Name
+		*VolumeSpaceOptions
+	}
+}
+
+type VolumeSpaceListResponse struct {
+	XMLName xml.Name `xml:"netapp"`
+	Results struct {
+		ResultBase
+		AttributesList struct {
+			SpaceInfo VolumeSpacesInfo `xml:"space-info"`
+		} `xml:"attributes-list"`
+		NumRecords string `xml:"num-records"`
+	} `xml:"results"`
+}
+
+type VolumeSpaceOptions struct {
+	DesiredAttributes *VolumeSpaceInfo `xml:"desired-attributes,omitempty"`
+	MaxRecords        int              `xml:"max-records,omitempty"`
+	Query             *VolumeSpaceInfo `xml:"query,omitempty"`
+	Tag               string           `xml:"tag,omitempty"`
+}
+
+func (v *VolumeSpace) List(options *VolumeSpaceOptions) (*VolumeSpaceListResponse, *http.Response, error) {
+	v.Params.XMLName = xml.Name{Local: "volume-space-get-iter"}
+	v.Params.VolumeSpaceOptions = options
+	r := VolumeSpaceListResponse{}
+	res, err := v.get(v, &r)
+	return &r, res, err
+}

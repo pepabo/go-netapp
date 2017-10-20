@@ -21,15 +21,16 @@ const (
 
 // A Client manages communication with the GitHub API.
 type Client struct {
-	client    *http.Client
-	BaseURL   *url.URL
-	UserAgent string
-	options   *ClientOptions
-	VServer   *VServer
-	Quota     *Quota
-	Job       *Job
-	Qtree     *Qtree
-	Volume    *Volume
+	client      *http.Client
+	BaseURL     *url.URL
+	UserAgent   string
+	options     *ClientOptions
+	VServer     *VServer
+	Quota       *Quota
+	Job         *Job
+	Qtree       *Qtree
+	Volume      *Volume
+	VolumeSpace *VolumeSpace
 }
 
 type ClientOptions struct {
@@ -55,6 +56,9 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 				InsecureSkipVerify: !options.SSLVerify,
 			},
 		},
+	}
+	if !strings.HasSuffix(endpoint, "/") {
+		endpoint = endpoint + "/"
 	}
 
 	baseURL, _ := url.Parse(endpoint)
@@ -91,13 +95,14 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 		Base: b,
 	}
 
+	c.VolumeSpace = &VolumeSpace{
+		Base: b,
+	}
+
 	return c
 }
 
 func (c *Client) NewRequest(method string, body interface{}) (*http.Request, error) {
-	if !strings.HasSuffix(c.BaseURL.Path, "/") {
-		return nil, fmt.Errorf("BaseURL must have a trailing slash, but %q does not", c.BaseURL)
-	}
 	u, _ := c.BaseURL.Parse(ServerURL)
 
 	buf, err := xml.MarshalIndent(body, "", "  ")

@@ -55,9 +55,15 @@ func (q *Qtree) List(options *QtreeOptions) (*QtreeListResponse, *http.Response,
 	return &r, res, err
 }
 
-func (q *Qtree) Create(vserverName string, info *QtreeInfo) (*QtreeListResponse, *http.Response, error) {
+func (q *Qtree) Create(vserverName, volume, qtree string, info *QtreeInfo) (*QtreeListResponse, *http.Response, error) {
 	q.Name = vserverName
 	q.Params.XMLName = xml.Name{Local: "qtree-create"}
+	if info == nil {
+		info = &QtreeInfo{}
+	}
+	info.Volume = volume
+	info.Qtree = qtree
+
 	q.Params.QtreeOptions = &QtreeOptions{
 		QtreeInfo: info,
 	}

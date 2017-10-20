@@ -95,9 +95,18 @@ func (q *Quota) List(options *QuotaOptions) (*QuotaListResponse, *http.Response,
 	return &r, res, err
 }
 
-func (q *Quota) Create(serverName string, entry *QuotaEntry) (*QuotaListResponse, *http.Response, error) {
+func (q *Quota) Create(serverName, target, quotaType, qtree string, entry *QuotaEntry) (*QuotaListResponse, *http.Response, error) {
 	q.Name = serverName
 	q.Params.XMLName = xml.Name{Local: "quota-add-entry"}
+
+	if entry == nil {
+		entry = &QuotaEntry{}
+	}
+
+	entry.QuotaTarget = target
+	entry.QuotaType = quotaType
+	entry.Qtree = &qtree
+
 	q.Params.QuotaOptions = &QuotaOptions{
 		QuotaEntry: entry,
 	}
