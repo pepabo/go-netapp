@@ -22,16 +22,16 @@ const (
 
 // A Client manages communication with the GitHub API.
 type Client struct {
-	client      *http.Client
-	BaseURL     *url.URL
-	UserAgent   string
-	options     *ClientOptions
-	VServer     *VServer
-	Quota       *Quota
-	Job         *Job
-	Qtree       *Qtree
-	Volume      *Volume
-	VolumeSpace *VolumeSpace
+	client         *http.Client
+	BaseURL        *url.URL
+	UserAgent      string
+	options        *ClientOptions
+	VServer        *VServer
+	Quota          *Quota
+	Job            *Job
+	Qtree          *Qtree
+	Volume         *Volume
+	VolumeSpace    *VolumeSpace
 	AggregateSpace *AggregateSpace
 }
 

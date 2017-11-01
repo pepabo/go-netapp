@@ -21,20 +21,20 @@ type AggrSpaceOptions struct {
 }
 
 type AggrSpaceInfo struct {
-	Aggregate 							string 	`xml:"aggregate"`
-	AggregateMetadata 					string 	`xml:"aggregate-metadata"`
-	AggregateMetadataPercent 			string 	`xml:"aggregate-metadata-percent"`
-	AggregateSize 						string 	`xml:"aggregate-size"`
-	PercentSnapshotSpace 				string 	`xml:"percent-snapshot-space"`
-	PhysicalUsed 						string 	`xml:"physical-used"`
-	PhysicalUsedPercent 				string 	`xml:"physical-used-percent"`
-	SnapSizeTotal 						string 	`xml:"snap-size-total"`
-	SnapshotReserveUnusable 			string 	`xml:"snapshot-reserve-unusable"`
-	SnapshotReserveUnusablePercent 		string 	`xml:"snapshot-reserve-unusable-percent"`
-	UsedIncludingSnapshotReserve 		string 	`xml:"used-including-snapshot-reserve"`
-	UsedIncludingSnapshotReservePercent string 	`xml:"used-including-snapshot-reserve-percent"`
-	VolumeFootprints 					string 	`xml:"volume-footprints"`
-	VolumeFootprintsPercent 			string 	`xml:"volume-footprints-percent"`
+	Aggregate                           string `xml:"aggregate"`
+	AggregateMetadata                   string `xml:"aggregate-metadata"`
+	AggregateMetadataPercent            string `xml:"aggregate-metadata-percent"`
+	AggregateSize                       string `xml:"aggregate-size"`
+	PercentSnapshotSpace                string `xml:"percent-snapshot-space"`
+	PhysicalUsed                        string `xml:"physical-used"`
+	PhysicalUsedPercent                 string `xml:"physical-used-percent"`
+	SnapSizeTotal                       string `xml:"snap-size-total"`
+	SnapshotReserveUnusable             string `xml:"snapshot-reserve-unusable"`
+	SnapshotReserveUnusablePercent      string `xml:"snapshot-reserve-unusable-percent"`
+	UsedIncludingSnapshotReserve        string `xml:"used-including-snapshot-reserve"`
+	UsedIncludingSnapshotReservePercent string `xml:"used-including-snapshot-reserve-percent"`
+	VolumeFootprints                    string `xml:"volume-footprints"`
+	VolumeFootprintsPercent             string `xml:"volume-footprints-percent"`
 }
 
 type AggrSpaceListResponse struct {
