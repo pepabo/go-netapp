@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"os"
 	"strings"
+	"time"
 )
 
 const (
@@ -37,6 +38,7 @@ type ClientOptions struct {
 	BasicAuthUser     string
 	BasicAuthPassword string
 	SSLVerify         bool
+	Timeout           time.Duration
 }
 
 func DefaultOptions() *ClientOptions {
@@ -51,6 +53,7 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 	}
 
 	httpClient := &http.Client{
+		Timeout: options.Timeout,
 		Transport: &http.Transport{
 			TLSClientConfig: &tls.Config{
 				InsecureSkipVerify: !options.SSLVerify,
