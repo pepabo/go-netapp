@@ -32,6 +32,7 @@ type Client struct {
 	Qtree          *Qtree
 	Volume         *Volume
 	VolumeSpace    *VolumeSpace
+	Aggregate      *Aggregate
 	AggregateSpace *AggregateSpace
 }
 
@@ -100,6 +101,10 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 	}
 
 	c.VolumeSpace = &VolumeSpace{
+		Base: b,
+	}
+
+	c.Aggregate = &Aggregate{
 		Base: b,
 	}
 
