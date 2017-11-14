@@ -27,6 +27,8 @@ type AggrListResponse struct {
 		AttributesList struct {
 			AggrAttributes []AggrInfo `xml:"aggr-attributes"`
 		} `xml:"attributes-list"`
+		NextTag    string `xml:"next-tag"`
+		NumRecords int    `xml:"num-records"`
 	} `xml:"results"`
 }
 
@@ -36,6 +38,39 @@ func (a *Aggregate) List(options *AggrOptions) (*AggrListResponse, *http.Respons
 	r := AggrListResponse{}
 	res, err := a.get(a, &r)
 	return &r, res, err
+}
+
+type AggrListPagesResponse struct {
+	Response    *AggrListResponse
+	Error       error
+	RawResponse *http.Response
+}
+
+type AggregatePageHandler func(AggrListPagesResponse) (shouldContinue bool)
+
+func (a *Aggregate) ListPages(options *AggrOptions, fn AggregatePageHandler) {
+
+	requestOptions := options
+
+	for shouldContinue := true; shouldContinue; {
+		aggregateResponse, res, err := a.List(requestOptions)
+		handlerResponse := false
+
+		if aggregateResponse.Results.NumRecords > 0 {
+			handlerResponse = fn(AggrListPagesResponse{Response: aggregateResponse, Error: err, RawResponse: res})
+		}
+
+		nextTag := ""
+		if err == nil {
+			nextTag = aggregateResponse.Results.NextTag
+			requestOptions = &AggrOptions{
+				Tag:        nextTag,
+				MaxRecords: options.MaxRecords,
+			}
+		}
+		shouldContinue = nextTag != "" && handlerResponse
+	}
+
 }
 
 type AggrInfo struct {

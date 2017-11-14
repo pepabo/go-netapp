@@ -26,14 +26,16 @@ type Client struct {
 	BaseURL        *url.URL
 	UserAgent      string
 	options        *ClientOptions
-	VServer        *VServer
-	Quota          *Quota
-	Job            *Job
-	Qtree          *Qtree
-	Volume         *Volume
-	VolumeSpace    *VolumeSpace
 	Aggregate      *Aggregate
 	AggregateSpace *AggregateSpace
+	Job            *Job
+	Lun            *Lun
+	Qtree          *Qtree
+	Quota          *Quota
+	Snapshot       *Snapshot
+	Volume         *Volume
+	VolumeSpace    *VolumeSpace
+	VServer        *VServer
 }
 
 type ClientOptions struct {
@@ -81,10 +83,11 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 		Version: version,
 	}
 
-	c.VServer = &VServer{
+	c.Aggregate = &Aggregate{
 		Base: b,
 	}
-	c.Quota = &Quota{
+
+	c.AggregateSpace = &AggregateSpace{
 		Base: b,
 	}
 
@@ -92,7 +95,19 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 		Base: b,
 	}
 
+	c.Lun = &Lun{
+		Base: b,
+	}
+
 	c.Qtree = &Qtree{
+		Base: b,
+	}
+
+	c.Quota = &Quota{
+		Base: b,
+	}
+
+	c.Snapshot = &Snapshot{
 		Base: b,
 	}
 
@@ -104,11 +119,7 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 		Base: b,
 	}
 
-	c.Aggregate = &Aggregate{
-		Base: b,
-	}
-
-	c.AggregateSpace = &AggregateSpace{
+	c.VServer = &VServer{
 		Base: b,
 	}
 
