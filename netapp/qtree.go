@@ -39,7 +39,7 @@ type QtreeListResponse struct {
 	Results struct {
 		ResultBase
 		AttributesList struct {
-			QtreeInfo QtreeInfo `xml:"quota-info"`
+			QtreeInfo []QtreeInfo `xml:"qtree-info"`
 		} `xml:"attributes-list"`
 	} `xml:"results"`
 	ResultJobid  string `xml:"result-jobid"`
