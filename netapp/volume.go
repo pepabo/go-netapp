@@ -263,9 +263,7 @@ func (v *Volume) ListPages(options *VolumeOptions, fn VolumePageHandler) {
 		VolumeResponse, res, err := v.List(requestOptions)
 		handlerResponse := false
 
-		if VolumeResponse.Results.NumRecords > 0 {
-			handlerResponse = fn(VolumeListPagesResponse{Response: VolumeResponse, Error: err, RawResponse: res})
-		}
+		handlerResponse = fn(VolumeListPagesResponse{Response: VolumeResponse, Error: err, RawResponse: res})
 
 		nextTag := ""
 		if err == nil {

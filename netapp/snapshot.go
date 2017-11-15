@@ -78,9 +78,7 @@ func (v *Snapshot) ListPages(options *SnapshotOptions, fn SnapshotPageHandler) {
 		snapshotResponse, res, err := v.List(requestOptions)
 		handlerResponse := false
 
-		if snapshotResponse.Results.NumRecords > 0 {
-			handlerResponse = fn(SnapshotListPagesResponse{Response: snapshotResponse, Error: err, RawResponse: res})
-		}
+		handlerResponse = fn(SnapshotListPagesResponse{Response: snapshotResponse, Error: err, RawResponse: res})
 
 		nextTag := ""
 		if err == nil {

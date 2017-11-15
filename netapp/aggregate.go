@@ -56,9 +56,7 @@ func (a *Aggregate) ListPages(options *AggrOptions, fn AggregatePageHandler) {
 		aggregateResponse, res, err := a.List(requestOptions)
 		handlerResponse := false
 
-		if aggregateResponse.Results.NumRecords > 0 {
-			handlerResponse = fn(AggrListPagesResponse{Response: aggregateResponse, Error: err, RawResponse: res})
-		}
+		handlerResponse = fn(AggrListPagesResponse{Response: aggregateResponse, Error: err, RawResponse: res})
 
 		nextTag := ""
 		if err == nil {

@@ -95,9 +95,7 @@ func (v *Lun) ListPages(options *LunOptions, fn LunPageHandler) {
 		LunResponse, res, err := v.List(requestOptions)
 		handlerResponse := false
 
-		if LunResponse.Results.NumRecords > 0 {
-			handlerResponse = fn(LunListPagesResponse{Response: LunResponse, Error: err, RawResponse: res})
-		}
+		handlerResponse = fn(LunListPagesResponse{Response: LunResponse, Error: err, RawResponse: res})
 
 		nextTag := ""
 		if err == nil {
