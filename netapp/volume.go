@@ -234,6 +234,8 @@ type VolumeListResponse struct {
 		AttributesList struct {
 			VolumeAttributes []VolumeInfo `xml:"volume-attributes"`
 		} `xml:"attributes-list"`
+		NextTag    string `xml:"next-tag"`
+		NumRecords int    `xml:"num-records"`
 	} `xml:"results"`
 }
 
@@ -243,6 +245,37 @@ func (v *Volume) List(options *VolumeOptions) (*VolumeListResponse, *http.Respon
 	r := VolumeListResponse{}
 	res, err := v.get(v, &r)
 	return &r, res, err
+}
+
+type VolumeListPagesResponse struct {
+	Response    *VolumeListResponse
+	Error       error
+	RawResponse *http.Response
+}
+
+type VolumePageHandler func(VolumeListPagesResponse) (shouldContinue bool)
+
+func (v *Volume) ListPages(options *VolumeOptions, fn VolumePageHandler) {
+
+	requestOptions := options
+
+	for shouldContinue := true; shouldContinue; {
+		VolumeResponse, res, err := v.List(requestOptions)
+		handlerResponse := false
+
+		handlerResponse = fn(VolumeListPagesResponse{Response: VolumeResponse, Error: err, RawResponse: res})
+
+		nextTag := ""
+		if err == nil {
+			nextTag = VolumeResponse.Results.NextTag
+			requestOptions = &VolumeOptions{
+				Tag:        nextTag,
+				MaxRecords: options.MaxRecords,
+			}
+		}
+		shouldContinue = nextTag != "" && handlerResponse
+	}
+
 }
 
 type VolumeSpaceInfo struct {
