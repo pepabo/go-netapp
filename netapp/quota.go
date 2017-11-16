@@ -61,7 +61,7 @@ type QuotaListResponse struct {
 	Results struct {
 		ResultBase
 		AttributesList struct {
-			QuotaEntry QuotaEntry `xml:"quota-entry"`
+			QuotaEntry []QuotaEntry `xml:"quota-entry"`
 		} `xml:"attributes-list"`
 	} `xml:"results"`
 }
