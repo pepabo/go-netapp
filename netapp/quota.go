@@ -173,11 +173,12 @@ func (q *Quota) On(serverName, volumeName string) (*QuotaStatusResponse, *http.R
 	return &r, res, err
 }
 
-func (q *Quota) Status(name string) (*QuotaStatusResponse, *http.Response, error) {
+func (q *Quota) Status(serverName, volumeName string) (*QuotaStatusResponse, *http.Response, error) {
+	q.Name = serverName
 	q.Params.XMLName = xml.Name{Local: "quota-status"}
 	q.Params.QuotaOptions = &QuotaOptions{
 		QuotaEntry: &QuotaEntry{
-			Volume: name,
+			Volume: volumeName,
 		},
 	}
 
