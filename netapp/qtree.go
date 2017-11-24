@@ -28,6 +28,7 @@ type QtreeInfo struct {
 	Mode                    string `xml:"mode,omitempty"`
 	Oplocks                 string `xml:"oplocks,omitempty"`
 	Qtree                   string `xml:"qtree,omitempty"`
+	Force                   bool   `xml:"force,omitempty"`
 	SecurityStyle           string `xml:"security-style,omitempty"`
 	Status                  string `xml:"status,omitempty"`
 	Volume                  string `xml:"volume,omitempty"`
@@ -73,12 +74,13 @@ func (q *Qtree) Create(vserverName, volume, qtree string, info *QtreeInfo) (*Qtr
 	return &r, res, err
 }
 
-func (q *Qtree) Delete(vserverName, volName, qtreeName string) (*QtreeListResponse, *http.Response, error) {
+func (q *Qtree) Delete(vserverName, volName, qtreeName string, force bool) (*QtreeListResponse, *http.Response, error) {
 	q.Name = vserverName
 	q.Params.XMLName = xml.Name{Local: "qtree-delete"}
 	q.Params.QtreeOptions = &QtreeOptions{
 		QtreeInfo: &QtreeInfo{
 			Qtree: fmt.Sprintf("/vol/%s/%s", volName, qtreeName),
+			Force: force,
 		},
 	}
 
