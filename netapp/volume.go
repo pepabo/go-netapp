@@ -285,11 +285,11 @@ type VolumeSpaceInfo struct {
 	InodesPercent              string `xml:"inodes-percent"`
 	PerformanceMetadata        string `xml:"performance-metadata"`
 	PerformanceMetadataPercent string `xml:"performance-metadata-percent"`
-	PhysicalUsed               string `xml:"physical-used"`
+	PhysicalUsed               int    `xml:"physical-used"`
 	PhysicalUsedPercent        string `xml:"physical-used-percent"`
 	SnapshotReserve            string `xml:"snapshot-reserve"`
 	SnapshotReservePercent     string `xml:"snapshot-reserve-percent"`
-	TotalUsed                  string `xml:"total-used"`
+	TotalUsed                  int    `xml:"total-used"`
 	TotalUsedPercent           string `xml:"total-used-percent"`
 	UserData                   string `xml:"user-data"`
 	UserDataPercent            string `xml:"user-data-percent"`
@@ -307,7 +307,7 @@ func (v VolumeSpacesInfo) Swap(i, j int) {
 }
 
 func (p VolumeSpacesInfo) Less(i, j int) bool {
-	return p[i].TotalUsedPercent < p[j].TotalUsedPercent
+	return p[i].PhysicalUsed < p[j].PhysicalUsed
 }
 
 type VolumeSpace struct {
