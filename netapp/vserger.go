@@ -47,11 +47,14 @@ type VServerInfo struct {
 	VserverSubtype             string `xml:"vserver-subtype,omitempty"`
 }
 
+type VServerQuery struct {
+	VServerInfo *VServerInfo `xml:"vserver-info,omitempty"`
+}
 type VServerOptions struct {
-	DesiredAttributes *VServerInfo `xml:"desired-attributes,omitempty"`
-	MaxRecords        int          `xml:"max-records,omitempty"`
-	Query             *VServerInfo `xml:"query,omitempty"`
-	Tag               string       `xml:"tag,omitempty"`
+	DesiredAttributes *VServerInfo  `xml:"desired-attributes,omitempty"`
+	MaxRecords        int           `xml:"max-records,omitempty"`
+	Query             *VServerQuery `xml:"query,omitempty"`
+	Tag               string        `xml:"tag,omitempty"`
 }
 
 type VServerListResponse struct {

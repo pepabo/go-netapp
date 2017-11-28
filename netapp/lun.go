@@ -12,12 +12,15 @@ type Lun struct {
 		*LunOptions
 	}
 }
+type LunQuery struct {
+	LunInfo *LunInfo `xml:"lun-info,omitempty"`
+}
 
 type LunOptions struct {
-	DesiredAttributes *LunInfo `xml:"desired-attributes,omitempty"`
-	MaxRecords        int      `xml:"max-records,omitempty"`
-	Query             *LunInfo `xml:"query,omitempty"`
-	Tag               string   `xml:"tag,omitempty"`
+	DesiredAttributes *LunInfo  `xml:"desired-attributes,omitempty"`
+	MaxRecords        int       `xml:"max-records,omitempty"`
+	Query             *LunQuery `xml:"query,omitempty"`
+	Tag               string    `xml:"tag,omitempty"`
 }
 
 type LunInfo struct {

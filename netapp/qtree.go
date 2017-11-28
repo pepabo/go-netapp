@@ -14,11 +14,15 @@ type Qtree struct {
 	}
 }
 
+type QtreeQuery struct {
+	QtreeInfo *QtreeInfo `xml:"qtree-info,omitempty"`
+}
+
 type QtreeOptions struct {
-	DesiredAttributes *QtreeInfo `xml:"desired-attributes,omitempty"`
-	MaxRecords        int        `xml:"max-records,omitempty"`
-	Query             *QtreeInfo `xml:"query,omitempty"`
-	Tag               string     `xml:"tag,omitempty"`
+	DesiredAttributes *QtreeInfo  `xml:"desired-attributes,omitempty"`
+	MaxRecords        int         `xml:"max-records,omitempty"`
+	Query             *QtreeQuery `xml:"query,omitempty"`
+	Tag               string      `xml:"tag,omitempty"`
 	*QtreeInfo
 }
 type QtreeInfo struct {

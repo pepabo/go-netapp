@@ -25,10 +25,14 @@ type Quota struct {
 	}
 }
 
+type QuotaQuery struct {
+	QuotaEntry *QuotaEntry `xml:"quota-entry,omitempty"`
+}
+
 type QuotaOptions struct {
 	DesiredAttributes *QuotaEntry `xml:"desired-attributes,omitempty"`
 	MaxRecords        int         `xml:"max-records,omitempty"`
-	Query             *QuotaEntry `xml:"query,omitempty"`
+	Query             *QuotaQuery `xml:"query,omitempty"`
 	Tag               string      `xml:"tag,omitempty"`
 	*QuotaEntry
 }

@@ -13,11 +13,15 @@ type Snapshot struct {
 	}
 }
 
+type SnapshotQuery struct {
+	SnapshotInfo *SnapshotInfo `xml:"snapshot-info,omitempty"`
+}
+
 type SnapshotOptions struct {
-	DesiredAttributes *SnapshotInfo `xml:"desired-attributes,omitempty"`
-	MaxRecords        int           `xml:"max-records,omitempty"`
-	Query             *SnapshotInfo `xml:"query,omitempty"`
-	Tag               string        `xml:"tag,omitempty"`
+	DesiredAttributes *SnapshotInfo  `xml:"desired-attributes,omitempty"`
+	MaxRecords        int            `xml:"max-records,omitempty"`
+	Query             *SnapshotQuery `xml:"query,omitempty"`
+	Tag               string         `xml:"tag,omitempty"`
 }
 
 type SnapshotInfo struct {

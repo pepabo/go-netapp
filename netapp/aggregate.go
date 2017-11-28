@@ -12,12 +12,15 @@ type Aggregate struct {
 		*AggrOptions
 	}
 }
+type AggrQuery struct {
+	AggrEntry *AggrInfo `xml:"aggr-attributes,omitempty"`
+}
 
 type AggrOptions struct {
-	DesiredAttributes *AggrInfo `xml:"desired-attributes,omitempty"`
-	MaxRecords        int       `xml:"max-records,omitempty"`
-	Query             *AggrInfo `xml:"query,omitempty"`
-	Tag               string    `xml:"tag,omitempty"`
+	DesiredAttributes *AggrInfo  `xml:"desired-attributes,omitempty"`
+	MaxRecords        int        `xml:"max-records,omitempty"`
+	Query             *AggrQuery `xml:"query,omitempty"`
+	Tag               string     `xml:"tag,omitempty"`
 }
 
 type AggrListResponse struct {
@@ -110,12 +113,15 @@ type AggregateSpace struct {
 		*AggrSpaceOptions
 	}
 }
+type AggrSpaceInfoQuery struct {
+	AggrSpaceInfo *AggrSpaceInfo `xml:"space-information,omitempty"`
+}
 
 type AggrSpaceOptions struct {
-	DesiredAttributes *AggrSpaceInfo `xml:"desired-attributes,omitempty"`
-	MaxRecords        int            `xml:"max-records,omitempty"`
-	Query             *AggrSpaceInfo `xml:"query,omitempty"`
-	Tag               string         `xml:"tag,omitempty"`
+	DesiredAttributes *AggrSpaceInfo      `xml:"desired-attributes,omitempty"`
+	MaxRecords        int                 `xml:"max-records,omitempty"`
+	Query             *AggrSpaceInfoQuery `xml:"query,omitempty"`
+	Tag               string              `xml:"tag,omitempty"`
 }
 
 type AggrSpaceInfo struct {
