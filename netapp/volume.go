@@ -13,11 +13,14 @@ type Volume struct {
 	}
 }
 
+type VolumeQuery struct {
+	VolumeInfo *VolumeInfo `xml:"volume-info,omitempty"`
+}
 type VolumeOptions struct {
-	DesiredAttributes *VolumeInfo `xml:"desired-attributes,omitempty"`
-	MaxRecords        int         `xml:"max-records,omitempty"`
-	Query             *VolumeInfo `xml:"query,omitempty"`
-	Tag               string      `xml:"tag,omitempty"`
+	DesiredAttributes *VolumeInfo  `xml:"desired-attributes,omitempty"`
+	MaxRecords        int          `xml:"max-records,omitempty"`
+	Query             *VolumeQuery `xml:"query,omitempty"`
+	Tag               string       `xml:"tag,omitempty"`
 }
 type VolumeAntivirusAttributes struct {
 	OnAccessPolicy string `xml:"on-access-policy"`
