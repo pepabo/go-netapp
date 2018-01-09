@@ -22,20 +22,25 @@ const (
 
 // A Client manages communication with the GitHub API.
 type Client struct {
-	client         *http.Client
-	BaseURL        *url.URL
-	UserAgent      string
-	options        *ClientOptions
-	Aggregate      *Aggregate
-	AggregateSpace *AggregateSpace
-	Job            *Job
-	Lun            *Lun
-	Qtree          *Qtree
-	Quota          *Quota
-	Snapshot       *Snapshot
-	Volume         *Volume
-	VolumeSpace    *VolumeSpace
-	VServer        *VServer
+	client          *http.Client
+	BaseURL         *url.URL
+	UserAgent       string
+	options         *ClientOptions
+	Aggregate       *Aggregate
+	AggregateSpace  *AggregateSpace
+	AggregateSpares *AggregateSpares
+	Cf              *Cf
+	Job             *Job
+	Lun             *Lun
+	Qtree           *Qtree
+	Quota           *Quota
+	QuotaReport     *QuotaReport
+	QuotaStatus     *QuotaStatus
+	Snapshot        *Snapshot
+	System          *System
+	Volume          *Volume
+	VolumeSpace     *VolumeSpace
+	VServer         *VServer
 }
 
 type ClientOptions struct {
@@ -91,6 +96,14 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 		Base: b,
 	}
 
+	c.AggregateSpares = &AggregateSpares{
+		Base: b,
+	}
+
+	c.Cf = &Cf{
+		Base: b,
+	}
+
 	c.Job = &Job{
 		Base: b,
 	}
@@ -107,7 +120,19 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 		Base: b,
 	}
 
+	c.QuotaReport = &QuotaReport{
+		Base: b,
+	}
+
+	c.QuotaStatus = &QuotaStatus{
+		Base: b,
+	}
+
 	c.Snapshot = &Snapshot{
+		Base: b,
+	}
+
+	c.System = &System{
 		Base: b,
 	}
 

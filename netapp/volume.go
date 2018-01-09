@@ -17,7 +17,7 @@ type VolumeQuery struct {
 	VolumeInfo *VolumeInfo `xml:"volume-info,omitempty"`
 }
 type VolumeOptions struct {
-	DesiredAttributes *VolumeInfo  `xml:"desired-attributes,omitempty"`
+	DesiredAttributes *VolumeQuery `xml:"desired-attributes,omitempty"`
 	MaxRecords        int          `xml:"max-records,omitempty"`
 	Query             *VolumeQuery `xml:"query,omitempty"`
 	Tag               string       `xml:"tag,omitempty"`
@@ -332,11 +332,15 @@ type VolumeSpaceListResponse struct {
 	} `xml:"results"`
 }
 
+type VolumeSpaceInfoQuery struct {
+	VolumeSpaceInfo *VolumeSpaceInfo `xml:"space-info,omitempty"`
+}
+
 type VolumeSpaceOptions struct {
-	DesiredAttributes *VolumeSpaceInfo `xml:"desired-attributes,omitempty"`
-	MaxRecords        int              `xml:"max-records,omitempty"`
-	Query             *VolumeSpaceInfo `xml:"query,omitempty"`
-	Tag               string           `xml:"tag,omitempty"`
+	DesiredAttributes *VolumeSpaceInfoQuery `xml:"desired-attributes,omitempty"`
+	MaxRecords        int                   `xml:"max-records,omitempty"`
+	Query             *VolumeSpaceInfoQuery `xml:"query,omitempty"`
+	Tag               string                `xml:"tag,omitempty"`
 }
 
 func (v *VolumeSpace) List(options *VolumeSpaceOptions) (*VolumeSpaceListResponse, *http.Response, error) {

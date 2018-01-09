@@ -19,12 +19,13 @@ type QtreeQuery struct {
 }
 
 type QtreeOptions struct {
-	DesiredAttributes *QtreeInfo  `xml:"desired-attributes,omitempty"`
+	DesiredAttributes *QtreeQuery `xml:"desired-attributes,omitempty"`
 	MaxRecords        int         `xml:"max-records,omitempty"`
 	Query             *QtreeQuery `xml:"query,omitempty"`
 	Tag               string      `xml:"tag,omitempty"`
 	*QtreeInfo
 }
+
 type QtreeInfo struct {
 	ExportPolicy            string `xml:"export-policy,omitempty"`
 	ID                      string `xml:"id,omitempty"`

@@ -17,7 +17,7 @@ type AggrQuery struct {
 }
 
 type AggrOptions struct {
-	DesiredAttributes *AggrInfo  `xml:"desired-attributes,omitempty"`
+	DesiredAttributes *AggrQuery `xml:"desired-attributes,omitempty"`
 	MaxRecords        int        `xml:"max-records,omitempty"`
 	Query             *AggrQuery `xml:"query,omitempty"`
 	Tag               string     `xml:"tag,omitempty"`
@@ -118,7 +118,7 @@ type AggrSpaceInfoQuery struct {
 }
 
 type AggrSpaceOptions struct {
-	DesiredAttributes *AggrSpaceInfo      `xml:"desired-attributes,omitempty"`
+	DesiredAttributes *AggrSpaceInfoQuery `xml:"desired-attributes,omitempty"`
 	MaxRecords        int                 `xml:"max-records,omitempty"`
 	Query             *AggrSpaceInfoQuery `xml:"query,omitempty"`
 	Tag               string              `xml:"tag,omitempty"`
@@ -157,4 +157,97 @@ func (a *AggregateSpace) List(options *AggrSpaceOptions) (*AggrSpaceListResponse
 	r := AggrSpaceListResponse{}
 	res, err := a.get(a, &r)
 	return &r, res, err
+}
+
+type AggregateSpares struct {
+	Base
+	Params struct {
+		XMLName xml.Name
+		*AggrSparesOptions
+	}
+}
+
+func (a *AggregateSpares) List(options *AggrSparesOptions) (*AggrSparesListResponse, *http.Response, error) {
+	a.Params.XMLName = xml.Name{Local: "aggr-spare-get-iter"}
+	a.Params.AggrSparesOptions = options
+	r := AggrSparesListResponse{}
+	res, err := a.get(a, &r)
+	return &r, res, err
+}
+
+func (a *AggregateSpares) ListPages(options *AggrSparesOptions, fn AggregateSparesPageHandler) {
+
+	requestOptions := options
+
+	for shouldContinue := true; shouldContinue; {
+		aggregateResponse, res, err := a.List(requestOptions)
+		handlerResponse := false
+
+		handlerResponse = fn(AggrSparesListPagesResponse{Response: aggregateResponse, Error: err, RawResponse: res})
+
+		nextTag := ""
+		if err == nil {
+			nextTag = aggregateResponse.Results.NextTag
+			requestOptions = &AggrSparesOptions{
+				Tag:        nextTag,
+				MaxRecords: options.MaxRecords,
+			}
+		}
+		shouldContinue = nextTag != "" && handlerResponse
+	}
+}
+
+type AggrSpareDiskInfoQuery struct {
+	AggrSpareDiskInfo *AggrSpareDiskInfo `xml:"aggr-spare-disk-info,omitempty"`
+}
+
+type AggrSparesOptions struct {
+	DesiredAttributes *AggrSpareDiskInfoQuery `xml:"desired-attributes,omitempty"`
+	MaxRecords        int                     `xml:"max-records,omitempty"`
+	Query             *AggrSpareDiskInfoQuery `xml:"query,omitempty"`
+	Tag               string                  `xml:"tag,omitempty"`
+}
+
+type AggregateSparesPageHandler func(AggrSparesListPagesResponse) (shouldContinue bool)
+
+type AggrSpareDiskInfo struct {
+	ChecksumStyle           string `xml:"checksum-style"`
+	Disk                    string `xml:"disk"`
+	DiskRpm                 int    `xml:"disk-rpm"`
+	DiskType                string `xml:"disk-type"`
+	EffectiveDiskRpm        int    `xml:"effective-disk-rpm"`
+	EffectiveDiskType       string `xml:"effective-disk-type"`
+	IsDiskLeftBehind        bool   `xml:"is-disk-left-behind"`
+	IsDiskShared            bool   `xml:"is-disk-shared"`
+	IsDiskZeroed            bool   `xml:"is-disk-zeroed"`
+	IsDiskZeroing           bool   `xml:"is-disk-zeroing"`
+	IsSparecore             bool   `xml:"is-sparecore"`
+	LocalUsableDataSize     int    `xml:"local-usable-data-size"`
+	LocalUsableDataSizeBlks int    `xml:"local-usable-data-size-blks"`
+	LocalUsableRootSize     int    `xml:"local-usable-root-size"`
+	LocalUsableRootSizeBlks int    `xml:"local-usable-root-size-blks"`
+	OriginalOwner           string `xml:"original-owner"`
+	SyncmirrorPool          string `xml:"syncmirror-pool"`
+	TotalSize               int    `xml:"total-size"`
+	UsableSize              int    `xml:"usable-size"`
+	UsableSizeBlks          int    `xml:"usable-size-blks"`
+	ZeroingPercent          int    `xml:"zeroing-percent"`
+}
+
+type AggrSparesListResponse struct {
+	XMLName xml.Name `xml:"netapp"`
+	Results struct {
+		ResultBase
+		AttributesList struct {
+			AggrAttributes []AggrSpareDiskInfo `xml:"aggr-spare-disk-info"`
+		} `xml:"attributes-list"`
+		NextTag    string `xml:"next-tag"`
+		NumRecords int    `xml:"num-records"`
+	} `xml:"results"`
+}
+
+type AggrSparesListPagesResponse struct {
+	Response    *AggrSparesListResponse
+	Error       error
+	RawResponse *http.Response
 }
