@@ -18,7 +18,7 @@ type SnapshotQuery struct {
 }
 
 type SnapshotOptions struct {
-	DesiredAttributes *SnapshotInfo  `xml:"desired-attributes,omitempty"`
+	DesiredAttributes *SnapshotQuery `xml:"desired-attributes,omitempty"`
 	MaxRecords        int            `xml:"max-records,omitempty"`
 	Query             *SnapshotQuery `xml:"query,omitempty"`
 	Tag               string         `xml:"tag,omitempty"`

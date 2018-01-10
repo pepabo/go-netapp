@@ -51,7 +51,7 @@ type VServerQuery struct {
 	VServerInfo *VServerInfo `xml:"vserver-info,omitempty"`
 }
 type VServerOptions struct {
-	DesiredAttributes *VServerInfo  `xml:"desired-attributes,omitempty"`
+	DesiredAttributes *VServerQuery `xml:"desired-attributes,omitempty"`
 	MaxRecords        int           `xml:"max-records,omitempty"`
 	Query             *VServerQuery `xml:"query,omitempty"`
 	Tag               string        `xml:"tag,omitempty"`

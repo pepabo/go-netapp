@@ -17,7 +17,7 @@ type LunQuery struct {
 }
 
 type LunOptions struct {
-	DesiredAttributes *LunInfo  `xml:"desired-attributes,omitempty"`
+	DesiredAttributes *LunQuery `xml:"desired-attributes,omitempty"`
 	MaxRecords        int       `xml:"max-records,omitempty"`
 	Query             *LunQuery `xml:"query,omitempty"`
 	Tag               string    `xml:"tag,omitempty"`

@@ -30,7 +30,7 @@ type QuotaQuery struct {
 }
 
 type QuotaOptions struct {
-	DesiredAttributes *QuotaEntry `xml:"desired-attributes,omitempty"`
+	DesiredAttributes *QuotaQuery `xml:"desired-attributes,omitempty"`
 	MaxRecords        int         `xml:"max-records,omitempty"`
 	Query             *QuotaQuery `xml:"query,omitempty"`
 	Tag               string      `xml:"tag,omitempty"`
@@ -190,3 +190,169 @@ func (q *Quota) Status(serverName, volumeName string) (*QuotaStatusResponse, *ht
 	res, err := q.get(q, &r)
 	return &r, res, err
 }
+
+type QuotaReport struct {
+	Base
+	Params struct {
+		XMLName xml.Name
+		*QuotaReportOptions
+	}
+}
+
+func (qr *QuotaReport) Report(options *QuotaReportOptions) (*QuotaReportResponse, *http.Response, error) {
+	qr.Params.XMLName = xml.Name{Local: "quota-report-iter"}
+	qr.Params.QuotaReportOptions = options
+
+	r := QuotaReportResponse{}
+	res, err := qr.get(qr, &r)
+	return &r, res, err
+}
+
+type QuotaReportPageHandler func(QuotaReportPagesResponse) (shouldContinue bool)
+
+func (a *QuotaReport) ReportPages(options *QuotaReportOptions, fn QuotaReportPageHandler) {
+
+	requestOptions := options
+
+	for shouldContinue := true; shouldContinue; {
+		quotaReportResponse, res, err := a.Report(requestOptions)
+		handlerResponse := false
+
+		handlerResponse = fn(QuotaReportPagesResponse{Response: quotaReportResponse, Error: err, RawResponse: res})
+
+		nextTag := ""
+		if err == nil {
+			nextTag = quotaReportResponse.Results.NextTag
+			requestOptions = &QuotaReportOptions{
+				Tag:        nextTag,
+				MaxRecords: options.MaxRecords,
+			}
+		}
+		shouldContinue = nextTag != "" && handlerResponse
+	}
+}
+
+type QuotaReportEntryQuery struct {
+	QuotaReportEntry *QuotaReportEntry `xml:"quota,omitempty"`
+}
+
+type QuotaReportOptions struct {
+	DesiredAttributes *QuotaReportEntryQuery `xml:"desired-attributes,omitempty"`
+	MaxRecords        int                    `xml:"max-records,omitempty"`
+	Path              string                 `xml:"path,omitempty"`
+	Query             *QuotaReportEntryQuery `xml:"query,omitempty"`
+	Tag               string                 `xml:"tag,omitempty"`
+}
+
+type QuotaReportEntry struct {
+	DiskLimit     string `xml:"disk-limit,omitempty"`
+	DiskUsed      string `xml:"disk-used,omitempty"`
+	FileLimit     string `xml:"file-limit,omitempty"`
+	FilesUsed     string `xml:"files-used,omitempty"`
+	QuotaTarget   string `xml:"quota-target,omitempty"`
+	QuotaType     string `xml:"quota-type,omitempty"`
+	SoftDiskLimit string `xml:"soft-disk-limit,omitempty"`
+	SoftFileLimit string `xml:"soft-file-limit,omitempty"`
+	Threshold     string `xml:"threshold,omitempty"`
+	Tree          string `xml:"tree,omitempty"`
+	Volume        string `xml:"volume,omitempty"`
+	Vserver       string `xml:"vserver,omitempty"`
+}
+
+type QuotaReportResponse struct {
+	XMLName xml.Name `xml:"netapp"`
+	Results struct {
+		ResultBase
+		AttributesList struct {
+			QuotaReportEntry []QuotaReportEntry `xml:"quota"`
+		} `xml:"attributes-list"`
+		NextTag    string `xml:"next-tag"`
+		NumRecords int    `xml:"num-records"`
+	} `xml:"results"`
+}
+
+type QuotaReportPagesResponse struct {
+	Response    *QuotaReportResponse
+	Error       error
+	RawResponse *http.Response
+}
+
+type QuotaStatus struct {
+	Base
+	Params struct {
+		XMLName xml.Name
+		*QuotaStatusIterOptions
+	}
+}
+
+func (qr *QuotaStatus) StatusIter(options *QuotaStatusIterOptions) (*QuotaStatusIterResponse, *http.Response, error) {
+	qr.Params.XMLName = xml.Name{Local: "quota-status-iter"}
+	qr.Params.QuotaStatusIterOptions = options
+
+	r := QuotaStatusIterResponse{}
+	res, err := qr.get(qr, &r)
+	return &r, res, err
+}
+
+func (a *QuotaStatus) StatusPages(options *QuotaStatusIterOptions, fn QuotaStatusPageHandler) {
+
+	requestOptions := options
+
+	for shouldContinue := true; shouldContinue; {
+		quotaStatusResponse, res, err := a.StatusIter(requestOptions)
+		handlerResponse := false
+
+		handlerResponse = fn(QuotaStatusPagesResponse{Response: quotaStatusResponse, Error: err, RawResponse: res})
+
+		nextTag := ""
+		if err == nil {
+			nextTag = quotaStatusResponse.Results.NextTag
+			requestOptions = &QuotaStatusIterOptions{
+				Tag:        nextTag,
+				MaxRecords: options.MaxRecords,
+			}
+		}
+		shouldContinue = nextTag != "" && handlerResponse
+	}
+}
+
+type QuotaStatusEntryQuery struct {
+	QuotaStatusEntry *QuotaStatusEntry `xml:"quota-status-attributes,omitempty"`
+}
+
+type QuotaStatusIterOptions struct {
+	DesiredAttributes *QuotaStatusEntryQuery `xml:"desired-attributes,omitempty"`
+	MaxRecords        int                    `xml:"max-records,omitempty"`
+	Query             *QuotaStatusEntryQuery `xml:"query,omitempty"`
+	Tag               string                 `xml:"tag,omitempty"`
+}
+
+type QuotaStatusEntry struct {
+	PercentComplete string `xml:"percent-complete"`
+	QuotaErrorMsgs  string `xml:"quota-error-msgs"`
+	Reason          string `xml:"reason"`
+	QuotaStatus     string `xml:"status"`
+	QuotaSubStatus  string `xml:"substatus"`
+	Volume          string `xml:"volume"`
+	Vserver         string `xml:"vserver"`
+}
+
+type QuotaStatusIterResponse struct {
+	XMLName xml.Name `xml:"netapp"`
+	Results struct {
+		ResultBase
+		AttributesList struct {
+			QuotaStatusAttributes []QuotaStatusEntry `xml:"quota-status-attributes"`
+		} `xml:"attributes-list"`
+		NextTag    string `xml:"next-tag"`
+		NumRecords int    `xml:"num-records"`
+	} `xml:"results"`
+}
+
+type QuotaStatusPagesResponse struct {
+	Response    *QuotaStatusIterResponse
+	Error       error
+	RawResponse *http.Response
+}
+
+type QuotaStatusPageHandler func(QuotaStatusPagesResponse) (shouldContinue bool)
