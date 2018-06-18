@@ -30,6 +30,7 @@ type Client struct {
 	AggregateSpace  *AggregateSpace
 	AggregateSpares *AggregateSpares
 	Cf              *Cf
+	Diagnosis       *Diagnosis
 	Job             *Job
 	Lun             *Lun
 	Qtree           *Qtree
@@ -101,6 +102,10 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 	}
 
 	c.Cf = &Cf{
+		Base: b,
+	}
+
+	c.Diagnosis = &Diagnosis{
 		Base: b,
 	}
 
