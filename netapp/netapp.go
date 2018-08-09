@@ -31,13 +31,17 @@ type Client struct {
 	AggregateSpares *AggregateSpares
 	Cf              *Cf
 	Diagnosis       *Diagnosis
+	Fcp             *Fcp
+	Fcport          *Fcport
 	Job             *Job
 	Lun             *Lun
+	Net             *Net
 	Qtree           *Qtree
 	Quota           *Quota
 	QuotaReport     *QuotaReport
 	QuotaStatus     *QuotaStatus
 	Snapshot        *Snapshot
+	StorageDisk     *StorageDisk
 	System          *System
 	Volume          *Volume
 	VolumeSpace     *VolumeSpace
@@ -109,11 +113,23 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 		Base: b,
 	}
 
+	c.Fcp = &Fcp{
+		Base: b,
+	}
+
+	c.Fcport = &Fcport{
+		Base: b,
+	}
+
 	c.Job = &Job{
 		Base: b,
 	}
 
 	c.Lun = &Lun{
+		Base: b,
+	}
+
+	c.Net = &Net{
 		Base: b,
 	}
 
@@ -134,6 +150,10 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 	}
 
 	c.Snapshot = &Snapshot{
+		Base: b,
+	}
+
+	c.StorageDisk = &StorageDisk{
 		Base: b,
 	}
 

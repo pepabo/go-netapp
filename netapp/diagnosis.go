@@ -65,7 +65,7 @@ type DiagnosisAlertPagesResposne struct {
 
 type DiagnosisPageHandler func(DiagnosisAlertPagesResposne) (shouldContinue bool)
 
-func (v *Diagnosis) List(options *DiagnosisOptions) (*DiagnosisListResponse, *http.Response, error) {
+func (v *Diagnosis) DiagnosisAlertGetIter(options *DiagnosisOptions) (*DiagnosisListResponse, *http.Response, error) {
 	v.Params.XMLName = xml.Name{Local: "diagnosis-alert-get-iter"}
 	v.Params.DiagnosisOptions = options
 	r := DiagnosisListResponse{}
@@ -73,12 +73,12 @@ func (v *Diagnosis) List(options *DiagnosisOptions) (*DiagnosisListResponse, *ht
 	return &r, res, err
 }
 
-func (v *Diagnosis) DiagnosisAlertPages(options *DiagnosisOptions, fn DiagnosisPageHandler) {
+func (v *Diagnosis) DiagnosisAlertGetAll(options *DiagnosisOptions, fn DiagnosisPageHandler) {
 
 	requestOptions := options
 
 	for shouldContinue := true; shouldContinue; {
-		DiagnosisResponse, res, err := v.List(requestOptions)
+		DiagnosisResponse, res, err := v.DiagnosisAlertGetIter(requestOptions)
 		handlerResponse := false
 
 		handlerResponse = fn(DiagnosisAlertPagesResposne{Response: DiagnosisResponse, Error: err, RawResponse: res})
