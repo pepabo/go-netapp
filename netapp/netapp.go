@@ -22,30 +22,31 @@ const (
 
 // A Client manages communication with the GitHub API.
 type Client struct {
-	client          *http.Client
-	BaseURL         *url.URL
-	UserAgent       string
-	options         *ClientOptions
-	Aggregate       *Aggregate
-	AggregateSpace  *AggregateSpace
-	AggregateSpares *AggregateSpares
-	Cf              *Cf
-	Diagnosis       *Diagnosis
-	Fcp             *Fcp
-	Fcport          *Fcport
-	Job             *Job
-	Lun             *Lun
-	Net             *Net
-	Qtree           *Qtree
-	Quota           *Quota
-	QuotaReport     *QuotaReport
-	QuotaStatus     *QuotaStatus
-	Snapshot        *Snapshot
-	StorageDisk     *StorageDisk
-	System          *System
-	Volume          *Volume
-	VolumeSpace     *VolumeSpace
-	VServer         *VServer
+	client           *http.Client
+	BaseURL          *url.URL
+	UserAgent        string
+	options          *ClientOptions
+	Aggregate        *Aggregate
+	AggregateSpace   *AggregateSpace
+	AggregateSpares  *AggregateSpares
+	Cf               *Cf
+	Diagnosis        *Diagnosis
+	Fcp              *Fcp
+	Fcport           *Fcport
+	Job              *Job
+	Lun              *Lun
+	Net              *Net
+	Qtree            *Qtree
+	Quota            *Quota
+	QuotaReport      *QuotaReport
+	QuotaStatus      *QuotaStatus
+	Snapshot         *Snapshot
+	StorageDisk      *StorageDisk
+	System           *System
+	Volume           *Volume
+	VolumeSpace      *VolumeSpace
+	VolumeOperations *VolumeOperation
+	VServer          *VServer
 }
 
 type ClientOptions struct {
@@ -166,6 +167,10 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 	}
 
 	c.VolumeSpace = &VolumeSpace{
+		Base: b,
+	}
+
+	c.VolumeOperations = &VolumeOperation{
 		Base: b,
 	}
 

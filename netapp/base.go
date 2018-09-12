@@ -16,10 +16,21 @@ type Base struct {
 type ResultBase struct {
 	Status     string `xml:"status,attr"`
 	Reason     string `xml:"reason,attr"`
-	NumRecords string `json:"num-records"`
+	NumRecords int    `json:"num-records"`
+	ErrorNo    int    `xml:"errno,attr"`
+}
+
+type SingleResultBase struct {
+	Status  string `xml:"status,attr"`
+	Reason  string `xml:"reason,attr"`
+	ErrorNo int    `xml:"errno,attr"`
 }
 
 func (r *ResultBase) Passed() bool {
+	return r.Status == "passed"
+}
+
+func (r *SingleResultBase) Passed() bool {
 	return r.Status == "passed"
 }
 
