@@ -14,37 +14,30 @@ type VServer struct {
 }
 
 type VServerInfo struct {
-	AntivirusOnAccessPolicy string `xml:"antivirus-on-access-policy"`
-	Comment                 string `xml:"comment"`
-	Ipspace                 string `xml:"ipspace,omitempty"`
-	IsRepositoryVserver     string `xml:"is-repository-vserver"`
-	SnapshotPolicy          string `xml:"snapshot-policy,omitempty"`
-	UUID                    string `xml:"uuid"`
-	VserverName             string `xml:"vserver-name"`
-	VserverType             string `xml:"vserver-type"`
-	AllowedProtocols        struct {
-		Protocol []string `xml:"protocol"`
-	} `xml:"allowed-protocols,omitempty"`
-	DisallowedProtocols struct {
-		Protocol []string `xml:"protocol"`
-	} `xml:"disallowed-protocols,omitempty"`
-	IsConfigLockedForChanges string `xml:"is-config-locked-for-changes,omitempty"`
-	Language                 string `xml:"language,omitempty"`
-	MaxVolumes               string `xml:"max-volumes,omitempty"`
-	NameMappingSwitch        struct {
-		Nmswitch string `xml:"nmswitch"`
-	} `xml:"name-mapping-switch,omitempty"`
-	NameServerSwitch struct {
-		Nsswitch string `xml:"nsswitch"`
-	} `xml:"name-server-switch,omitempty"`
-	OperationalState           string `xml:"operational-state,omitempty"`
-	QuotaPolicy                string `xml:"quota-policy,omitempty"`
-	RootVolume                 string `xml:"root-volume,omitempty"`
-	RootVolumeAggregate        string `xml:"root-volume-aggregate,omitempty"`
-	RootVolumeSecurityStyle    string `xml:"root-volume-security-style,omitempty"`
-	State                      string `xml:"state,omitempty"`
-	VolumeDeleteRetentionHours string `xml:"volume-delete-retention-hours,omitempty"`
-	VserverSubtype             string `xml:"vserver-subtype,omitempty"`
+	AntivirusOnAccessPolicy    string   `xml:"antivirus-on-access-policy,omitempty"`
+	AggregateList              []string `xml:"aggr-list>aggr-name"`
+	Comment                    string   `xml:"comment,omitempty"`
+	Ipspace                    string   `xml:"ipspace,omitempty"`
+	IsRepositoryVserver        string   `xml:"is-repository-vserver,omitempty"`
+	SnapshotPolicy             string   `xml:"snapshot-policy,omitempty"`
+	UUID                       string   `xml:"uuid,omitempty"`
+	VserverName                string   `xml:"vserver-name,omitempty"`
+	VserverType                string   `xml:"vserver-type,omitempty"`
+	AllowedProtocols           []string `xml:"allowed-protocols>protocol,omitempty"`
+	DisallowedProtocols        []string `xml:"disallowed-protocols>protocol,omitempty"`
+	IsConfigLockedForChanges   string   `xml:"is-config-locked-for-changes,omitempty"`
+	Language                   string   `xml:"language,omitempty"`
+	MaxVolumes                 string   `xml:"max-volumes,omitempty"`
+	NameMappingSwitch          []string `xml:"name-mapping-switch>nmswitch,omitempty"`
+	NameServerSwitch           []string `xml:"name-server-switch>nsswitch,omitempty"`
+	OperationalState           string   `xml:"operational-state,omitempty"`
+	QuotaPolicy                string   `xml:"quota-policy,omitempty"`
+	RootVolume                 string   `xml:"root-volume,omitempty"`
+	RootVolumeAggregate        string   `xml:"root-volume-aggregate,omitempty"`
+	RootVolumeSecurityStyle    string   `xml:"root-volume-security-style,omitempty"`
+	State                      string   `xml:"state,omitempty"`
+	VolumeDeleteRetentionHours int      `xml:"volume-delete-retention-hours,omitempty"`
+	VserverSubtype             string   `xml:"vserver-subtype,omitempty"`
 }
 
 type VServerQuery struct {
@@ -70,10 +63,8 @@ type VServerListResponse struct {
 type VServerResponse struct {
 	XMLName xml.Name `xml:"netapp"`
 	Results struct {
-		ResultBase
-		AttributesList struct {
-			VserverInfo []VServerInfo `xml:"vserver-info"`
-		} `xml:"attributes"`
+		SingleResultBase
+		VServerInfo VServerInfo `xml:"attributes>vserver-info"`
 	} `xml:"results"`
 }
 
