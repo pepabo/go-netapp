@@ -14,10 +14,11 @@ type Volume struct {
 }
 
 type VolumeQuery struct {
-	VolumeInfo *VolumeInfo `xml:"volume-info,omitempty"`
+	VolumeInfo *VolumeInfo `xml:"volume-attributes,omitempty"`
 }
 type VolumeOptions struct {
 	DesiredAttributes *VolumeQuery `xml:"desired-attributes,omitempty"`
+	Attributes        *VolumeQuery `xml:"attributes,omitempty"`
 	MaxRecords        int          `xml:"max-records,omitempty"`
 	Query             *VolumeQuery `xml:"query,omitempty"`
 	Tag               string       `xml:"tag,omitempty"`
@@ -50,32 +51,28 @@ type VolumeHybridCacheAttributes struct {
 	Eligibility            string `xml:"eligibility"`
 }
 type VolumeIDAttributes struct {
-	AggrList struct {
-		AggrName string `xml:"aggr-name"`
-	} `xml:"aggr-list"`
-	Comment                 string `xml:"comment"`
-	ContainingAggregateName string `xml:"containing-aggregate-name"`
-	ContainingAggregateUUID string `xml:"containing-aggregate-uuid"`
-	CreationTime            string `xml:"creation-time"`
-	Dsid                    string `xml:"dsid"`
-	Fsid                    string `xml:"fsid"`
-	InstanceUUID            string `xml:"instance-uuid"`
-	JunctionParentName      string `xml:"junction-parent-name"`
-	JunctionPath            string `xml:"junction-path"`
-	Msid                    string `xml:"msid"`
-	Name                    string `xml:"name"`
-	NameOrdinal             string `xml:"name-ordinal"`
-	Node                    string `xml:"node"`
-	Nodes                   struct {
-		NodeName string `xml:"node-name"`
-	} `xml:"nodes"`
-	OwningVserverName string `xml:"owning-vserver-name"`
-	OwningVserverUUID string `xml:"owning-vserver-uuid"`
-	ProvenanceUUID    string `xml:"provenance-uuid"`
-	Style             string `xml:"style"`
-	StyleExtended     string `xml:"style-extended"`
-	Type              string `xml:"type"`
-	UUID              string `xml:"uuid"`
+	AggrList                []string `xml:"aggr-list>aggr-name,omitempty"`
+	Comment                 string   `xml:"comment,omitempty"`
+	ContainingAggregateName string   `xml:"containing-aggregate-name,omitempty"`
+	ContainingAggregateUUID string   `xml:"containing-aggregate-uuid,omitempty"`
+	CreationTime            string   `xml:"creation-time,omitempty"`
+	Dsid                    string   `xml:"dsid,omitempty"`
+	Fsid                    string   `xml:"fsid,omitempty"`
+	InstanceUUID            string   `xml:"instance-uuid,omitempty"`
+	JunctionParentName      string   `xml:"junction-parent-name,omitempty"`
+	JunctionPath            string   `xml:"junction-path,omitempty"`
+	Msid                    string   `xml:"msid,omitempty"`
+	Name                    string   `xml:"name,omitempty"`
+	NameOrdinal             string   `xml:"name-ordinal,omitempty"`
+	Node                    string   `xml:"node,omitempty"`
+	Nodes                   []string `xml:"nodes>node-name,omitempty"`
+	OwningVserverName       string   `xml:"owning-vserver-name,omitempty"`
+	OwningVserverUUID       string   `xml:"owning-vserver-uuid,omitempty"`
+	ProvenanceUUID          string   `xml:"provenance-uuid,omitempty"`
+	Style                   string   `xml:"style,omitempty"`
+	StyleExtended           string   `xml:"style-extended,omitempty"`
+	Type                    string   `xml:"type,omitempty"`
+	UUID                    string   `xml:"uuid,omitempty"`
 }
 type VolumeInodeAttributes struct {
 	BlockType                string `xml:"block-type"`
@@ -110,6 +107,13 @@ type VolumePerformanceAttributes struct {
 	MinimalReadAhead     string `xml:"minimal-read-ahead"`
 	ReadRealloc          string `xml:"read-realloc"`
 }
+
+// VolumeQosAttributes is for tracking QOS-related volume attributes
+type VolumeQosAttributes struct {
+	AdaptivePolicyGroupName string `xml:"adaptive-policy-group-name,omitempty"`
+	PolicyGroupName         string `xml:"policy-group-name"`
+}
+
 type VolumeSecurityAttributes struct {
 	Style                        string `xml:"style"`
 	VolumeSecurityUnixAttributes struct {
@@ -134,11 +138,11 @@ type VolumeSnaplockAttributes struct {
 	SnaplockType string `xml:"snaplock-type"`
 }
 type VolumeSnapshotAttributes struct {
-	AutoSnapshotsEnabled           string `xml:"auto-snapshots-enabled"`
-	SnapdirAccessEnabled           string `xml:"snapdir-access-enabled"`
-	SnapshotCloneDependencyEnabled string `xml:"snapshot-clone-dependency-enabled"`
-	SnapshotCount                  string `xml:"snapshot-count"`
-	SnapshotPolicy                 string `xml:"snapshot-policy"`
+	AutoSnapshotsEnabled           string `xml:"auto-snapshots-enabled,omitempty"`
+	SnapdirAccessEnabled           bool   `xml:"snapdir-access-enabled,omitempty"`
+	SnapshotCloneDependencyEnabled string `xml:"snapshot-clone-dependency-enabled,omitempty"`
+	SnapshotCount                  string `xml:"snapshot-count,omitempty"`
+	SnapshotPolicy                 string `xml:"snapshot-policy,omitempty"`
 }
 type VolumeSnapshotAutodeleteAttributes struct {
 	Commitment          string `xml:"commitment"`
@@ -165,7 +169,7 @@ type VolumeSpaceAttributes struct {
 	PercentageSnapshotReserveUsed   string `xml:"percentage-snapshot-reserve-used"`
 	PhysicalUsed                    string `xml:"physical-used"`
 	PhysicalUsedPercent             string `xml:"physical-used-percent"`
-	Size                            string `xml:"size"`
+	Size                            int    `xml:"size"`
 	SizeAvailable                   string `xml:"size-available"`
 	SizeAvailableForSnapshots       string `xml:"size-available-for-snapshots"`
 	SizeTotal                       string `xml:"size-total"`
@@ -207,38 +211,37 @@ type VolumeTransitionAttributes struct {
 }
 
 type VolumeInfo struct {
-	Encrypt                            string                             `xml:"encrypt"`
-	KeyID                              string                             `xml:"key-id,omitempty"`
-	VolumeAntivirusAttributes          VolumeAntivirusAttributes          `xml:"volume-antivirus-attributes,omitempty"`
-	VolumeAutobalanceAttributes        VolumeAutobalanceAttributes        `xml:"volume-autobalance-attributes,omitempty"`
-	VolumeAutosizeAttributes           VolumeAutosizeAttributes           `xml:"volume-autosize-attributes"`
-	VolumeDirectoryAttributes          VolumeDirectoryAttributes          `xml:"volume-directory-attributes"`
-	VolumeExportAttributes             VolumeExportAttributes             `xml:"volume-export-attributes,omitempty"`
-	VolumeHybridCacheAttributes        VolumeHybridCacheAttributes        `xml:"volume-hybrid-cache-attributes"`
-	VolumeIDAttributes                 VolumeIDAttributes                 `xml:"volume-id-attributes"`
-	VolumeInodeAttributes              VolumeInodeAttributes              `xml:"volume-inode-attributes"`
-	VolumeLanguageAttributes           VolumeLanguageAttributes           `xml:"volume-language-attributes"`
-	VolumeMirrorAttributes             VolumeMirrorAttributes             `xml:"volume-mirror-attributes"`
-	VolumePerformanceAttributes        VolumePerformanceAttributes        `xml:"volume-performance-attributes"`
-	VolumeSecurityAttributes           VolumeSecurityAttributes           `xml:"volume-security-attributes"`
-	VolumeSisAttributes                VolumeSisAttributes                `xml:"volume-sis-attributes"`
-	VolumeSnaplockAttributes           VolumeSnaplockAttributes           `xml:"volume-snaplock-attributes,omitempty"`
-	VolumeSnapshotAttributes           VolumeSnapshotAttributes           `xml:"volume-snapshot-attributes"`
-	VolumeSnapshotAutodeleteAttributes VolumeSnapshotAutodeleteAttributes `xml:"volume-snapshot-autodelete-attributes"`
-	VolumeSpaceAttributes              VolumeSpaceAttributes              `xml:"volume-space-attributes"`
-	VolumeStateAttributes              VolumeStateAttributes              `xml:"volume-state-attributes"`
-	VolumeTransitionAttributes         VolumeTransitionAttributes         `xml:"volume-transition-attributes"`
+	Encrypt                            string                              `xml:"encrypt,omitempty"`
+	KeyID                              string                              `xml:"key-id,omitempty"`
+	VolumeAntivirusAttributes          *VolumeAntivirusAttributes          `xml:"volume-antivirus-attributes,omitempty"`
+	VolumeAutobalanceAttributes        *VolumeAutobalanceAttributes        `xml:"volume-autobalance-attributes,omitempty"`
+	VolumeAutosizeAttributes           *VolumeAutosizeAttributes           `xml:"volume-autosize-attributes"`
+	VolumeDirectoryAttributes          *VolumeDirectoryAttributes          `xml:"volume-directory-attributes"`
+	VolumeExportAttributes             *VolumeExportAttributes             `xml:"volume-export-attributes,omitempty"`
+	VolumeHybridCacheAttributes        *VolumeHybridCacheAttributes        `xml:"volume-hybrid-cache-attributes,omitempty"`
+	VolumeIDAttributes                 *VolumeIDAttributes                 `xml:"volume-id-attributes,omitempty"`
+	VolumeInodeAttributes              *VolumeInodeAttributes              `xml:"volume-inode-attributes,omitempty"`
+	VolumeLanguageAttributes           *VolumeLanguageAttributes           `xml:"volume-language-attributes,omitempty"`
+	VolumeMirrorAttributes             *VolumeMirrorAttributes             `xml:"volume-mirror-attributes,omitempty"`
+	VolumePerformanceAttributes        *VolumePerformanceAttributes        `xml:"volume-performance-attributes,omitempty"`
+	VolumeQosAttributes                *VolumeQosAttributes                `xml:"volume-qos-attributes,omitempty"`
+	VolumeSecurityAttributes           *VolumeSecurityAttributes           `xml:"volume-security-attributes,omitempty"`
+	VolumeSisAttributes                *VolumeSisAttributes                `xml:"volume-sis-attributes,omitempty"`
+	VolumeSnaplockAttributes           *VolumeSnaplockAttributes           `xml:"volume-snaplock-attributes,omitempty"`
+	VolumeSnapshotAttributes           *VolumeSnapshotAttributes           `xml:"volume-snapshot-attributes,omitempty"`
+	VolumeSnapshotAutodeleteAttributes *VolumeSnapshotAutodeleteAttributes `xml:"volume-snapshot-autodelete-attributes,omitempty"`
+	VolumeSpaceAttributes              *VolumeSpaceAttributes              `xml:"volume-space-attributes,omitempty"`
+	VolumeStateAttributes              *VolumeStateAttributes              `xml:"volume-state-attributes,omitempty"`
+	VolumeTransitionAttributes         *VolumeTransitionAttributes         `xml:"volume-transition-attributes,omitempty"`
 }
 
 type VolumeListResponse struct {
 	XMLName xml.Name `xml:"netapp"`
 	Results struct {
 		ResultBase
-		AttributesList struct {
-			VolumeAttributes []VolumeInfo `xml:"volume-attributes"`
-		} `xml:"attributes-list"`
-		NextTag    string `xml:"next-tag"`
-		NumRecords int    `xml:"num-records"`
+		AttributesList []VolumeInfo `xml:"attributes-list>volume-attributes"`
+		NextTag        string       `xml:"next-tag"`
+		NumRecords     int          `xml:"num-records"`
 	} `xml:"results"`
 }
 
