@@ -5,6 +5,7 @@ import (
 	"net/http"
 )
 
+// These consts are for defined volume operations
 const (
 	VolumeCreateOperation   = "volume-create"
 	VolumeOfflineOperation  = "volume-offline"
@@ -14,12 +15,13 @@ const (
 	VolumeRestrictOperation = "volume-restrict"
 )
 
+// VolumeOperation is the base struct for volume operations
 type VolumeOperation struct {
 	Base
 	Params struct {
 		XMLName    xml.Name
 		VolumeName *volumeName
-		*VolumeCreateOptions
+		VolumeCreateOptions
 	}
 }
 
@@ -28,6 +30,7 @@ type volumeName struct {
 	Name    string `xml:",innerxml"`
 }
 
+// VolumeCreateOptions struct is used for volume creation
 type VolumeCreateOptions struct {
 	AntivirusOnAccessPolicy    string `xml:"antivirus-on-access-policy,omitempty"`
 	CacheRetentionPriority     string `xml:"cache-retention-priority,omitempty"`
@@ -71,6 +74,7 @@ type VolumeCreateOptions struct {
 	VserverDrProtection        string `xml:"vserver-dr-protection,omitempty"`
 }
 
+// VolumeOperationResponse is a response struct for volume operations
 type VolumeOperationResponse struct {
 	XMLName xml.Name `xml:"netapp"`
 	Results struct {
@@ -78,16 +82,18 @@ type VolumeOperationResponse struct {
 	} `xml:"results"`
 }
 
-func (v *VolumeOperation) Create(options *VolumeCreateOptions, vserverName string) (*VolumeOperationResponse, *http.Response, error) {
+// Create a new volume
+func (v VolumeOperation) Create(options *VolumeCreateOptions, vserverName string) (*VolumeOperationResponse, *http.Response, error) {
 	v.Params.XMLName = xml.Name{Local: VolumeCreateOperation}
 	v.Name = vserverName
-	v.Params.VolumeCreateOptions = options
+	v.Params.VolumeCreateOptions = *options
 	r := VolumeOperationResponse{}
 	res, err := v.get(v, &r)
 	return &r, res, err
 }
 
-func (v *VolumeOperation) Operation(volName string, vserverName string, operation string) (*VolumeOperationResponse, *http.Response, error) {
+// Operation runs several operations (from consts defined above with VolumeOperation* name)
+func (v VolumeOperation) Operation(volName string, vserverName string, operation string) (*VolumeOperationResponse, *http.Response, error) {
 	v.Params.XMLName = xml.Name{Local: operation}
 	v.Name = vserverName
 	elementName := "name"

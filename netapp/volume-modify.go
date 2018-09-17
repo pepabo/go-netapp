@@ -31,7 +31,8 @@ type VolumeModifyInfo struct {
 	VolumeKey    *VolumeInfo `xml:"volume-key,omitempty"`
 }
 
-func (v *Volume) Modify(options *VolumeOptions) (*VolumeModifyResponce, *http.Response, error) {
+// Modify changes some volume properties, note: it will silently ignore things it cannot change
+func (v Volume) Modify(options *VolumeOptions) (*VolumeModifyResponce, *http.Response, error) {
 	v.Params.XMLName = xml.Name{Local: "volume-modify-iter"}
 	v.Params.VolumeOptions = options
 	r := VolumeModifyResponce{}
