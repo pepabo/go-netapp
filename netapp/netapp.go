@@ -37,6 +37,7 @@ type Client struct {
 	Lun              *Lun
 	Net              *Net
 	Qtree            *Qtree
+	QosPolicy        *QosPolicy
 	Quota            *Quota
 	QuotaReport      *QuotaReport
 	QuotaStatus      *QuotaStatus
@@ -135,6 +136,10 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 	}
 
 	c.Qtree = &Qtree{
+		Base: b,
+	}
+
+	c.QosPolicy = &QosPolicy{
 		Base: b,
 	}
 
