@@ -245,7 +245,7 @@ type VolumeListResponse struct {
 	} `xml:"results"`
 }
 
-func (v *Volume) List(options *VolumeOptions) (*VolumeListResponse, *http.Response, error) {
+func (v Volume) List(options *VolumeOptions) (*VolumeListResponse, *http.Response, error) {
 	v.Params.XMLName = xml.Name{Local: "volume-get-iter"}
 	v.Params.VolumeOptions = options
 	r := VolumeListResponse{}
