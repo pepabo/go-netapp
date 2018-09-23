@@ -1,0 +1,6 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <qos-policy-group-get>
+    <desired-attributes></desired-attributes>
+    <policy-group>qos-policy-test-not-found</policy-group>
+  </qos-policy-group-get>
+</netapp>

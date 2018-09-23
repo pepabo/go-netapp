@@ -46,19 +46,19 @@ type QosPolicyResponse struct {
 	} `xml:"results"`
 }
 
+// Create makes new qos policy
+func (qp QosPolicy) Create(query *QosPolicyInfo) (*QosPolicyResponse, *http.Response, error) {
+	qp.Params.XMLName = xml.Name{Local: "qos-policy-group-create"}
+	qp.Params.QosPolicyInfo = *query
+
+	return qp.doAPICall()
+}
+
 // Get grabs a qos policy, note: it will do so cluster wide
 func (qp QosPolicy) Get(name string, query *QosPolicyInfo) (*QosPolicyResponse, *http.Response, error) {
 	qp.Params.XMLName = xml.Name{Local: "qos-policy-group-get"}
 	qp.Params.Query = query
 	qp.Params.QosPolicyInfo.PolicyGroup = name
-
-	return qp.doAPICall()
-}
-
-// Create makes new qos policy
-func (qp QosPolicy) Create(query *QosPolicyInfo) (*QosPolicyResponse, *http.Response, error) {
-	qp.Params.XMLName = xml.Name{Local: "qos-policy-group-create"}
-	qp.Params.QosPolicyInfo = *query
 
 	return qp.doAPICall()
 }

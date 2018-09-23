@@ -1,0 +1,6 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <qos-policy-group-modify>
+    <max-throughput>1000IOPS</max-throughput>
+    <policy-group>qos-policy-iops-change</policy-group>
+  </qos-policy-group-modify>
+</netapp>

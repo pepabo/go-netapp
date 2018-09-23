@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100' xmlns='http://www.netapp.com/filer/admin'>
+
+    <!-- Output of qos-policy-group-get [Execution Time: 144 ms] -->
+	<results status='passed'>
+		<attributes>
+			<qos-policy-group-info>
+				<max-throughput>1000IOPS</max-throughput>
+				<num-workloads>1</num-workloads>
+				<pgid>12966</pgid>
+				<policy-group>qos-policy-test</policy-group>
+				<policy-group-class>user_defined</policy-group-class>
+				<uuid>9112f935-9b41-11e8-bf6a-00a0983afb38</uuid>
+				<vserver>test</vserver>
+			</qos-policy-group-info>
+		</attributes>
+	</results>
+</netapp>

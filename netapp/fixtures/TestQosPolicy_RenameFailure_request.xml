@@ -1,0 +1,6 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <qos-policy-group-rename>
+    <policy-group-name>qos-policy-rename-test-fail</policy-group-name>
+    <new-name>qos-policy-rename-test-fail-new</new-name>
+  </qos-policy-group-rename>
+</netapp>
