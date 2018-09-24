@@ -219,7 +219,7 @@ func (c *Client) NewRequest(method string, body interface{}) (*http.Request, err
 }
 
 func (c *Client) Do(req *http.Request, v interface{}) (*http.Response, error) {
-	resp, err := c.client.Do(req)
+	resp, err := checkResp(c.client.Do(req))
 	if err != nil {
 		return nil, err
 	}
@@ -240,4 +240,26 @@ func (c *Client) Do(req *http.Request, v interface{}) (*http.Response, error) {
 		}
 	}
 	return resp, err
+}
+
+// checkResp wraps an HTTP request from the default client and verifies that the
+// request was successful. A non-200 request returns an error formatted to
+// included any validation problems or otherwise.
+func checkResp(resp *http.Response, err error) (*http.Response, error) {
+	// If the err is already there, there was an error higher up the chain, so
+	// just return that.
+	if err != nil {
+		return resp, err
+	}
+
+	switch resp.StatusCode {
+	case 200, 201, 202, 204, 205, 206:
+		return resp, nil
+	default:
+		return resp, newHTTPError(resp)
+	}
+}
+
+func newHTTPError(resp *http.Response) error {
+	return fmt.Errorf("Http Error status %d, Message: %s", resp.StatusCode, resp.Body)
 }

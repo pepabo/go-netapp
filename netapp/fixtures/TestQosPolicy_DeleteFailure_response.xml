@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100' xmlns='http://www.netapp.com/filer/admin'>
+
+    <!-- Output of qos-policy-group-delete [Execution Time: 413 ms] -->
+	<results reason='Policy group could not be removed because there are still workloads associated with it.' errno='18337' status='failed'/>
+</netapp>

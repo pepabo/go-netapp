@@ -1,0 +1,7 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <qos-policy-group-create>
+    <max-throughput>3000iops</max-throughput>
+    <policy-group>qos-policy-create-test</policy-group>
+    <vserver>test-vserver</vserver>
+  </qos-policy-group-create>
+</netapp>

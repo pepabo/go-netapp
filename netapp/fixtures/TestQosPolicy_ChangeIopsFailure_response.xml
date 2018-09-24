@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100' xmlns='http://www.netapp.com/filer/admin'>
+
+    <!-- Output of qos-policy-group-modify [Execution Time: 602 ms] -->
+	<results reason='Invalid value specified for "max-throughput" element within "qos-policy-group-modify": "1000dalmations".' errno='13115' status='failed'/>
+</netapp>
