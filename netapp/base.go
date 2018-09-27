@@ -26,6 +26,14 @@ type SingleResultBase struct {
 	ErrorNo int    `xml:"errno,attr"`
 }
 
+// SingleResultResponse is used any time only pass/error is communted back to the client from the server
+type SingleResultResponse struct {
+	XMLName xml.Name `xml:"netapp"`
+	Results struct {
+		SingleResultBase
+	} `xml:"results"`
+}
+
 type AsyncResultBase struct {
 	ErrorCode    int    `xml:"result-error-code"`
 	ErrorMessage string `xml:"result-error-message"`
