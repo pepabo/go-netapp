@@ -6,6 +6,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"os"
+	"reflect"
 	"testing"
 
 	"github.com/andreyvit/diff"
@@ -19,7 +21,11 @@ func setup() (baseURL string, mux *http.ServeMux, teardownFn func()) {
 }
 
 func fixture(path string, t *testing.T) []byte {
-	b, err := ioutil.ReadFile("fixtures/" + path)
+	r, err := os.OpenFile("fixtures/"+path, os.O_RDONLY|os.O_CREATE, 0666)
+	if err != nil {
+		t.Fatal(err)
+	}
+	b, err := ioutil.ReadAll(r)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -52,4 +58,42 @@ func createTestClientWithFixtures(t *testing.T) (c *netapp.Client, teardownFn fu
 	c = netapp.NewClient(baseURL, "1.10", nil)
 
 	return c, teardown
+}
+
+func checkResponseSuccess(result *netapp.SingleResultBase, err error, t *testing.T) {
+	if err != nil {
+		t.Fatalf("Should not have gotten an error %s", err)
+	}
+
+	if !result.Passed() {
+		t.Fatalf("Got the failure response, expected success, reason: %s", result.Reason)
+	}
+}
+
+func checkResponseFailure(result *netapp.SingleResultBase, err error, t *testing.T) {
+	if err != nil {
+		t.Fatalf("Should not have gotten an error %s", err)
+	}
+
+	if result.Passed() {
+		t.Fatal("Got the successful response, expecting failure")
+	}
+}
+
+func testFailureResult(errorNo int, reason string, result *netapp.SingleResultBase, t *testing.T) {
+
+	if result.ErrorNo != errorNo {
+		t.Errorf("%s got = %+v, want %+v", t.Name(), result.ErrorNo, errorNo)
+	}
+
+	if result.Reason != reason {
+		t.Errorf("%s got = %+v, want %+v", t.Name(), result.Reason, reason)
+	}
+}
+
+// debugTableItems is used to get reflected vaules of 2 items so its easier to tell why reflect.DeepEqual() fails
+func debugItems(v1 interface{}, v2 interface{}) {
+	val1 := reflect.ValueOf(v1)
+	val2 := reflect.ValueOf(v2)
+	fmt.Printf("v1: %v, v2: %v", val1, val2)
 }
