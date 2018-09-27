@@ -1,0 +1,8 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin" vfiler="C666">
+  <nfs-service-create>
+    <is-nfs-access-enabled>true</is-nfs-access-enabled>
+    <is-nfsv3-enabled>true</is-nfsv3-enabled>
+    <is-nfsv40-enabled>true</is-nfsv40-enabled>
+    <is-vstorage-enabled>true</is-vstorage-enabled>
+  </nfs-service-create>
+</netapp>

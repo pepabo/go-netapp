@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100' xmlns='http://www.netapp.com/filer/admin'>
+
+    <!-- Output of vserver-create-async [Execution Time: 203 ms] -->
+	<results status='passed'>
+		<result>
+			<vserver-info>
+				<vserver-name>G554</vserver-name>
+			</vserver-info>
+		</result>
+		<result-jobid>27008</result-jobid>
+		<result-status>in_progress</result-status>
+	</results>
+</netapp>
+<?xml version="1.0" encoding="UTF-8"?>

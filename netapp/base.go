@@ -16,7 +16,7 @@ type Base struct {
 type ResultBase struct {
 	Status     string `xml:"status,attr"`
 	Reason     string `xml:"reason,attr"`
-	NumRecords int    `json:"num-records"`
+	NumRecords int    `xml:"num-records"`
 	ErrorNo    int    `xml:"errno,attr"`
 }
 
@@ -26,11 +26,23 @@ type SingleResultBase struct {
 	ErrorNo int    `xml:"errno,attr"`
 }
 
+type AsyncResultBase struct {
+	ErrorCode    int    `xml:"result-error-code"`
+	ErrorMessage string `xml:"result-error-message"`
+	JobID        int    `xml:"result-jobid"`
+	JobStatus    string `xml:"result-status"`
+	Status       string `xml:"status,attr"`
+}
+
 func (r *ResultBase) Passed() bool {
 	return r.Status == "passed"
 }
 
 func (r *SingleResultBase) Passed() bool {
+	return r.Status == "passed"
+}
+
+func (r *AsyncResultBase) Passed() bool {
 	return r.Status == "passed"
 }
 
