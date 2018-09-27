@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100' xmlns='http://www.netapp.com/filer/admin'>
+
+    <!-- Output of net-ipspaces-get [Execution Time: 248 ms] -->
+	<results status='passed'>
+		<broadcast-domains>
+			<broadcast-domain-name>test-net-ipspace</broadcast-domain-name>
+		</broadcast-domains>
+		<ports>
+			<net-qualified-port-name>lab-cluster01-02:a0a-3555</net-qualified-port-name>
+			<net-qualified-port-name>lab-cluster01-01:a0a-3555</net-qualified-port-name>
+		</ports>
+		<vservers>
+			<vserver-name>Test-Vserver</vserver-name>
+			<vserver-name>test-vserver</vserver-name>
+		</vservers>
+	</results>
+</netapp>

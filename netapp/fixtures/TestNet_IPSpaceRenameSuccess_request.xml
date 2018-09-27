@@ -1,0 +1,6 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <net-ipspaces-rename>
+    <ipspace>test-net-ipspace</ipspace>
+    <new-name>test-net-ipspace-new</new-name>
+  </net-ipspaces-rename>
+</netapp>

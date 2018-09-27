@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100' xmlns='http://www.netapp.com/filer/admin'>
+
+    <!-- Output of net-ipspaces-destroy [Execution Time: 144 ms] -->
+	<results reason='entry doesn"t exist' errno='15661' status='failed'/>
+</netapp>

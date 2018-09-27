@@ -1,0 +1,8 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin" vfiler="C666">
+  <net-routes-create>
+    <destination>0.0.0.0/0</destination>
+    <gateway>172.30.1.199</gateway>
+    <metric>20</metric>
+    <return-record>true</return-record>
+  </net-routes-create>
+</netapp>

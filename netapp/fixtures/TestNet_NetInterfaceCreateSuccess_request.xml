@@ -1,0 +1,15 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <net-interface-create>
+    <address>172.30.1.1</address>
+    <administrative-status>up</administrative-status>
+    <data-protocols>
+      <data-protocol>nfs</data-protocol>
+    </data-protocols>
+    <home-node>lab-cluster01-01</home-node>
+    <home-port>a0a-3666</home-port>
+    <interface-name>C666-v3666-1.1</interface-name>
+    <netmask>255.255.255.0</netmask>
+    <role>data</role>
+    <vserver>C666</vserver>
+  </net-interface-create>
+</netapp>

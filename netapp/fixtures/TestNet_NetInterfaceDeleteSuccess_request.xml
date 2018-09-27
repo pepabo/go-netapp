@@ -1,0 +1,6 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <net-interface-delete>
+    <interface-name>C666-v3666-1.1</interface-name>
+    <vserver>C666</vserver>
+  </net-interface-delete>
+</netapp>

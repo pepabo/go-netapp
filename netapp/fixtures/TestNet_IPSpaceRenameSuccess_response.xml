@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.110' xmlns='http://www.netapp.com/filer/admin'>
+
+    <!-- Output of net-ipspaces-rename [Execution Time: 318 ms] -->
+	<results status='passed'/>
+</netapp>

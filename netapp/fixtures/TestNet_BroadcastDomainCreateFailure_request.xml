@@ -1,0 +1,7 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <net-port-broadcast-domain-create>
+    <broadcast-domain>test-bcastdomain</broadcast-domain>
+    <ipspace>test-ip-space</ipspace>
+    <mtu>1500</mtu>
+  </net-port-broadcast-domain-create>
+</netapp>

@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100' xmlns='http://www.netapp.com/filer/admin'>
+
+    <!-- Output of net-port-broadcast-domain-create [Execution Time: 156 ms] -->
+	<results reason='Specified IPspace not found' errno='18603' status='failed'/>
+</netapp>

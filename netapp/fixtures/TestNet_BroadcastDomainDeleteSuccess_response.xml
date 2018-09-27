@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100' xmlns='http://www.netapp.com/filer/admin'>
+
+    <!-- Output of net-port-broadcast-domain-destroy [Execution Time: 156 ms] -->
+	<results status='passed'>
+		<port-update-status-combined>complete</port-update-status-combined>
+	</results>
+</netapp>
