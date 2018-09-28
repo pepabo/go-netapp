@@ -1,5 +1,4 @@
 dist: trusty
-sudo: false
 
 language: go
 
@@ -7,8 +6,16 @@ go:
   - "1.10"
   - "1.11"
 
+go_import_path: github.com/pepabo/go-netapp
+
+# Only build pull requests, pushes to the master branch, and branches
+# starting with `test-`. This is a convenient way to push branches to
+# your own fork of the repostiory to ensure Travis passes before submitting
+# a PR. For instance, you might run:
+# git push myremote branchname:test-branchname
 branches:
   only:
     - master
+    - /^test-.*$/
 
-script: go get -t ./netapp && go test ./netapp
+script: go test ./netapp

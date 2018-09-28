@@ -70,6 +70,18 @@ func checkResponseSuccess(result *netapp.SingleResultBase, err error, t *testing
 	}
 }
 
+
+func checkAsyncResponseSuccess(result *netapp.AsyncResultBase, err error, t *testing.T) {
+	if err != nil {
+		t.Fatalf("Async Response should not have gotten an error %s", err)
+	}
+
+	if !result.Passed() {
+		t.Fatalf("Async Response expected success got failure, reason: %s", result.ErrorMessage)
+	}
+}
+
+
 func checkResponseFailure(result *netapp.SingleResultBase, err error, t *testing.T) {
 	if err != nil {
 		t.Fatalf("Should not have gotten an error %s", err)
