@@ -61,7 +61,7 @@ func TestSnapmirror_InitializeLSSetSuccess(t *testing.T) {
 	defer teardown()
 
 	call, _, err := c.Snapmirror.InitializeLSSet("C666", "C666:c666_root")
-	checkAsyncResponseSuccess(&call.Results.AsyncResultBase, err, t)
+	checkResponseSuccess(&call.Results.AsyncResultBase, err, t)
 
 	job := call.Results.AsyncResultBase
 	expectedJob := 27167
@@ -79,7 +79,7 @@ func TestSnapmirror_UpdateLSSetSuccess(t *testing.T) {
 	defer teardown()
 
 	call, _, err := c.Snapmirror.UpdateLSSet("C666", "C666:c666_root")
-	checkAsyncResponseSuccess(&call.Results.AsyncResultBase, err, t)
+	checkResponseSuccess(&call.Results.AsyncResultBase, err, t)
 
 	job := call.Results.AsyncResultBase
 	expectedJob := 27168
