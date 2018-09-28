@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100' xmlns='http://www.netapp.com/filer/admin'>
+
+    <!-- Output of vserver-get [Execution Time: 245 ms] -->
+	<results status='passed'>
+		<attributes>
+			<vserver-info>
+				<aggr-list>
+					<aggr-name>aggr0_root_cluster01_01</aggr-name>
+					<aggr-name>aggr0_root_cluster01_02</aggr-name>
+					<aggr-name>n01_aggrfp_sas01</aggr-name>
+					<aggr-name>n02_aggr_sata01</aggr-name>
+				</aggr-list>
+				<allowed-protocols>
+					<protocol>nfs</protocol>
+				</allowed-protocols>
+				<antivirus-on-access-policy>default</antivirus-on-access-policy>
+				<comment/>
+				<disallowed-protocols>
+					<protocol>cifs</protocol>
+					<protocol>fcp</protocol>
+					<protocol>iscsi</protocol>
+					<protocol>ndmp</protocol>
+				</disallowed-protocols>
+				<ipspace>g555</ipspace>
+				<is-config-locked-for-changes>false</is-config-locked-for-changes>
+				<is-repository-vserver>false</is-repository-vserver>
+				<language>c.utf_8</language>
+				<max-volumes>unlimited</max-volumes>
+				<name-mapping-switch>
+					<nmswitch>file</nmswitch>
+				</name-mapping-switch>
+				<name-server-switch>
+					<nsswitch>file</nsswitch>
+				</name-server-switch>
+				<operational-state>running</operational-state>
+				<quota-policy>default</quota-policy>
+				<root-volume>g555_root</root-volume>
+				<root-volume-aggregate>n01_aggrfp_sas01</root-volume-aggregate>
+				<root-volume-security-style>unix</root-volume-security-style>
+				<snapshot-policy>none</snapshot-policy>
+				<state>running</state>
+				<uuid>48fc46c1-9b2e-11e8-bf6a-00a0983afb38</uuid>
+				<volume-delete-retention-hours>0</volume-delete-retention-hours>
+				<vserver-aggr-info-list>
+					<vserver-aggr-info>
+						<aggr-availsize>18352828416</aggr-availsize>
+						<aggr-is-cft-precommit>false</aggr-is-cft-precommit>
+						<aggr-name>aggr0_root_cluster01_01</aggr-name>
+					</vserver-aggr-info>
+					<vserver-aggr-info>
+						<aggr-availsize>74439512064</aggr-availsize>
+						<aggr-is-cft-precommit>false</aggr-is-cft-precommit>
+						<aggr-name>aggr0_root_cluster01_02</aggr-name>
+					</vserver-aggr-info>
+					<vserver-aggr-info>
+						<aggr-availsize>4775117905920</aggr-availsize>
+						<aggr-is-cft-precommit>false</aggr-is-cft-precommit>
+						<aggr-name>n01_aggrfp_sas01</aggr-name>
+					</vserver-aggr-info>
+					<vserver-aggr-info>
+						<aggr-availsize>9783342731264</aggr-availsize>
+						<aggr-is-cft-precommit>false</aggr-is-cft-precommit>
+						<aggr-name>n02_aggr_sata01</aggr-name>
+					</vserver-aggr-info>
+				</vserver-aggr-info-list>
+				<vserver-name>G555</vserver-name>
+				<vserver-subtype>default</vserver-subtype>
+				<vserver-type>data</vserver-type>
+			</vserver-info>
+		</attributes>
+	</results>
+</netapp>

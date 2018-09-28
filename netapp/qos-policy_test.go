@@ -6,38 +6,6 @@ import (
 	"github.com/pepabo/go-netapp/netapp"
 )
 
-func checkResponseSuccess(result *netapp.SingleResultBase, err error, t *testing.T) {
-
-	if err != nil {
-		t.Fatalf("Should not have gotten an error %s", err)
-	}
-
-	if !result.Passed() {
-		t.Fatalf("Got the failure response, expected success, reason: %s", result.Reason)
-	}
-}
-
-func checkResponseFailure(result *netapp.SingleResultBase, err error, t *testing.T) {
-	if err != nil {
-		t.Fatalf("Should not have gotten an error %s", err)
-	}
-
-	if result.Passed() {
-		t.Fatal("Got the successful response, expecting failure")
-	}
-}
-
-func testFailureResult(errorNo int, reason string, result *netapp.SingleResultBase, t *testing.T) {
-
-	if result.ErrorNo != errorNo {
-		t.Errorf("%s got = %+v, want %+v", t.Name(), result.ErrorNo, errorNo)
-	}
-
-	if result.Reason != reason {
-		t.Errorf("%s got = %+v, want %+v", t.Name(), result.Reason, reason)
-	}
-}
-
 func TestQosPolicy_GetSuccess(t *testing.T) {
 	c, teardown := createTestClientWithFixtures(t)
 	defer teardown()

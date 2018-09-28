@@ -1,0 +1,12 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <vserver-create-async>
+    <ipspace>g554</ipspace>
+    <snapshot-policy>none</snapshot-policy>
+    <vserver-name>G554</vserver-name>
+    <language>C.UTF-8</language>
+    <root-volume>g554_root</root-volume>
+    <root-volume-aggregate>test_aggr_01</root-volume-aggregate>
+    <root-volume-security-style>unix</root-volume-security-style>
+    <vserver-subtype>default</vserver-subtype>
+  </vserver-create-async>
+</netapp>
