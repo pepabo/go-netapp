@@ -1,0 +1,13 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin" vfiler="C666">
+  <snapmirror-get>
+    <desired-attributes>
+      <snapmirror-info>
+        <is-healthy>true</is-healthy>
+        <relationship-type> </relationship-type>
+        <vserver> </vserver>
+      </snapmirror-info>
+    </desired-attributes>
+    <destination-location>C666:c666_root_m1</destination-location>
+    <source-location>C666:c666_root</source-location>
+  </snapmirror-get>
+</netapp>

@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100' xmlns='http://www.netapp.com/filer/admin'>
+
+    <!-- Output of snapmirror-update-ls-set [Execution Time: 426 ms] -->
+	<results status='passed'>
+		<result-jobid>27168</result-jobid>
+		<result-status>in_progress</result-status>
+	</results>
+</netapp>

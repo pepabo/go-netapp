@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100' xmlns='http://www.netapp.com/filer/admin'>
+
+    <!-- Output of snapmirror-create [Execution Time: 1929 ms] -->
+	<results status='passed'/>
+</netapp>

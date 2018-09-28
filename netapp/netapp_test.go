@@ -60,7 +60,7 @@ func createTestClientWithFixtures(t *testing.T) (c *netapp.Client, teardownFn fu
 
 func checkResponseSuccess(result netapp.Result, err error, t *testing.T) {
 	if err != nil {
-		t.Fatalf("Should not have gotten an error %s", err)
+		t.Fatalf("Should not have gotten an error: '%s'", err)
 	}
 
 	if !result.Passed() {
