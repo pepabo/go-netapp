@@ -47,8 +47,6 @@ func createTestClientWithFixtures(t *testing.T) (c *netapp.Client, teardownFn fu
 
 		if !bytes.Equal(bs, requestFixture) {
 			t.Errorf("%s: result not as expected:\n%v", t.Name(), diff.LineDiff(string(requestFixture), string(bs)))
-			w.WriteHeader(http.StatusServiceUnavailable)
-			return
 		}
 
 		w.WriteHeader(http.StatusOK)
@@ -60,29 +58,17 @@ func createTestClientWithFixtures(t *testing.T) (c *netapp.Client, teardownFn fu
 	return c, teardown
 }
 
-func checkResponseSuccess(result *netapp.SingleResultBase, err error, t *testing.T) {
+func checkResponseSuccess(result netapp.Result, err error, t *testing.T) {
 	if err != nil {
 		t.Fatalf("Should not have gotten an error %s", err)
 	}
 
 	if !result.Passed() {
-		t.Fatalf("Got the failure response, expected success, reason: %s", result.Reason)
+		t.Fatalf("Got the failure response, expected success, reason: %s", result.Result().Reason)
 	}
 }
 
-
-func checkAsyncResponseSuccess(result *netapp.AsyncResultBase, err error, t *testing.T) {
-	if err != nil {
-		t.Fatalf("Async Response should not have gotten an error %s", err)
-	}
-
-	if !result.Passed() {
-		t.Fatalf("Async Response expected success got failure, reason: %s", result.ErrorMessage)
-	}
-}
-
-
-func checkResponseFailure(result *netapp.SingleResultBase, err error, t *testing.T) {
+func checkResponseFailure(result netapp.Result, err error, t *testing.T) {
 	if err != nil {
 		t.Fatalf("Should not have gotten an error %s", err)
 	}

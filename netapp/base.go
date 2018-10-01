@@ -13,6 +13,11 @@ type Base struct {
 	client  *Client
 }
 
+type Result interface {
+	Passed() bool
+	Result() *SingleResultBase
+}
+
 type ResultBase struct {
 	Status     string `xml:"status,attr"`
 	Reason     string `xml:"reason,attr"`
@@ -46,12 +51,32 @@ func (r *ResultBase) Passed() bool {
 	return r.Status == "passed"
 }
 
+func (r *ResultBase) Result() *SingleResultBase {
+	return &SingleResultBase{
+		Status:  r.Status,
+		Reason:  r.Reason,
+		ErrorNo: r.ErrorNo,
+	}
+}
+
 func (r *SingleResultBase) Passed() bool {
 	return r.Status == "passed"
 }
 
+func (r *SingleResultBase) Result() *SingleResultBase {
+	return r
+}
+
 func (r *AsyncResultBase) Passed() bool {
 	return r.Status == "passed"
+}
+
+func (r *AsyncResultBase) Result() *SingleResultBase {
+	return &SingleResultBase{
+		Status:  r.Status,
+		Reason:  r.ErrorMessage,
+		ErrorNo: r.ErrorCode,
+	}
 }
 
 func (b *Base) get(base interface{}, r interface{}) (*http.Response, error) {
