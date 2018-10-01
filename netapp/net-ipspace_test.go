@@ -15,7 +15,7 @@ func TestNet_IPSpaceCreateSuccess(t *testing.T) {
 	checkResponseSuccess(&call.Results.SingleResultBase, err, t)
 
 	info := call.Results.NetIPSpaceCreateInfo
-	var nilSlice []string
+	var nilSlice *[]string
 	tests := []struct {
 		name string
 		got  interface{}
@@ -26,7 +26,7 @@ func TestNet_IPSpaceCreateSuccess(t *testing.T) {
 		{"IP Space", info.IPSpace, "test-ip-space"},
 		{"Ports", info.Ports, nilSlice},
 		{"UUID", info.UUID, "af9fa457-c02d-11e8-bf6a-00a0983afb38"},
-		{"VServers", info.VServers, []string{"test-ip-space"}},
+		{"VServers", info.VServers, &[]string{"test-ip-space"}},
 	}
 
 	for _, tt := range tests {
@@ -64,9 +64,9 @@ func TestNet_IPSpaceGetSuccess(t *testing.T) {
 		got  interface{}
 		want interface{}
 	}{
-		{"Broadcast Domains", info.BroadcastDomains, []string{"test-net-ipspace"}},
-		{"Ports", info.Ports, []string{"lab-cluster01-02:a0a-3555", "lab-cluster01-01:a0a-3555"}},
-		{"VServers", info.VServers, []string{"Test-Vserver", "test-vserver"}},
+		{"Broadcast Domains", info.BroadcastDomains, &[]string{"test-net-ipspace"}},
+		{"Ports", info.Ports, &[]string{"lab-cluster01-02:a0a-3555", "lab-cluster01-01:a0a-3555"}},
+		{"VServers", info.VServers, &[]string{"Test-Vserver", "test-vserver"}},
 		{"Create Info is empty", call.Results.NetIPSpaceCreateInfo, createInfo},
 	}
 
@@ -74,6 +74,38 @@ func TestNet_IPSpaceGetSuccess(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if !reflect.DeepEqual(tt.got, tt.want) {
 				t.Errorf("Net.GetIPSpace() got = %+v, want %+v", tt.got, tt.want)
+			}
+		})
+	}
+}
+
+func TestNet_IPSpaceListSuccess(t *testing.T) {
+	c, teardown := createTestClientWithFixtures(t)
+	defer teardown()
+
+	query := &netapp.NetIPSpaceInfo{
+		IPSpace: "c666",
+	}
+	call, _, err := c.Net.ListIPSpaces(query)
+	checkResponseSuccess(&call.Results.ResultBase, err, t)
+
+	info := call.Results.Info[0]
+	tests := []struct {
+		name string
+		got  interface{}
+		want interface{}
+	}{
+		{"UUID", info.UUID, "c61db834-9a57-11e8-bf6a-00a0983afb38"},
+		{"ID", info.ID, 25},
+		{"Broadcast Domains", info.BroadcastDomains, &[]string{"test-net-ipspace"}},
+		{"Ports", info.Ports, &[]string{"lab-cluster01-02:a0a-3666", "lab-cluster01-01:a0a-3666"}},
+		{"VServers", info.VServers, &[]string{"C666", "c666"}},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if !reflect.DeepEqual(tt.got, tt.want) {
+				t.Errorf("Net.ListIPSpaces() got = %+v, want %+v", tt.got, tt.want)
 			}
 		})
 	}

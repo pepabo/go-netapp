@@ -13,6 +13,21 @@ type netIPSpaceRequest struct {
 	DeleteParams *netIPSpaceGetParams    `xml:"net-ipspaces-destroy,omitempty"`
 }
 
+type netIPSpaceListRequest struct {
+	Base
+	Params struct {
+		XMLName xml.Name
+		NetIPSpaceOptions
+	}
+}
+
+type NetIPSpaceOptions struct {
+	DesiredAttributes *NetIPSpaceInfo `xml:"desired-attributes>net-ip-spaces-info,omitempty"`
+	MaxRecords        int             `xml:"max-records,omitempty"`
+	Query             *NetIPSpaceInfo `xml:"query>net-ipspaces-info,omitempty"`
+	Tag               string          `xml:"tag,omitempty"`
+}
+
 type netIPSpaceCreateParams struct {
 	IPSpace      string `xml:"ipspace"`
 	ReturnRecord bool   `xml:"return-record"`
@@ -29,12 +44,12 @@ type netIPSpaceRenameParams struct {
 
 // NetIPSpaceInfo holds newly created ipspace variables
 type NetIPSpaceInfo struct {
-	BroadcastDomains []string `xml:"broadcast-domains>broadcast-domain-name,omitempty"`
-	ID               int      `xml:"id"`
-	IPSpace          string   `xml:"ipspace"`
-	Ports            []string `xml:"ports>net-qualified-port-name,omitempty"`
-	UUID             string   `xml:"uuid"`
-	VServers         []string `xml:"vservers>vserver-name"`
+	BroadcastDomains *[]string `xml:"broadcast-domains>broadcast-domain-name,omitempty"`
+	ID               int       `xml:"id,omitempty"`
+	IPSpace          string    `xml:"ipspace,omitempty"`
+	Ports            *[]string `xml:"ports>net-qualified-port-name,omitempty"`
+	UUID             string    `xml:"uuid,omitempty"`
+	VServers         *[]string `xml:"vservers>vserver-name,omitempty"`
 }
 
 // NetIPSpaceResponse is return type for net ip space requests
@@ -44,6 +59,15 @@ type NetIPSpaceResponse struct {
 		SingleResultBase
 		NetIPSpaceInfo       `xml:",innerxml"`
 		NetIPSpaceCreateInfo *NetIPSpaceInfo `xml:"result>net-ipspaces-info"`
+	} `xml:"results"`
+}
+
+type NetIPSpaceListResponse struct {
+	XMLName xml.Name `xml:"netapp"`
+	Results struct {
+		ResultBase
+		Info       []NetIPSpaceInfo `xml:"attributes-list>net-ipspaces-info"`
+		NumRecords string           `xml:"num-records"`
 	} `xml:"results"`
 }
 
@@ -65,6 +89,19 @@ func (n Net) GetIPSpace(name string) (*NetIPSpaceResponse, *http.Response, error
 	}
 
 	return n.newNetIPSpaceResponse(req)
+}
+
+func (n Net) ListIPSpaces(query *NetIPSpaceInfo) (*NetIPSpaceListResponse, *http.Response, error) {
+	req := &netIPSpaceListRequest{
+		Base: n.Base,
+	}
+	req.Params.XMLName = xml.Name{Local: "net-ipspaces-get-iter"}
+	req.Params.MaxRecords = 20
+	req.Params.NetIPSpaceOptions.Query = query
+
+	r := NetIPSpaceListResponse{}
+	res, err := n.get(req, &r)
+	return &r, res, err
 }
 
 // RenameIPSpace changes the name of an ipspace

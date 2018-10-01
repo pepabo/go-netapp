@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100'
+  xmlns='http://www.netapp.com/filer/admin'>
+
+  <!-- Output of net-ipspaces-get-iter [Execution Time: 233 ms] -->
+  <results status='passed'>
+    <attributes-list>
+      <net-ipspaces-info>
+        <broadcast-domains>
+          <broadcast-domain-name>test-net-ipspace</broadcast-domain-name>
+        </broadcast-domains>
+        <id>25</id>
+        <ipspace>c666</ipspace>
+        <ports>
+          <net-qualified-port-name>lab-cluster01-02:a0a-3666</net-qualified-port-name>
+          <net-qualified-port-name>lab-cluster01-01:a0a-3666</net-qualified-port-name>
+        </ports>
+        <uuid>c61db834-9a57-11e8-bf6a-00a0983afb38</uuid>
+        <vservers>
+          <vserver-name>C666</vserver-name>
+          <vserver-name>c666</vserver-name>
+        </vservers>
+      </net-ipspaces-info>
+    </attributes-list>
+    <num-records>1</num-records>
+  </results>
+</netapp>
