@@ -80,11 +80,9 @@ type NodeDetailsResponse struct {
 	XMLName xml.Name `xml:"netapp"`
 	Results struct {
 		ResultBase
-		AttributesList struct {
-			NodeDetails []NodeDetails `xml:"node-details-info"`
-		} `xml:"attributes-list"`
-		NextTag    string `xml:"next-tag"`
-		NumRecords int    `xml:"num-records"`
+		NodeDetails []NodeDetails `xml:"attributes-list>node-details-info"`
+		NextTag     string        `xml:"next-tag"`
+		NumRecords  int           `xml:"num-records"`
 	} `xml:"results"`
 }
 

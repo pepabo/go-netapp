@@ -13,11 +13,39 @@ type Job struct {
 	}
 }
 
+type jobHistoryRequest struct {
+	Base
+	History *JobHistoryOptions `xml:"job-history-get-iter"`
+}
+
 type JobOptions struct {
 	DesiredAttributes *JobEntry `xml:"desired-attributes,omitempty"`
 	MaxRecords        int       `xml:"max-records,omitempty"`
 	Tag               string    `xml:"tag,omitempty"`
 	*JobEntry
+}
+
+type JobHistoryOptions struct {
+	Query      *JobHistoryInfo `xml:"query>job-history-info,omitempty"`
+	MaxRecords int             `xml:"max-records,omitempty"`
+	Tag        string          `xml:"tag,omitempty"`
+}
+
+type JobHistoryInfo struct {
+	JobCompletion  string `xml:"job-completion,omitempty"`
+	JobDescription string `xml:"job-description,omitempty"`
+	JobEndTime     int    `xml:"job-end-time,omitempty"`
+	JobEventTime   int    `xml:"job-event-time,omitempty"`
+	JobEventType   string `xml:"job-event-type,omitempty"`
+	JobID          int    `xml:"job-id,omitempty"`
+	JobName        string `xml:"job-name,omitempty"`
+	JobNode        string `xml:"job-node,omitempty"`
+	JobStartTime   int    `xml:"job-start-time,omitempty"`
+	JobStatusCode  int    `xml:"job-status-code,omitempty"`
+	JobUsername    string `xml:"job-username,omitempty"`
+	JobUUID        string `xml:"job-uuid,omitempty"`
+	JobVServer     string `xml:"job-vserver,omitempty"`
+	LogID          int    `xml:"log-id,omitempty"`
 }
 
 type JobResponse struct {
@@ -56,6 +84,15 @@ type JobEntry struct {
 	ID int `xml:"job-id"`
 }
 
+type JobListResponse struct {
+	XMLName xml.Name `xml:"netapp"`
+	Results struct {
+		ResultBase
+		HistoryInfo []JobHistoryInfo `xml:"attributes-list>job-history-info"`
+		NumRecords  int              `xml:"num-records"`
+	} `xml:"results"`
+}
+
 func (j *JobResponse) JobState() string {
 	return j.Results.Attributes.JobInfo.JobState
 }
@@ -77,4 +114,15 @@ func (q *Job) Get(vserverName string, id int, options *JobOptions) (*JobResponse
 	r := JobResponse{}
 	res, err := q.get(q, &r)
 	return &r, res, err
+}
+
+func (j Job) GetHistory(options *JobHistoryOptions) (*JobListResponse, *http.Response, error) {
+	h := &jobHistoryRequest{
+		Base:    j.Base,
+		History: options,
+	}
+	r := JobListResponse{}
+	res, err := j.get(h, &r)
+	return &r, res, err
+
 }

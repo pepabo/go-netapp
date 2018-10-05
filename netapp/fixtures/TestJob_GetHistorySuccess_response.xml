@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100'
+  xmlns='http://www.netapp.com/filer/admin'>
+
+  <!-- Output of job-history-get-iter [Execution Time: 209 ms] -->
+  <results status='passed'>
+    <attributes-list>
+      <job-history-info>
+        <job-completion>
+Vserver creation completed</job-completion>
+        <job-description>Create Vserver T100</job-description>
+        <job-end-time>1538762631</job-end-time>
+        <job-event-time>1538762631</job-event-time>
+        <job-event-type>succeeded</job-event-type>
+        <job-id>27292</job-id>
+        <job-name>Vserver Create </job-name>
+        <job-node>test-cluster01-02</job-node>
+        <job-start-time>1538762626</job-start-time>
+        <job-status-code>0</job-status-code>
+        <job-username>swautomation</job-username>
+        <job-uuid>0106994d-c8c9-11e8-a192-00a0983afb00</job-uuid>
+        <job-vserver>test-cluster01</job-vserver>
+        <log-id>1158775</log-id>
+      </job-history-info>
+      <job-history-info>
+        <job-description>Create Vserver T100</job-description>
+        <job-event-time>1538762626</job-event-time>
+        <job-event-type>running</job-event-type>
+        <job-id>27292</job-id>
+        <job-name>Vserver Create </job-name>
+        <job-node>test-cluster01-02</job-node>
+        <job-status-code>0</job-status-code>
+        <job-username>swautomation</job-username>
+        <job-uuid>0106994d-c8c9-11e8-a192-00a0983afb00</job-uuid>
+        <job-vserver>test-cluster01</job-vserver>
+        <log-id>1158774</log-id>
+      </job-history-info>
+    </attributes-list>
+    <num-records>2</num-records>
+  </results>
+</netapp>
