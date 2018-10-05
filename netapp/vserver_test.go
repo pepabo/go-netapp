@@ -116,3 +116,11 @@ func TestVServer_CreateFailure(t *testing.T) {
 
 	testFailureResult(1017, `Ipspace "test" does not exist.`, results, t)
 }
+
+func TestVServer_DeleteSuccess(t *testing.T) {
+	c, teardown := createTestClientWithFixtures(t)
+	defer teardown()
+
+	call, _, err := c.VServer.Delete("T100")
+	checkResponseSuccess(&call.Results.ResultBase, err, t)
+}
