@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE netapp SYSTEM 'file:/etc/netapp_gx.dtd'>
+<netapp version='1.100'
+  xmlns='http://www.netapp.com/filer/admin'>
+  <results reason="Ipspace &quot;test&quot; does not exist." status="failed" errno="1017"/>
+</netapp>

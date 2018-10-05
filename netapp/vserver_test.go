@@ -1,6 +1,7 @@
 package netapp_test
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 
@@ -93,4 +94,25 @@ func TestVServer_CreateSuccess(t *testing.T) {
 	if info.VserverName != vserverSettings.VserverName {
 		t.Errorf("Incorrect VServer name. Expected %s, got %s", vserverSettings.VserverName, info.VserverName)
 	}
+}
+
+func TestVServer_CreateFailure(t *testing.T) {
+	c, teardown := createTestClientWithFixtures(t)
+	defer teardown()
+
+	opts := &netapp.VServerInfo{
+		VserverName:             "TEST",
+		Ipspace:                 "test",
+		RootVolume:              fmt.Sprintf("%s_root", "TEST"),
+		RootVolumeAggregate:     "aggregate",
+		RootVolumeSecurityStyle: "unix",
+		SnapshotPolicy:          "none",
+	}
+
+	call, _, err := c.VServer.Create(opts)
+
+	results := &call.Results.AsyncResultBase
+	checkResponseFailure(results, err, t)
+
+	testFailureResult(1017, `Ipspace "test" does not exist.`, results, t)
 }
