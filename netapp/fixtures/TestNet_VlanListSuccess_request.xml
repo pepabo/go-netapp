@@ -1,0 +1,11 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <net-vlan-get-iter>
+    <max-records>20</max-records>
+    <query>
+      <vlan-info>
+        <parent-interface>a0a</parent-interface>
+        <vlanid>3555</vlanid>
+      </vlan-info>
+    </query>
+  </net-vlan-get-iter>
+</netapp>

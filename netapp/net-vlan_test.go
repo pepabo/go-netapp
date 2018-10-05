@@ -47,6 +47,38 @@ func TestNet_VlanGetFailure(t *testing.T) {
 	testFailureResult(13115, `Invalid value specified for "node" element within "net-vlan-get": "test-cluster-01-01".`, results, t)
 }
 
+func TestNet_VlanListSuccess(t *testing.T) {
+	c, teardown := createTestClientWithFixtures(t)
+	defer teardown()
+
+	options := &netapp.NetVlanInfo{
+		ParentInterface: "a0a",
+		VlanID:          3555,
+	}
+	call, _, err := c.Net.ListVlans(options)
+	checkResponseSuccess(&call.Results.ResultBase, err, t)
+
+	info := call.Results.Info[0]
+	tests := []struct {
+		name string
+		got  interface{}
+		want interface{}
+	}{
+		{"Interface Name", info.InterfaceName, "a0a-3555"},
+		{"Node", info.Node, "test-cluster-01-01"},
+		{"Parent Interface", info.ParentInterface, "a0a"},
+		{"VLanID", info.VlanID, 3555},
+		{"Port String", info.ToString(), "test-cluster-01-01:a0a-3555"},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if !reflect.DeepEqual(tt.got, tt.want) {
+				t.Errorf("Net.GetVlan() got = %+v, want %+v", tt.got, tt.want)
+			}
+		})
+	}
+}
 func TestNet_VlanCreateSuccess(t *testing.T) {
 	c, teardown := createTestClientWithFixtures(t)
 	defer teardown()
