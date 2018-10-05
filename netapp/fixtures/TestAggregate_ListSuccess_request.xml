@@ -1,0 +1,12 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <aggr-get-iter>
+    <max-records>20</max-records>
+    <query>
+      <aggr-attributes>
+        <aggr-raid-attributes>
+          <is-root-aggregate>false</is-root-aggregate>
+        </aggr-raid-attributes>
+      </aggr-attributes>
+    </query>
+  </aggr-get-iter>
+</netapp>
