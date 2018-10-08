@@ -1,0 +1,9 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <net-vlan-delete>
+    <vlan-info>
+      <node>test-cluster-01-01</node>
+      <parent-interface>a0a</parent-interface>
+      <vlanid>3555</vlanid>
+    </vlan-info>
+  </net-vlan-delete>
+</netapp>

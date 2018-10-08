@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100' xmlns='http://www.netapp.com/filer/admin'>
+
+    <!-- Output of net-vlan-get [Execution Time: 150 ms] -->
+	<results reason='Invalid value specified for "node" element within "net-vlan-get": "test-cluster-01-01".' errno='13115' status='failed'/>
+</netapp>

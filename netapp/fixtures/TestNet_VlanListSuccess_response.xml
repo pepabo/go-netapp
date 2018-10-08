@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100'
+  xmlns='http://www.netapp.com/filer/admin'>
+
+  <!-- Output of net-vlan-get-iter [Execution Time: 299 ms] -->
+  <results status='passed'>
+    <attributes-list>
+      <vlan-info>
+        <interface-name>a0a-3555</interface-name>
+        <node>test-cluster-01-01</node>
+        <parent-interface>a0a</parent-interface>
+        <vlanid>3555</vlanid>
+      </vlan-info>
+      <vlan-info>
+        <interface-name>a0a-3555</interface-name>
+        <node>test-cluster-01-02</node>
+        <parent-interface>a0a</parent-interface>
+        <vlanid>3555</vlanid>
+      </vlan-info>
+    </attributes-list>
+    <num-records>2</num-records>
+  </results>
+</netapp>

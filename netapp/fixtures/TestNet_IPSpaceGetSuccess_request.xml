@@ -1,0 +1,5 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <net-ipspaces-get>
+    <ipspace>test-net-ipspace</ipspace>
+  </net-ipspaces-get>
+</netapp>

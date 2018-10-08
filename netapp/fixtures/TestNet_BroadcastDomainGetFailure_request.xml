@@ -1,0 +1,6 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <net-port-broadcast-domain-get>
+    <broadcast-domain>other-bdomain</broadcast-domain>
+    <ipspace>test-ip-space</ipspace>
+  </net-port-broadcast-domain-get>
+</netapp>

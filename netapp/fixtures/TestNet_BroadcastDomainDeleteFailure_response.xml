@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100' xmlns='http://www.netapp.com/filer/admin'>
+
+    <!-- Output of net-port-broadcast-domain-destroy [Execution Time: 246 ms] -->
+	<results reason='Broadcast domain "test-bcastdomain" in IPspace "test-ip-space" not found.' errno='18604' status='failed'/>
+</netapp>

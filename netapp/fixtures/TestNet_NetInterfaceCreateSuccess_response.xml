@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100' xmlns='http://www.netapp.com/filer/admin'>
+
+    <!-- Output of net-interface-create [Execution Time: 345 ms] -->
+	<results status='passed'/>
+</netapp>

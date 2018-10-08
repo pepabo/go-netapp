@@ -1,0 +1,6 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <net-ipspaces-create>
+    <ipspace>test-ip-space</ipspace>
+    <return-record>true</return-record>
+  </net-ipspaces-create>
+</netapp>

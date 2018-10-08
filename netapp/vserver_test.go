@@ -81,7 +81,7 @@ func TestVServer_CreateSuccess(t *testing.T) {
 	}
 
 	call, _, err := c.VServer.Create(vserverSettings)
-	checkAsyncResponseSuccess(&call.Results.AsyncResultBase, err, t)
+	checkResponseSuccess(&call.Results.AsyncResultBase, err, t)
 
 	info := call.Results.VServerInfo
 	job := call.Results.AsyncResultBase

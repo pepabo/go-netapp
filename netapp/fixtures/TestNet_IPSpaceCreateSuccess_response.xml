@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100' xmlns='http://www.netapp.com/filer/admin'>
+
+    <!-- Output of net-ipspaces-create [Execution Time: 328 ms] -->
+	<results status='passed'>
+		<result>
+			<net-ipspaces-info>
+				<id>39</id>
+				<ipspace>test-ip-space</ipspace>
+				<uuid>af9fa457-c02d-11e8-bf6a-00a0983afb38</uuid>
+				<vservers>
+					<vserver-name>test-ip-space</vserver-name>
+				</vservers>
+			</net-ipspaces-info>
+		</result>
+	</results>
+</netapp>

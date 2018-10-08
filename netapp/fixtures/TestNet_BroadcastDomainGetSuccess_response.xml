@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100' xmlns='http://www.netapp.com/filer/admin'>
+
+    <!-- Output of net-port-broadcast-domain-get [Execution Time: 271 ms] -->
+	<results status='passed'>
+		<attributes>
+			<net-port-broadcast-domain-info>
+				<broadcast-domain>test-bdomain</broadcast-domain>
+				<failover-groups>
+					<failover-group>test-bdomain</failover-group>
+				</failover-groups>
+				<ipspace>test-net-ipspace</ipspace>
+				<mtu>1500</mtu>
+				<port-update-status-combined>complete</port-update-status-combined>
+				<ports>
+					<port-info>
+						<port>lab-cluster01-02:a0a-3555</port>
+						<port-update-status>complete</port-update-status>
+						<port-update-status-details>complete</port-update-status-details>
+					</port-info>
+					<port-info>
+						<port>lab-cluster01-01:a0a-3555</port>
+						<port-update-status>complete</port-update-status>
+						<port-update-status-details>complete</port-update-status-details>
+					</port-info>
+				</ports>
+			</net-port-broadcast-domain-info>
+		</attributes>
+	</results>
+</netapp>

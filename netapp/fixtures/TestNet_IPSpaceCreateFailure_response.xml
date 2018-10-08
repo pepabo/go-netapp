@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100' xmlns='http://www.netapp.com/filer/admin'>
+
+    <!-- Output of net-ipspaces-create [Execution Time: 167 ms] -->
+	<results reason='Invalid IPspace name. The name "test-ip-space" is already in use by a cluster node, Vserver, or is the name of the local cluster.' errno='13001' status='failed'/>
+</netapp>

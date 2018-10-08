@@ -1,0 +1,5 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <net-ipspaces-destroy>
+    <ipspace>test-net-ipspace-new</ipspace>
+  </net-ipspaces-destroy>
+</netapp>

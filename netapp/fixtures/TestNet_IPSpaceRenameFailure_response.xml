@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+	<netapp version='1.100' xmlns='http://www.netapp.com/filer/admin'>
+
+		<!-- Output of net-ipspaces-rename [Execution Time: 161 ms] -->
+		<results reason='IPspace test-net-ipspace does not exist.' errno='13001' status='failed'/>
+	</netapp>
