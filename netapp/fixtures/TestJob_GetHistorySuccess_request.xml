@@ -1,0 +1,10 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <job-history-get-iter>
+    <query>
+      <job-history-info>
+        <job-id>27292</job-id>
+      </job-history-info>
+    </query>
+    <max-records>20</max-records>
+  </job-history-get-iter>
+</netapp>
