@@ -78,14 +78,14 @@ func checkResponseFailure(result netapp.Result, err error, t *testing.T) {
 	}
 }
 
-func testFailureResult(errorNo int, reason string, result *netapp.SingleResultBase, t *testing.T) {
-
+func testFailureResult(errorNo int, expectedReason string, r netapp.Result, t *testing.T) {
+	result := r.Result()
 	if result.ErrorNo != errorNo {
 		t.Errorf("%s got = %+v, want %+v", t.Name(), result.ErrorNo, errorNo)
 	}
 
-	if result.Reason != reason {
-		t.Errorf("%s got = %+v, want %+v", t.Name(), result.Reason, reason)
+	if result.Reason != expectedReason {
+		t.Errorf("%s got = %+v, want %+v", t.Name(), result.Reason, expectedReason)
 	}
 }
 

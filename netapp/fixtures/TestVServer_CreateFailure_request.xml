@@ -1,0 +1,10 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <vserver-create-async>
+    <ipspace>test</ipspace>
+    <snapshot-policy>none</snapshot-policy>
+    <vserver-name>TEST</vserver-name>
+    <root-volume>TEST_root</root-volume>
+    <root-volume-aggregate>aggregate</root-volume-aggregate>
+    <root-volume-security-style>unix</root-volume-security-style>
+  </vserver-create-async>
+</netapp>

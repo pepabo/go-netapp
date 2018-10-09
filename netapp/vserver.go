@@ -106,6 +106,8 @@ func (v VServer) List(options *VServerOptions) (*VServerListResponse, *http.Resp
 }
 
 func (v VServer) Delete(name string) (*VServerListResponse, *http.Response, error) {
+	v.Params.XMLName = xml.Name{Local: "vserver-destroy"}
+	v.Params.VserverName = name
 
 	r := VServerListResponse{}
 	res, err := v.get(v, &r)

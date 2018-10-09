@@ -40,11 +40,11 @@ type SingleResultResponse struct {
 }
 
 type AsyncResultBase struct {
+	SingleResultBase
 	ErrorCode    int    `xml:"result-error-code"`
 	ErrorMessage string `xml:"result-error-message"`
 	JobID        int    `xml:"result-jobid"`
 	JobStatus    string `xml:"result-status"`
-	Status       string `xml:"status,attr"`
 }
 
 func (r *ResultBase) Passed() bool {
@@ -74,8 +74,8 @@ func (r *AsyncResultBase) Passed() bool {
 func (r *AsyncResultBase) Result() *SingleResultBase {
 	return &SingleResultBase{
 		Status:  r.Status,
-		Reason:  r.ErrorMessage,
-		ErrorNo: r.ErrorCode,
+		Reason:  r.Reason,
+		ErrorNo: r.ErrorNo,
 	}
 }
 

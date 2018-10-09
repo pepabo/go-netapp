@@ -1,0 +1,5 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <vserver-destroy>
+    <vserver-name>T100</vserver-name>
+  </vserver-destroy>
+</netapp>
