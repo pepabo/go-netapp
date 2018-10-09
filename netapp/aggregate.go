@@ -9,35 +9,29 @@ type Aggregate struct {
 	Base
 	Params struct {
 		XMLName xml.Name
-		*AggrOptions
+		AggrOptions
 	}
-}
-type AggrQuery struct {
-	AggrEntry *AggrInfo `xml:"aggr-attributes,omitempty"`
 }
 
 type AggrOptions struct {
-	DesiredAttributes *AggrQuery `xml:"desired-attributes,omitempty"`
-	MaxRecords        int        `xml:"max-records,omitempty"`
-	Query             *AggrQuery `xml:"query,omitempty"`
-	Tag               string     `xml:"tag,omitempty"`
+	DesiredAttributes *AggrInfo `xml:"desired-attributes>aggr-attributes,omitempty"`
+	MaxRecords        int       `xml:"max-records,omitempty"`
+	Query             *AggrInfo `xml:"query>aggr-attributes,omitempty"`
+	Tag               string    `xml:"tag,omitempty"`
 }
 
 type AggrListResponse struct {
 	XMLName xml.Name `xml:"netapp"`
 	Results struct {
 		ResultBase
-		AttributesList struct {
-			AggrAttributes []AggrInfo `xml:"aggr-attributes"`
-		} `xml:"attributes-list"`
-		NextTag    string `xml:"next-tag"`
-		NumRecords int    `xml:"num-records"`
+		AggrAttributes []AggrInfo `xml:"attributes-list>aggr-attributes"`
+		NextTag        string     `xml:"next-tag"`
 	} `xml:"results"`
 }
 
-func (a *Aggregate) List(options *AggrOptions) (*AggrListResponse, *http.Response, error) {
+func (a Aggregate) List(options *AggrOptions) (*AggrListResponse, *http.Response, error) {
 	a.Params.XMLName = xml.Name{Local: "aggr-get-iter"}
-	a.Params.AggrOptions = options
+	a.Params.AggrOptions = *options
 	r := AggrListResponse{}
 	res, err := a.get(a, &r)
 	return &r, res, err
@@ -75,33 +69,72 @@ func (a *Aggregate) ListPages(options *AggrOptions, fn AggregatePageHandler) {
 }
 
 type AggrInfo struct {
-	AggregateName       string              `xml:"aggregate-name"`
-	AggrInodeAttributes AggrInodeAttributes `xml:"aggr-inode-attributes"`
-	AggrSpaceAttributes AggrSpaceAttributes `xml:"aggr-space-attributes"`
+	AggregateName           string                   `xml:"aggregate-name,omitempty"`
+	AggrInodeAttributes     *AggrInodeAttributes     `xml:"aggr-inode-attributes,omitempty"`
+	AggrSpaceAttributes     *AggrSpaceAttributes     `xml:"aggr-space-attributes,omitempty"`
+	AggrOwnershipAttributes *AggrOwnershipAttributes `xml:"aggr-ownership-attributes,omitempty"`
+	AggrRaidAttributes      *AggrRaidAttributes      `xml:"aggr-raid-attributes,omitempty"`
+}
+
+type AggrRaidAttributes struct {
+	AggregateType      string `xml:"aggregate-type,omitempty"`
+	CacheRaidGroupSize int    `xml:"cache-raid-group-size,omitempty"`
+	ChecksumStatus     string `xml:"checksum-status,omitempty"`
+	ChecksumStyle      string `xml:"checksum-style,omitempty"`
+	DiskCount          int    `xml:"disk-count,omitempty"`
+	EncryptionKeyID    string `xml:"encryption-key-id,omitempty"`
+	HaPolicy           string `xml:"ha-policy,omitempty"`
+	HasLocalRoot       *bool  `xml:"has-local-root"`
+	HasPartnerRoot     *bool  `xml:"has-partner-root"`
+	IsChecksumEnabled  *bool  `xml:"is-checksum-enabled"`
+	IsEncrypted        *bool  `xml:"is-encrypted"`
+	IsHybrid           *bool  `xml:"is-hybrid"`
+	IsHybridEnabled    *bool  `xml:"is-hybrid-enabled"`
+	IsInconsistent     *bool  `xml:"is-inconsistent"`
+	IsMirrored         *bool  `xml:"is-mirrored"`
+	IsRootAggregate    *bool  `xml:"is-root-aggregate"`
+	MirrorStatus       string `xml:"mirror-status,omitempty"`
+	MountState         string `xml:"mount-state,omitempty"`
+	PlexCount          int    `xml:"plex-count,omitempty"`
+	RaidLostWriteState string `xml:"raid-lost-write-state,omitempty"`
+	RaidSize           int    `xml:"raid-size,omitempty"`
+	RaidStatus         string `xml:"raid-status,omitempty"`
+	RaidType           string `xml:"raid-type,omitempty"`
+	State              string `xml:"state,omitempty"`
+	UsesSharedDisks    *bool  `xml:"uses-shared-disks"`
+}
+
+// AggrOwnershipAttributes describe aggregate's ownership
+type AggrOwnershipAttributes struct {
+	Cluster   string `xml:"cluster"`
+	HomeID    int    `xml:"home-id"`
+	HomeName  string `xml:"home-name"`
+	OwnerID   int    `xml:"owner-id"`
+	OwnerName string `xml:"owner-name"`
 }
 
 type AggrInodeAttributes struct {
-	FilesPrivateUsed         string `xml:"files-private-used"`
-	FilesTotal               string `xml:"files-total"`
-	FilesUsed                string `xml:"files-used"`
-	InodefilePrivateCapacity string `xml:"inodefile-private-capacity"`
-	InodefilePublicCapacity  string `xml:"inodefile-public-capacity"`
-	MaxfilesAvailable        string `xml:"maxfiles-available"`
-	MaxfilesPossible         string `xml:"maxfiles-possible"`
-	MaxfilesUsed             string `xml:"maxfiles-used"`
-	PercentInodeUsedCapacity string `xml:"percent-inode-used-capacity"`
+	FilesPrivateUsed         int `xml:"files-private-used"`
+	FilesTotal               int `xml:"files-total"`
+	FilesUsed                int `xml:"files-used"`
+	InodefilePrivateCapacity int `xml:"inodefile-private-capacity"`
+	InodefilePublicCapacity  int `xml:"inodefile-public-capacity"`
+	MaxfilesAvailable        int `xml:"maxfiles-available"`
+	MaxfilesPossible         int `xml:"maxfiles-possible"`
+	MaxfilesUsed             int `xml:"maxfiles-used"`
+	PercentInodeUsedCapacity int `xml:"percent-inode-used-capacity"`
 }
 
 type AggrSpaceAttributes struct {
 	AggregateMetadata            string `xml:"aggregate-metadata"`
 	HybridCacheSizeTotal         string `xml:"hybrid-cache-size-total"`
 	PercentUsedCapacity          string `xml:"percent-used-capacity"`
-	PhysicalUsed                 string `xml:"physical-used"`
-	PhysicalUsedPercent          string `xml:"physical-used-percent"`
-	SizeAvailable                string `xml:"size-available"`
-	SizeTotal                    string `xml:"size-total"`
-	SizeUsed                     string `xml:"size-used"`
-	TotalReservedSpace           string `xml:"total-reserved-space"`
+	PhysicalUsed                 int    `xml:"physical-used"`
+	PhysicalUsedPercent          int    `xml:"physical-used-percent"`
+	SizeAvailable                int    `xml:"size-available"`
+	SizeTotal                    int    `xml:"size-total"`
+	SizeUsed                     int    `xml:"size-used"`
+	TotalReservedSpace           int    `xml:"total-reserved-space"`
 	UsedIncludingSnapshotReserve string `xml:"used-including-snapshot-reserve"`
 	VolumeFootprints             string `xml:"volume-footprints"`
 }
