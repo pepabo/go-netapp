@@ -74,26 +74,18 @@ type VolumeCreateOptions struct {
 	VserverDrProtection        string `xml:"vserver-dr-protection,omitempty"`
 }
 
-// VolumeOperationResponse is a response struct for volume operations
-type VolumeOperationResponse struct {
-	XMLName xml.Name `xml:"netapp"`
-	Results struct {
-		SingleResultBase
-	} `xml:"results"`
-}
-
 // Create a new volume
-func (v VolumeOperation) Create(options *VolumeCreateOptions, vserverName string) (*VolumeOperationResponse, *http.Response, error) {
+func (v VolumeOperation) Create(vserverName string, options *VolumeCreateOptions) (*SingleResultResponse, *http.Response, error) {
 	v.Params.XMLName = xml.Name{Local: VolumeCreateOperation}
 	v.Name = vserverName
 	v.Params.VolumeCreateOptions = *options
-	r := VolumeOperationResponse{}
+	r := SingleResultResponse{}
 	res, err := v.get(v, &r)
 	return &r, res, err
 }
 
 // Operation runs several operations (from consts defined above with VolumeOperation* name)
-func (v VolumeOperation) Operation(volName string, vserverName string, operation string) (*VolumeOperationResponse, *http.Response, error) {
+func (v VolumeOperation) Operation(vserverName string, volName string, operation string) (*SingleResultResponse, *http.Response, error) {
 	v.Params.XMLName = xml.Name{Local: operation}
 	v.Name = vserverName
 	elementName := "name"
@@ -104,7 +96,7 @@ func (v VolumeOperation) Operation(volName string, vserverName string, operation
 		XMLName: xml.Name{Local: elementName},
 		Name:    volName,
 	}
-	r := VolumeOperationResponse{}
+	r := SingleResultResponse{}
 	res, err := v.get(v, &r)
 	return &r, res, err
 }

@@ -90,7 +90,7 @@ func TestVServer_CreateSuccess(t *testing.T) {
 	if job.JobID != expectedJob {
 		t.Errorf("Incorrect Job Id. Expected %d, got %d", expectedJob, job.JobID)
 	}
-	// checkJobResponse(job.JobID, 27008)
+
 	if info.VserverName != vserverSettings.VserverName {
 		t.Errorf("Incorrect VServer name. Expected %s, got %s", vserverSettings.VserverName, info.VserverName)
 	}

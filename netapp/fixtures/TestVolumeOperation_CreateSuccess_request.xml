@@ -1,0 +1,9 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin" vfiler="C666">
+  <volume-create>
+    <containing-aggr-name>n01_aggrfp_sas01</containing-aggr-name>
+    <size>1G</size>
+    <snapshot-policy>none</snapshot-policy>
+    <volume>c666_root_m1</volume>
+    <volume-type>dp</volume-type>
+  </volume-create>
+</netapp>

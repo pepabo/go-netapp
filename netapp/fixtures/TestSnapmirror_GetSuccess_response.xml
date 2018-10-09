@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100' xmlns='http://www.netapp.com/filer/admin'>
+
+    <!-- Output of snapmirror-get [Execution Time: 384 ms] -->
+	<results status='passed'>
+		<attributes>
+			<snapmirror-info>
+				<destination-cluster>lab-cluster01</destination-cluster>
+				<destination-location>lab-cluster01://C666/c666_root_m1</destination-location>
+				<destination-volume>c666_root_m1</destination-volume>
+				<destination-vserver>C666</destination-vserver>
+				<is-healthy>true</is-healthy>
+        <relationship-type>load_sharing</relationship-type>
+				<source-cluster>lab-cluster01</source-cluster>
+				<source-location>lab-cluster01://C666/c666_root</source-location>
+				<source-volume>c666_root</source-volume>
+				<source-vserver>C666</source-vserver>
+				<vserver>C666</vserver>
+			</snapmirror-info>
+		</attributes>
+	</results>
+</netapp>
