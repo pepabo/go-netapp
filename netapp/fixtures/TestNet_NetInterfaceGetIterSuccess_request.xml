@@ -1,0 +1,10 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <net-interface-get-iter>
+    <max-records>20</max-records>
+    <query>
+      <net-interface-info>
+        <vserver>T100</vserver>
+      </net-interface-info>
+    </query>
+  </net-interface-get-iter>
+</netapp>
