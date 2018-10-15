@@ -6,9 +6,9 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
-	"os"
 	"strings"
 	"time"
 )
@@ -199,9 +199,7 @@ func (c *Client) NewRequest(method string, body interface{}) (*http.Request, err
 		return nil, err
 	}
 
-	if os.Getenv("DEBUG") != "" {
-		fmt.Printf("request xml =====================================\n%v\n=================================================\n", string(buf))
-	}
+	log.Printf("[DEBUG] request xml: \n%v\n", string(buf))
 
 	req, err := http.NewRequest(method, u.String(), bytes.NewBuffer(buf))
 	if err != nil {
@@ -228,15 +226,13 @@ func (c *Client) Do(req *http.Request, v interface{}) (*http.Response, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	if os.Getenv("DEBUG") != "" {
-		bs, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			return nil, err
-		}
-		resp.Body = ioutil.NopCloser(bytes.NewBuffer(bs))
-		fmt.Printf("response xml ====================================\n%v\n=================================================\n", string(bs))
+	bs, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
 	}
+	resp.Body = ioutil.NopCloser(bytes.NewBuffer(bs))
+	log.Printf("[DEBUG] response xml \n%v\n", string(bs))
+
 	if v != nil {
 		defer resp.Body.Close()
 		err = xml.NewDecoder(resp.Body).Decode(v)
