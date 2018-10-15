@@ -117,6 +117,19 @@ func TestVServer_CreateFailure(t *testing.T) {
 	testFailureResult(1017, `Ipspace "test" does not exist.`, results, t)
 }
 
+func TestVServer_ModifySuccess(t *testing.T) {
+
+	c, teardown := createTestClientWithFixtures(t)
+	defer teardown()
+
+	modifyOpts := &netapp.VServerInfo{
+		AllowedProtocols: &[]string{"nfs"},
+	}
+
+	call, _, err := c.VServer.Modify("T100", modifyOpts)
+	checkResponseSuccess(&call.Results.SingleResultBase, err, t)
+}
+
 func TestVServer_DeleteSuccess(t *testing.T) {
 	c, teardown := createTestClientWithFixtures(t)
 	defer teardown()
