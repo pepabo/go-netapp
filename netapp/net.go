@@ -139,7 +139,7 @@ type NetInterfaceInfo struct {
 	FirewallPolicy       string    `xml:"firewall-policy,omitempty"`
 	HomeNode             string    `xml:"home-node,omitempty"`
 	HomePort             string    `xml:"home-port,omitempty"`
-	InterfaceName        string    `xml:"interface-name"`
+	InterfaceName        string    `xml:"interface-name,omitempty"`
 	IsAutoRevert         bool      `xml:"is-auto-revert,omitempty"`
 	IsHome               bool      `xml:"is-home,omitempty"`
 	IsIpv4LinkLocal      bool      `xml:"is-ipv4-link-local,omitempty"`
