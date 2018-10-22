@@ -41,9 +41,9 @@
           <fsid>1512</fsid>
           <instance-uuid>e554a9c8-9ea3-4f44-8266-091bf89eba75</instance-uuid>
           <junction-parent-name>T100_root</junction-parent-name>
-          <junction-path>/faction_ccv_05_changed</junction-path>
+          <junction-path>/test_volume_01</junction-path>
           <msid>2152779536</msid>
-          <name>faction_ccv_05_changed</name>
+          <name>test_volume_01</name>
           <name-ordinal>base</name-ordinal>
           <node>lab-cluster01-02</node>
           <owning-vserver-name>T100</owning-vserver-name>
@@ -88,7 +88,7 @@
           <read-realloc>off</read-realloc>
         </volume-performance-attributes>
         <volume-qos-attributes>
-          <policy-group-name>faction_ccv_05_changed-1000iops</policy-group-name>
+          <policy-group-name>test_volume_01-1000iops</policy-group-name>
         </volume-qos-attributes>
         <volume-security-attributes>
           <style>unix</style>
