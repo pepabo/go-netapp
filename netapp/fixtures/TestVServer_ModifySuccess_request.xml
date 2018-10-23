@@ -1,0 +1,8 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <vserver-modify>
+    <vserver-name>T100</vserver-name>
+    <allowed-protocols>
+      <protocol>nfs</protocol>
+    </allowed-protocols>
+  </vserver-modify>
+</netapp>

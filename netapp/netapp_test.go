@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -54,7 +55,7 @@ func createTestClientWithFixtures(t *testing.T) (c *netapp.Client, teardownFn fu
 	})
 
 	c = netapp.NewClient(baseURL, "1.10", nil)
-
+	log.SetOutput(ioutil.Discard)
 	return c, teardown
 }
 

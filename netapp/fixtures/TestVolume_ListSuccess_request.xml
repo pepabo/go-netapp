@@ -1,0 +1,13 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <volume-get-iter>
+    <query>
+      <volume-attributes>
+        <volume-id-attributes>
+          <aggr-list></aggr-list>
+          <nodes></nodes>
+          <uuid>98595b5a-cb3d-11e8-bf6a-00a0983afb38</uuid>
+        </volume-id-attributes>
+      </volume-attributes>
+    </query>
+  </volume-get-iter>
+</netapp>

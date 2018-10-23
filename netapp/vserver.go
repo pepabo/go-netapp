@@ -113,3 +113,13 @@ func (v VServer) Delete(name string) (*VServerListResponse, *http.Response, erro
 	res, err := v.get(v, &r)
 	return &r, res, err
 }
+
+func (v VServer) Modify(name string, options *VServerInfo) (*SingleResultResponse, *http.Response, error) {
+	v.Params.XMLName = xml.Name{Local: "vserver-modify"}
+	v.Params.VServerInfo = *options
+	v.Params.VserverName = name
+
+	r := SingleResultResponse{}
+	res, err := v.get(v, &r)
+	return &r, res, err
+}
