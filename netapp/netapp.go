@@ -2,6 +2,7 @@ package netapp
 
 import (
 	"bytes"
+	"context"
 	"crypto/tls"
 	"encoding/xml"
 	"fmt"
@@ -26,6 +27,7 @@ type Client struct {
 	BaseURL          *url.URL
 	UserAgent        string
 	options          *ClientOptions
+	ResponseTimeout  time.Duration
 	Aggregate        *Aggregate
 	AggregateSpace   *AggregateSpace
 	AggregateSpares  *AggregateSpares
@@ -61,6 +63,7 @@ type ClientOptions struct {
 func DefaultOptions() *ClientOptions {
 	return &ClientOptions{
 		SSLVerify: true,
+		Timeout:   60 * time.Second,
 	}
 }
 
@@ -84,10 +87,11 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 	baseURL, _ := url.Parse(endpoint)
 
 	c := &Client{
-		client:    httpClient,
-		BaseURL:   baseURL,
-		UserAgent: userAgent,
-		options:   options,
+		client:          httpClient,
+		BaseURL:         baseURL,
+		UserAgent:       userAgent,
+		options:         options,
+		ResponseTimeout: options.Timeout,
 	}
 
 	b := Base{
@@ -222,7 +226,9 @@ func (c *Client) NewRequest(method string, body interface{}) (*http.Request, err
 }
 
 func (c *Client) Do(req *http.Request, v interface{}) (*http.Response, error) {
-	resp, err := checkResp(c.client.Do(req))
+	ctx, cncl := context.WithTimeout(context.Background(), c.ResponseTimeout)
+	defer cncl()
+	resp, err := checkResp(c.client.Do(req.WithContext(ctx)))
 	if err != nil {
 		return nil, err
 	}
