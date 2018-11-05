@@ -1,0 +1,11 @@
+<netapp version="1.10" xmlsns="http://www.netapp.com/filer/admin">
+  <snapmirror-destroy-iter>
+    <continue-on-failure>true</continue-on-failure>
+    <max-records>20</max-records>
+    <query>
+      <snapmirror-info>
+        <vserver>T100</vserver>
+      </snapmirror-info>
+    </query>
+  </snapmirror-destroy-iter>
+</netapp>

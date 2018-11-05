@@ -15,6 +15,18 @@ type Snapmirror struct {
 	}
 }
 
+type snapmirrorIterRequest struct {
+	Base
+	Params struct {
+		XMLName           xml.Name
+		ContinueOnFailure bool            `xml:"continue-on-failure,omitempty"`
+		MaxFailureCount   int             `xml:"max-failure-count,omitempty"`
+		MaxRecords        int             `xml:"max-records,omitempty"`
+		Tag               string          `xml:"tag,omitempty"`
+		Query             *SnapmirrorInfo `xml:"query>snapmirror-info"`
+	}
+}
+
 // Snapmirror Relationship Types
 const (
 	SnapmirrorRelationshipDP  string = "data_protection"
@@ -109,6 +121,22 @@ type SnapmirrorAsyncResponse struct {
 	} `xml:"results"`
 }
 
+type SnapmirrorIterResponse struct {
+	XMLName xml.Name `xml:"netapp"`
+	Results struct {
+		NumFailed    int `xml:"num-failed"`
+		NumSucceeded int `xml:"num-succeeded"`
+		FailureList  []struct {
+			ErrorNo int             `xml:"error-code"`
+			Reason  string          `xml:"error-message"`
+			Info    *SnapmirrorInfo `xml:"snapmirror-key>snapmirror-info"`
+		} `xml:"failure-list>snapmirror-destroy-iter-info"`
+		SuccessList []struct {
+			Info *SnapmirrorInfo `xml:"snapmirror-key>snapmirror-info"`
+		} `xml:"success-list>snapmirror-destroy-iter-info"`
+	} `xml:"results"`
+}
+
 // Create creates a snapmirror on a vserver with attributes provided. Note, not all attributes
 // are supported, refer to docs or api errors to diagnose
 func (s Snapmirror) Create(vServerName string, attributes *SnapmirrorInfo) (*SingleResultResponse, *http.Response, error) {
@@ -141,6 +169,34 @@ func (s Snapmirror) Get(vServerName string, sourcePath string, destinationPath s
 	}
 	r := &SnapmirrorResponse{}
 	res, err := s.get(s, r)
+	return r, res, err
+}
+
+func (s Snapmirror) DestroyBy(query *SnapmirrorInfo, continueOnFailure bool) (*SnapmirrorIterResponse, *http.Response, error) {
+	req := &snapmirrorIterRequest{
+		Base: s.Base,
+	}
+	req.Params.XMLName = xml.Name{Local: "snapmirror-destroy-iter"}
+	req.Params.Query = query
+	req.Params.ContinueOnFailure = continueOnFailure
+	req.Params.MaxRecords = 20
+
+	r := &SnapmirrorIterResponse{}
+	res, err := s.get(req, r)
+	return r, res, err
+}
+
+func (s Snapmirror) AbortBy(query *SnapmirrorInfo, continueOnFailure bool) (*SnapmirrorIterResponse, *http.Response, error) {
+	req := &snapmirrorIterRequest{
+		Base: s.Base,
+	}
+	req.Params.XMLName = xml.Name{Local: "snapmirror-abort-iter"}
+	req.Params.Query = query
+	req.Params.ContinueOnFailure = continueOnFailure
+	req.Params.MaxRecords = 20
+
+	r := &SnapmirrorIterResponse{}
+	res, err := s.get(req, r)
 	return r, res, err
 }
 

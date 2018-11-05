@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100'
+  xmlns='http://www.netapp.com/filer/admin'>
+
+  <!-- Output of snapmirror-destroy-iter [Execution Time: 2900 ms] -->
+  <results status='passed'>
+    <failure-list>
+      <snapmirror-destroy-iter-info>
+        <error-code>13001</error-code>
+        <error-message>SnapMirror: error: Failed to change the volume T100_root_m1 to data-protection. (Volume not online)</error-message>
+        <snapmirror-key>
+          <snapmirror-info>
+            <destination-cluster>test-cluster01</destination-cluster>
+            <destination-location>test-cluster01://T100/T100_root_m1</destination-location>
+            <destination-volume>T100_root_m1</destination-volume>
+            <destination-vserver>T100</destination-vserver>
+            <source-cluster>test-cluster01</source-cluster>
+            <source-location>test-cluster01://T100/T100_root</source-location>
+            <source-volume>T100_root</source-volume>
+            <source-vserver>T100</source-vserver>
+          </snapmirror-info>
+        </snapmirror-key>
+      </snapmirror-destroy-iter-info>
+      <snapmirror-destroy-iter-info>
+        <error-code>13001</error-code>
+        <error-message>SnapMirror: error: Failed to change the volume T100_root_m2 to data-protection. (Volume not online)</error-message>
+        <snapmirror-key>
+          <snapmirror-info>
+            <destination-cluster>test-cluster01</destination-cluster>
+            <destination-location>test-cluster01://T100/T100_root_m2</destination-location>
+            <destination-volume>T100_root_m2</destination-volume>
+            <destination-vserver>T100</destination-vserver>
+            <source-cluster>test-cluster01</source-cluster>
+            <source-location>test-cluster01://T100/T100_root</source-location>
+            <source-volume>T100_root</source-volume>
+            <source-vserver>T100</source-vserver>
+          </snapmirror-info>
+        </snapmirror-key>
+      </snapmirror-destroy-iter-info>
+    </failure-list>
+    <num-failed>2</num-failed>
+    <num-succeeded>0</num-succeeded>
+    <success-list/>
+  </results>
+</netapp>
