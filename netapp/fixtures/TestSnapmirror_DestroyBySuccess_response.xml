@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<netapp version='1.100'
+  xmlns='http://www.netapp.com/filer/admin'>
+
+  <!-- Output of snapmirror-destroy-iter [Execution Time: 9003 ms] -->
+  <results status='passed'>
+    <failure-list/>
+    <num-failed>0</num-failed>
+    <num-succeeded>2</num-succeeded>
+    <success-list>
+      <snapmirror-destroy-iter-info>
+        <result-operation-id>00000000-0000-0000-0000-000000000000</result-operation-id>
+        <snapmirror-key>
+          <snapmirror-info>
+            <destination-cluster>test-cluster01</destination-cluster>
+            <destination-location>test-cluster01://T100/T100_root_m1</destination-location>
+            <destination-volume>T100_root_m1</destination-volume>
+            <destination-vserver>T100</destination-vserver>
+            <source-cluster>test-cluster01</source-cluster>
+            <source-location>test-cluster01://T100/T100_root</source-location>
+            <source-volume>T100_root</source-volume>
+            <source-vserver>T100</source-vserver>
+          </snapmirror-info>
+        </snapmirror-key>
+      </snapmirror-destroy-iter-info>
+      <snapmirror-destroy-iter-info>
+        <result-operation-id>00000000-0000-0000-0000-000000000000</result-operation-id>
+        <snapmirror-key>
+          <snapmirror-info>
+            <destination-cluster>test-cluster01</destination-cluster>
+            <destination-location>test-cluster01://T100/T100_root_m2</destination-location>
+            <destination-volume>T100_root_m2</destination-volume>
+            <destination-vserver>T100</destination-vserver>
+            <source-cluster>test-cluster01</source-cluster>
+            <source-location>test-cluster01://T100/T100_root</source-location>
+            <source-volume>T100_root</source-volume>
+            <source-vserver>T100</source-vserver>
+          </snapmirror-info>
+        </snapmirror-key>
+      </snapmirror-destroy-iter-info>
+    </success-list>
+  </results>
+</netapp>

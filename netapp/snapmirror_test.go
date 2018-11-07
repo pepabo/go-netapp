@@ -2,6 +2,7 @@ package netapp_test
 
 import (
 	"reflect"
+	"strings"
 	"testing"
 
 	"github.com/pepabo/go-netapp/netapp"
@@ -54,6 +55,82 @@ func TestSnapmirror_CreateSuccess(t *testing.T) {
 	}
 	call, _, err := c.Snapmirror.Create("C666", opts)
 	checkResponseSuccess(&call.Results.SingleResultBase, err, t)
+}
+
+func TestSnapmirror_DestroyByFailure(t *testing.T) {
+	c, teardown := createTestClientWithFixtures(t)
+	defer teardown()
+
+	query := &netapp.SnapmirrorInfo{
+		VServer: "T100",
+	}
+
+	call, _, err := c.Snapmirror.DestroyBy(query, true)
+
+	if err != nil {
+		t.Fatalf("Should not have gotten an error %s", err)
+	}
+
+	results := call.Results.FailureList
+
+	if len(results) == 0 || call.Results.NumFailed == 0 {
+		t.Error("Got back 0 failures, should've had 2")
+	}
+
+	if call.Results.NumFailed != 2 {
+		t.Errorf("%s got = %+v, want %+v", t.Name(), call.Results.NumFailed, 2)
+	}
+
+	if call.Results.NumSucceeded != 0 {
+		t.Errorf("%s got = %+v, want %+v", t.Name(), call.Results.NumSucceeded, 0)
+	}
+
+	for _, result := range results {
+		if result.ErrorNo != 13001 {
+			t.Errorf("%s got = %+v, want %+v", t.Name(), result.ErrorNo, 13001)
+		}
+		msg := "SnapMirror: error: Failed to change the volume T100_root"
+		if !strings.Contains(result.Reason, msg) {
+			t.Errorf("%s got = %+v, want to contain %+v", t.Name(), result.Reason, msg)
+		}
+
+		if result.Info == nil {
+			t.Errorf("%s got empty snapmirror object, should have values", t.Name())
+		}
+	}
+}
+
+func TestSnapmirror_DestroyBySuccess(t *testing.T) {
+	c, teardown := createTestClientWithFixtures(t)
+	defer teardown()
+
+	query := &netapp.SnapmirrorInfo{
+		VServer: "T100",
+	}
+
+	call, _, err := c.Snapmirror.DestroyBy(query, true)
+
+	if err != nil {
+		t.Fatalf("Should not have gotten an error %s", err)
+	}
+
+	results := call.Results.SuccessList
+
+	if len(results) == 0 {
+		t.Error("Got back 0 results")
+	}
+
+	if call.Results.NumSucceeded != 2 {
+		t.Errorf("%s got = %+v, want %+v", t.Name(), call.Results.NumSucceeded, 2)
+	}
+
+	if call.Results.NumFailed != 0 {
+		t.Errorf("%s got = %+v, want %+v", t.Name(), call.Results.NumFailed, 0)
+	}
+}
+
+func TestSnapmirror_AbortBySuccess(t *testing.T) {
+
 }
 
 func TestSnapmirror_InitializeLSSetSuccess(t *testing.T) {
