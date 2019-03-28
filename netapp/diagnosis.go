@@ -57,13 +57,13 @@ type DiagnosisListResponse struct {
 	} `xml:"results"`
 }
 
-type DiagnosisAlertPagesResposne struct {
+type DiagnosisAlertPagesResponse struct {
 	Response    *DiagnosisListResponse
 	Error       error
 	RawResponse *http.Response
 }
 
-type DiagnosisPageHandler func(DiagnosisAlertPagesResposne) (shouldContinue bool)
+type DiagnosisPageHandler func(DiagnosisAlertPagesResponse) (shouldContinue bool)
 
 func (v *Diagnosis) DiagnosisAlertGetIter(options *DiagnosisOptions) (*DiagnosisListResponse, *http.Response, error) {
 	v.Params.XMLName = xml.Name{Local: "diagnosis-alert-get-iter"}
@@ -81,7 +81,7 @@ func (v *Diagnosis) DiagnosisAlertGetAll(options *DiagnosisOptions, fn Diagnosis
 		DiagnosisResponse, res, err := v.DiagnosisAlertGetIter(requestOptions)
 		handlerResponse := false
 
-		handlerResponse = fn(DiagnosisAlertPagesResposne{Response: DiagnosisResponse, Error: err, RawResponse: res})
+		handlerResponse = fn(DiagnosisAlertPagesResponse{Response: DiagnosisResponse, Error: err, RawResponse: res})
 
 		nextTag := ""
 		if err == nil {

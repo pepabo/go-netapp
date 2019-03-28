@@ -38,6 +38,7 @@ type Client struct {
 	Job              *Job
 	Lun              *Lun
 	Net              *Net
+	Perf             *Perf
 	Qtree            *Qtree
 	QosPolicy        *QosPolicy
 	Quota            *Quota
@@ -137,6 +138,10 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 	}
 
 	c.Net = &Net{
+		Base: b,
+	}
+
+	c.Perf = &Perf{
 		Base: b,
 	}
 
