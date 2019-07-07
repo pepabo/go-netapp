@@ -58,12 +58,14 @@ type ClientOptions struct {
 	BasicAuthUser     string
 	BasicAuthPassword string
 	SSLVerify         bool
+	Debug             bool
 	Timeout           time.Duration
 }
 
 func DefaultOptions() *ClientOptions {
 	return &ClientOptions{
 		SSLVerify: true,
+		Debug:     true,
 		Timeout:   60 * time.Second,
 	}
 }
@@ -208,8 +210,9 @@ func (c *Client) NewRequest(method string, body interface{}) (*http.Request, err
 		return nil, err
 	}
 
-	log.Printf("[DEBUG] request xml: \n%v\n", string(buf))
-
+	if c.options.Debug {
+		log.Printf("[DEBUG] request xml: \n%v\n", string(buf))
+	}
 	req, err := http.NewRequest(method, u.String(), bytes.NewBuffer(buf))
 	if err != nil {
 		return nil, err
@@ -242,8 +245,9 @@ func (c *Client) Do(req *http.Request, v interface{}) (*http.Response, error) {
 		return nil, err
 	}
 	resp.Body = ioutil.NopCloser(bytes.NewBuffer(bs))
-	log.Printf("[DEBUG] response xml \n%v\n", string(bs))
-
+	if c.options.Debug {
+		log.Printf("[DEBUG] response xml \n%v\n", string(bs))
+	}
 	if v != nil {
 		defer resp.Body.Close()
 		err = xml.NewDecoder(resp.Body).Decode(v)
