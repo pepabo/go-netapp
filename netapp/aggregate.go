@@ -158,20 +158,20 @@ type AggrSpaceOptions struct {
 }
 
 type AggrSpaceInfo struct {
-	Aggregate                           string `xml:"aggregate"`
-	AggregateMetadata                   string `xml:"aggregate-metadata"`
-	AggregateMetadataPercent            string `xml:"aggregate-metadata-percent"`
-	AggregateSize                       string `xml:"aggregate-size"`
-	PercentSnapshotSpace                string `xml:"percent-snapshot-space"`
-	PhysicalUsed                        string `xml:"physical-used"`
-	PhysicalUsedPercent                 string `xml:"physical-used-percent"`
-	SnapSizeTotal                       string `xml:"snap-size-total"`
-	SnapshotReserveUnusable             string `xml:"snapshot-reserve-unusable"`
-	SnapshotReserveUnusablePercent      string `xml:"snapshot-reserve-unusable-percent"`
-	UsedIncludingSnapshotReserve        string `xml:"used-including-snapshot-reserve"`
-	UsedIncludingSnapshotReservePercent string `xml:"used-including-snapshot-reserve-percent"`
-	VolumeFootprints                    string `xml:"volume-footprints"`
-	VolumeFootprintsPercent             string `xml:"volume-footprints-percent"`
+	Aggregate                           string `xml:"aggregate,omitempty"`
+	AggregateMetadata                   string `xml:"aggregate-metadata,omitempty"`
+	AggregateMetadataPercent            string `xml:"aggregate-metadata-percent,omitempty"`
+	AggregateSize                       string `xml:"aggregate-size,omitempty"`
+	PercentSnapshotSpace                string `xml:"percent-snapshot-space,omitempty"`
+	PhysicalUsed                        string `xml:"physical-used,omitempty"`
+	PhysicalUsedPercent                 string `xml:"physical-used-percent,omitempty"`
+	SnapSizeTotal                       string `xml:"snap-size-total,omitempty"`
+	SnapshotReserveUnusable             string `xml:"snapshot-reserve-unusable,omitempty"`
+	SnapshotReserveUnusablePercent      string `xml:"snapshot-reserve-unusable-percent,omitempty"`
+	UsedIncludingSnapshotReserve        string `xml:"used-including-snapshot-reserve,omitempty"`
+	UsedIncludingSnapshotReservePercent string `xml:"used-including-snapshot-reserve-percent,omitempty"`
+	VolumeFootprints                    string `xml:"volume-footprints,omitempty"`
+	VolumeFootprintsPercent             string `xml:"volume-footprints-percent,omitempty"`
 }
 
 type AggrSpaceListResponse struct {
