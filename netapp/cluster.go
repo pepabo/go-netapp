@@ -18,7 +18,7 @@ type Cluster struct {
 type ClusterInfo struct {
 	ClusterContact          string `xml:"cluster-contact,omitempty"`
 	ClusterLocation         string `xml:"cluster-location"`
-	ClusterName  					  int    `xml:"cluster-name"`
+	ClusterName  					  string    `xml:"cluster-name"`
 	ClusterSerialNumber 	  string `xml:"cluster-serial-number"`
 	RdbUuid                 string `xml:"rdb-uuid"`
 	UUID                    string `xml:"uuid"`
