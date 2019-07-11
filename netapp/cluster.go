@@ -13,28 +13,24 @@ type Cluster struct {
 	}
 }
 
-
-
 type ClusterInfo struct {
-	ClusterContact          string `xml:"cluster-contact,omitempty"`
-	ClusterLocation         string `xml:"cluster-location"`
-	ClusterName  					  string  `xml:"cluster-name"`
-	ClusterSerialNumber 	  string `xml:"cluster-serial-number"`
-	RdbUuid                 string `xml:"rdb-uuid"`
-	UUID                    string `xml:"uuid"`
+	ClusterContact      string `xml:"cluster-contact,omitempty"`
+	ClusterLocation     string `xml:"cluster-location"`
+	ClusterName         string `xml:"cluster-name"`
+	ClusterSerialNumber string `xml:"cluster-serial-number"`
+	RdbUuid             string `xml:"rdb-uuid"`
+	UUID                string `xml:"uuid"`
 }
 
-
-
-
-type  ClusterOptions struct {
+type ClusterOptions struct {
 	DesiredAttributes *ClusterInfo `xml:"desired-attributes,omitempty"`
 }
 
-type  ClusterResponse struct {
-	Attributes *ClusterInfo `xml:"desired-attributes,omitempty"`
+type ClusterResponse struct {
+	Attributes struct {
+		*ClusterInfo `xml:"cluster-identity-info,omitempty"`
+	} `xml:"attributes"`
 }
-
 
 func (c *Cluster) List(options *ClusterOptions) (*ClusterResponse, *http.Response, error) {
 	c.Params.XMLName = xml.Name{Local: "cluster-identity-get"}
