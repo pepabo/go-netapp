@@ -32,7 +32,7 @@ type  ClusterOptions struct {
 }
 
 type  ClusterResponse struct {
-	DesiredAttributes *ClusterInfo `xml:"desired-attributes,omitempty"`
+	Attributes *ClusterInfo `xml:"desired-attributes,omitempty"`
 }
 
 
