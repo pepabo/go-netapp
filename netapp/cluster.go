@@ -5,15 +5,15 @@ import (
 	"net/http"
 )
 
-type Cluster struct {
+type ClusterIdentity struct {
 	Base
 	Params struct {
 		XMLName xml.Name
-		*ClusterOptions
+		*ClusterIdentityOptions
 	}
 }
 
-type ClusterInfo struct {
+type ClusterIdentityInfo struct {
 	ClusterContact      string `xml:"cluster-contact,omitempty"`
 	ClusterLocation     string `xml:"cluster-location"`
 	ClusterName         string `xml:"cluster-name"`
@@ -22,20 +22,22 @@ type ClusterInfo struct {
 	UUID                string `xml:"uuid"`
 }
 
-type ClusterOptions struct {
-	DesiredAttributes *ClusterInfo `xml:"desired-attributes,omitempty"`
+type ClusterIdentityOptions struct {
+	DesiredAttributes *ClusterIdentityInfo `xml:"desired-attributes,omitempty"`
 }
 
-type ClusterResponse struct {
-	Attributes struct {
-		*ClusterInfo `xml:"cluster-identity-info,omitempty"`
-	} `xml:"attributes"`
+type ClusterIdentityResponse struct {
+	XMLName xml.Name `xml:"netapp"`
+	Results struct {
+		ResultBase
+		ClusterIdentityInfo []ClusterIdentityInfo `xml:"attributes>cluster-identity-info"`
+	} `xml:"results"`
 }
 
-func (c *Cluster) List(options *ClusterOptions) (*ClusterResponse, *http.Response, error) {
+func (c *ClusterIdentity) List(options *ClusterIdentityOptions) (*ClusterIdentityResponse, *http.Response, error) {
 	c.Params.XMLName = xml.Name{Local: "cluster-identity-get"}
-	c.Params.ClusterOptions = options
-	r := ClusterResponse{}
+	c.Params.ClusterIdentityOptions = options
+	r := ClusterIdentityResponse{}
 	res, err := c.get(c, &r)
 	return &r, res, err
 }

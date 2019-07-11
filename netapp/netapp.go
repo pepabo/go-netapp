@@ -32,7 +32,7 @@ type Client struct {
 	AggregateSpace   *AggregateSpace
 	AggregateSpares  *AggregateSpares
 	Cf               *Cf
-	Cluster          *Cluster
+	ClusterIdentity  *ClusterIdentity
 	Diagnosis        *Diagnosis
 	Fcp              *Fcp
 	Fcport           *Fcport
@@ -116,7 +116,7 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 		Base: b,
 	}
 
-	c.Cluster = &Cluster{
+	c.ClusterIdentity = &ClusterIdentity{
 		Base: b,
 	}
 	c.Cf = &Cf{
