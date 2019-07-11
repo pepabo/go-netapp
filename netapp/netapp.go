@@ -32,6 +32,7 @@ type Client struct {
 	AggregateSpace   *AggregateSpace
 	AggregateSpares  *AggregateSpares
 	Cf               *Cf
+	Cluster          *Cluster
 	Diagnosis        *Diagnosis
 	Fcp              *Fcp
 	Fcport           *Fcport
