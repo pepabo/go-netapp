@@ -72,6 +72,7 @@ func DefaultOptions() *ClientOptions {
 
 func NewClient(endpoint string, version string, options *ClientOptions) *Client {
 	if options == nil {
+		gi
 		options = DefaultOptions()
 	}
 
@@ -115,6 +116,9 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 		Base: b,
 	}
 
+	c.Cluster = &Cluster{
+		Base: b,
+	}
 	c.Cf = &Cf{
 		Base: b,
 	}
