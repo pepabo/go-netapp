@@ -73,7 +73,6 @@ func DefaultOptions() *ClientOptions {
 
 func NewClient(endpoint string, version string, options *ClientOptions) *Client {
 	if options == nil {
-		gi
 		options = DefaultOptions()
 	}
 
