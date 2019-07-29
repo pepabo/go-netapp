@@ -14,51 +14,51 @@ type StorageDisk struct {
 }
 
 type StorageDiskInfo struct {
-	DiskInventoryInfo DiskInventoryInfo `xml:"disk-inventory-info"`
-	DiskName          string            `xml:"disk-name"`
-	DiskOwnershipInfo DiskOwnershipInfo `xml:"disk-ownership-info"`
+	DiskInventoryInfo *DiskInventoryInfo `xml:"disk-inventory-info,omitempty"`
+	DiskName          string            `xml:"disk-name,omitempty"`
+	DiskOwnershipInfo *DiskOwnershipInfo `xml:"disk-ownership-info,omitempty"`
 }
 
 type DiskInventoryInfo struct {
-	BytesPerSector                 int    `xml:"bytes-per-sector"`
-	CapacitySectors                int    `xml:"capacity-sectors"`
-	ChecksumCompatibility          string `xml:"checksum-compatibility"`
-	DiskClusterName                string `xml:"disk-cluster-name"`
-	DiskType                       string `xml:"disk-type"`
-	DiskUid                        string `xml:"disk-uid"`
-	FirmwareRevision               string `xml:"firmware-revision"`
-	GrownDefectListCount           int    `xml:"grown-defect-list-count"`
-	HealthMonitorTimeInterval      int    `xml:"health-monitor-time-interval"`
-	ImportInProgress               bool   `xml:"import-in-progress"`
-	IsDynamicallyQualified         bool   `xml:"is-dynamically-qualified"`
-	IsMultidiskCarrier             bool   `xml:"is-multidisk-carrier"`
-	IsShared                       bool   `xml:"is-shared"`
-	MediaScrubCount                int    `xml:"media-scrub-count"`
-	MediaScrubLastDoneTimeInterval int    `xml:"media-scrub-last-done-time-interval"`
-	Model                          string `xml:"model"`
-	ReservationKey                 string `xml:"reservation-key"`
-	ReservationType                string `xml:"reservation-type"`
-	RightSizeSectors               int    `xml:"right-size-sectors"`
-	Rpm                            int    `xml:"rpm"`
-	SerialNumber                   string `xml:"serial-number"`
-	Shelf                          string `xml:"shelf"`
-	ShelfBay                       string `xml:"shelf-bay"`
-	ShelfUid                       string `xml:"shelf-uid"`
-	StackID                        int    `xml:"stack-id"`
-	Vendor                         string `xml:"vendor"`
+	BytesPerSector                 int    `xml:"bytes-per-sector,omitempty"`
+	CapacitySectors                int    `xml:"capacity-sectors,omitempty"`
+	ChecksumCompatibility          string `xml:"checksum-compatibility,omitempty"`
+	DiskClusterName                string `xml:"disk-cluster-name,omitempty"`
+	DiskType                       string `xml:"disk-type,omitempty"`
+	DiskUid                        string `xml:"disk-uid,omitempty"`
+	FirmwareRevision               string `xml:"firmware-revision,omitempty"`
+	GrownDefectListCount           int    `xml:"grown-defect-list-count,omitempty"`
+	HealthMonitorTimeInterval      int    `xml:"health-monitor-time-interval,omitempty"`
+	ImportInProgress               *bool   `xml:"import-in-progress,omitempty"`
+	IsDynamicallyQualified         *bool   `xml:"is-dynamically-qualified,omitempty"`
+	IsMultidiskCarrier             *bool   `xml:"is-multidisk-carrier,omitempty"`
+	IsShared                       *bool   `xml:"is-shared,omitempty"`
+	MediaScrubCount                int    `xml:"media-scrub-count,omitempty"`
+	MediaScrubLastDoneTimeInterval int    `xml:"media-scrub-last-done-time-interval,omitempty"`
+	Model                          string `xml:"model,omitempty"`
+	ReservationKey                 string `xml:"reservation-key,omitempty"`
+	ReservationType                string `xml:"reservation-type,omitempty"`
+	RightSizeSectors               int    `xml:"right-size-sectors,omitempty"`
+	Rpm                            int    `xml:"rpm,omitempty"`
+	SerialNumber                   string `xml:"serial-number,omitempty"`
+	Shelf                          string `xml:"shelf,omitempty"`
+	ShelfBay                       string `xml:"shelf-bay,omitempty"`
+	ShelfUid                       string `xml:"shelf-uid,omitempty"`
+	StackID                        int    `xml:"stack-id,omitempty"`
+	Vendor                         string `xml:"vendor,omitempty"`
 }
 
 type DiskOwnershipInfo struct {
-	DiskUid          string `xml:"disk-uid"`
-	DrHomeNodeId     int    `xml:"dr-home-node-id"`
-	DrHomeNodeName   string `xml:"dr-home-node-name"`
-	HomeNodeId       int    `xml:"home-node-id"`
-	HomeNodeName     string `xml:"home-node-name"`
-	IsFailed         bool   `xml:"is-failed"`
-	OwnerNodeId      int    `xml:"owner-node-id"`
-	OwnerNodeName    string `xml:"owner-node-name"`
-	Pool             int    `xml:"pool"`
-	ReservedByNodeId int    `xml:"reserved-by-node-id"`
+	DiskUid          string `xml:"disk-uid,omitempty"`
+	DrHomeNodeId     int    `xml:"dr-home-node-id,omitempty"`
+	DrHomeNodeName   string `xml:"dr-home-node-name,omitempty"`
+	HomeNodeId       int    `xml:"home-node-id,omitempty"`
+	HomeNodeName     string `xml:"home-node-name,omitempty"`
+	IsFailed         *bool   `xml:"is-failed,omitempty"`
+	OwnerNodeId      int    `xml:"owner-node-id,omitempty"`
+	OwnerNodeName    string `xml:"owner-node-name,omitempty"`
+	Pool             int    `xml:"pool,omitempty"`
+	ReservedByNodeId int    `xml:"reserved-by-node-id,omitempty"`
 }
 
 type StorageDiskGetIterResponse struct {
@@ -80,6 +80,8 @@ type StorageDiskInfoPageResponse struct {
 }
 
 type StorageDiskOptions struct {
+	DesiredAttributes *StorageDiskInfo `xml:"desired-attributes>storage-disk-info,omitempty"`
+	Query             *StorageDiskInfo `xml:"query>storage-disk-info,omitempty"`
 	MaxRecords int    `xml:"max-records,omitempty"`
 	Tag        string `xml:"tag,omitempty"`
 }
