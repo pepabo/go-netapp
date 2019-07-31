@@ -159,6 +159,10 @@ type VolumeSpaceAttributes struct {
 	IsFilesysSizeFixed              string `xml:"is-filesys-size-fixed,omitempty"`
 	IsSpaceGuaranteeEnabled         string `xml:"is-space-guarantee-enabled,omitempty"`
 	IsSpaceSloEnabled               string `xml:"is-space-slo-enabled,omitempty"`
+	LogicalUsed						string `xml:"logical-used"`
+	LogicalUsedByAfs				string `xml:"logical-used-by-afs"`
+	LogicalUsedBySnapshot			string `xml:"logical-used-by-snapshot"`
+	LogicalUsedPercent				string `xml:"logical-used-percent"`
 	OverwriteReserve                string `xml:"overwrite-reserve,omitempty"`
 	OverwriteReserveRequired        string `xml:"overwrite-reserve-required,omitempty"`
 	OverwriteReserveUsed            string `xml:"overwrite-reserve-used,omitempty"`
