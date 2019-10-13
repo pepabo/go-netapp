@@ -76,6 +76,10 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 		options = DefaultOptions()
 	}
 
+	if options.Timeout == 0 {
+		options.Timeout = 60 * time.Second
+	}
+
 	httpClient := &http.Client{
 		Timeout: options.Timeout,
 		Transport: &http.Transport{
