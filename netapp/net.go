@@ -149,7 +149,7 @@ type NetInterfaceInfo struct {
 	Role                 string    `xml:"role,omitempty"`
 	RoutingGroupName     string    `xml:"routing-group-name,omitempty"`
 	UseFailoverGroup     string    `xml:"use-failover-group,omitempty"`
-	Vserver              string    `xml:"vserver"`
+	Vserver              string    `xml:"vserver,omitempty"`
 }
 
 type NetInterfaceGetIterResponse struct {
