@@ -21,31 +21,31 @@ type NetPortOptions struct {
 }
 
 type NetPortInfo struct {
-	AdministrativeDuplex          string `xml:"administrative-duplex"`
-	AdministrativeFlowcontrol     string `xml:"administrative-flowcontrol"`
-	AdministrativeSpeed           string `xml:"administrative-speed"`
-	AutorevertDelay               int    `xml:"autorevert-delay"`
-	IfgrpDistributionFunction     string `xml:"ifgrp-distribution-function"`
-	IfgrpMode                     string `xml:"ifgrp-mode"`
-	IfgrpNode                     string `xml:"ifgrp-node"`
-	IfgrpPort                     string `xml:"ifgrp-port"`
-	IsAdministrativeAutoNegotiate bool   `xml:"is-administrative-auto-negotiate"`
-	IsAdministrativeUp            bool   `xml:"is-administrative-up"`
-	IsOperationalAutoNegotiate    bool   `xml:"is-operational-auto-negotiate"`
-	LinkStatus                    string `xml:"link-status"`
-	MacAddress                    string `xml:"mac-address"`
-	Mtu                           int    `xml:"mtu"`
-	Node                          string `xml:"node"`
-	OperationalDuplex             string `xml:"operational-duplex"`
-	OperationalFlowcontrol        string `xml:"operational-flowcontrol"`
-	OperationalSpeed              string `xml:"operational-speed"`
-	Port                          string `xml:"port"`
-	PortType                      string `xml:"port-type"`
-	RemoteDeviceId                string `xml:"remote-device-id"`
-	Role                          string `xml:"role"`
-	VlanId                        int    `xml:"vlan-id"`
-	VlanNode                      string `xml:"vlan-node"`
-	VlanPort                      string `xml:"vlan-port"`
+	AdministrativeDuplex          string `xml:"administrative-duplex,omitempty"`
+	AdministrativeFlowcontrol     string `xml:"administrative-flowcontrol,omitempty"`
+	AdministrativeSpeed           string `xml:"administrative-speed,omitempty"`
+	AutorevertDelay               int    `xml:"autorevert-delay,omitempty"`
+	IfgrpDistributionFunction     string `xml:"ifgrp-distribution-function,omitempty"`
+	IfgrpMode                     string `xml:"ifgrp-mode,omitempty"`
+	IfgrpNode                     string `xml:"ifgrp-node,omitempty"`
+	IfgrpPort                     string `xml:"ifgrp-port,omitempty"`
+	IsAdministrativeAutoNegotiate bool   `xml:"is-administrative-auto-negotiate,omitempty"`
+	IsAdministrativeUp            bool   `xml:"is-administrative-up,omitempty"`
+	IsOperationalAutoNegotiate    bool   `xml:"is-operational-auto-negotiate,omitempty"`
+	LinkStatus                    string `xml:"link-status,omitempty"`
+	MacAddress                    string `xml:"mac-address,omitempty"`
+	Mtu                           int    `xml:"mtu,omitempty"`
+	Node                          string `xml:"node,omitempty"`
+	OperationalDuplex             string `xml:"operational-duplex,omitempty"`
+	OperationalFlowcontrol        string `xml:"operational-flowcontrol,omitempty"`
+	OperationalSpeed              string `xml:"operational-speed,omitempty"`
+	Port                          string `xml:"port,omitempty"`
+	PortType                      string `xml:"port-type,omitempty"`
+	RemoteDeviceId                string `xml:"remote-device-id,omitempty"`
+	Role                          string `xml:"role,omitempty"`
+	VlanId                        int    `xml:"vlan-id,omitempty"`
+	VlanNode                      string `xml:"vlan-node,omitempty"`
+	VlanPort                      string `xml:"vlan-port,omitempty"`
 }
 
 type NetPortGetIterResponse struct {
