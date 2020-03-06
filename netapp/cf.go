@@ -58,6 +58,7 @@ type StorageFailoverInfo struct {
 	InterconnectRelatedInfo *InterconnectRelatedInfo `xml:"sfo-interconnect-info>interconnect-related-info"`
 	NodeRelatedInfo         *NodeRelatedInfo         `xml:"sfo-node-info>node-related-info"`
 	TakeoverRelatedInfo     *TakeoverRelatedInfo     `xml:"sfo-takeover-info>takeover-related-info"`
+	GivebackRelatedInfo     *GivebackRelatedInfo     `xml:"sfo-giveback-info>giveback-related-info"`
 }
 
 type InterconnectRelatedInfo struct {
@@ -90,6 +91,10 @@ type TakeoverRelatedInfo struct {
 	TakeoverState             string `xml:"takeover-state"`
 	TimeSinceTakeover         int    `xml:"time-since-takeover"`
 	TimeUntilTakeover         int    `xml:"time-until-takeover"`
+}
+
+type GivebackRelatedInfo struct {
+	GivebackState string `xml:"giveback-state"`
 }
 
 type ClusterFailoverInfoResponse struct {
