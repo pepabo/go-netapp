@@ -55,15 +55,10 @@ type ClusterFailoverInfoOptions struct {
 }
 
 type StorageFailoverInfo struct {
-	SfoInterconnectInfo struct {
-		InterconnectRelatedInfo InterconnectRelatedInfo `xml:"interconnect-related-info"`
-	} `xml:"sfo-interconnect-info"`
-	SfoNodeInfo struct {
-		NodeRelatedInfo NodeRelatedInfo `xml:"node-related-info"`
-	} `xml:"sfo-node-info"`
-	SfoTakeoverInfo struct {
-		TakeoverRelatedInfo TakeoverRelatedInfo `xml:"takeover-related-info"`
-	} `xml:"sfo-takeover-info"`
+	InterconnectRelatedInfo *InterconnectRelatedInfo `xml:"sfo-interconnect-info>interconnect-related-info"`
+	NodeRelatedInfo         *NodeRelatedInfo         `xml:"sfo-node-info>node-related-info"`
+	TakeoverRelatedInfo     *TakeoverRelatedInfo     `xml:"sfo-takeover-info>takeover-related-info"`
+	GivebackRelatedInfo     *GivebackRelatedInfo     `xml:"sfo-giveback-info>giveback-related-info"`
 }
 
 type InterconnectRelatedInfo struct {
@@ -98,15 +93,17 @@ type TakeoverRelatedInfo struct {
 	TimeUntilTakeover         int    `xml:"time-until-takeover"`
 }
 
+type GivebackRelatedInfo struct {
+	GivebackState string `xml:"giveback-state"`
+}
+
 type ClusterFailoverInfoResponse struct {
 	XMLName xml.Name `xml:"netapp"`
 	Results struct {
 		ResultBase
-		AttributesList struct {
-			StorageFailoverInfo []StorageFailoverInfo `xml:"storage-failover-info"`
-		} `xml:"attributes-list"`
-		NextTag    string `xml:"next-tag"`
-		NumRecords int    `xml:"num-records"`
+		AttributesList []StorageFailoverInfo `xml:"attributes-list>storage-failover-info"`
+		NextTag        string                `xml:"next-tag"`
+		NumRecords     int                   `xml:"num-records"`
 	} `xml:"results"`
 }
 
