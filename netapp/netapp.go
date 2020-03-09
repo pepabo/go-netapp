@@ -31,6 +31,7 @@ type Client struct {
 	Aggregate        *Aggregate
 	AggregateSpace   *AggregateSpace
 	AggregateSpares  *AggregateSpares
+	Certificate      *Certificate
 	Cf               *Cf
 	ClusterIdentity  *ClusterIdentity
 	Diagnosis        *Diagnosis
@@ -117,6 +118,10 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 	}
 
 	c.AggregateSpares = &AggregateSpares{
+		Base: b,
+	}
+
+	c.Certificate = &Certificate{
 		Base: b,
 	}
 
