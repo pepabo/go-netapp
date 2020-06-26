@@ -26,7 +26,8 @@ type VServerIgroupInfo struct {
 	PortsetName        string    `xml:"initiator-group-portset-name,omitempty"`
 	InitiatorGroupName string    `xml:"initiator-group-name,omitempty"`
 	InitiatorGroupUUID string    `xml:"initiator-group-uuid,omitempty"`
-	Initiators         *[]string `xml:"initiators>initiator-name,omitempty"`
+	Initiators         *[]string `xml:"initiators>initiator-info,omitempty"`
+	InitiatorName      string    `xml:"initiators>initiator-info>initiator-name,omitempty"`
 }
 
 // VServerIgroupsResponse creates correct response obj
@@ -38,13 +39,13 @@ type VServerIgroupsResponse struct {
 }
 
 // AddInitiator add an initiator to an igroup
-func (v VServer) AddInitiator(vServerName string, iGroupName string, initiators *[]string) (*VServerIgroupsResponse, *http.Response, error) {
+func (v VServer) AddInitiator(vServerName string, iGroupName string, initiator string) (*VServerIgroupsResponse, *http.Response, error) {
 	req := v.newVServerIgroupsRequest()
 	req.Base.Name = vServerName
 	req.Params.XMLName = xml.Name{Local: "igroup-add"}
 	req.Params.VServerIgroupInfo = VServerIgroupInfo{
 		InitiatorGroupName: iGroupName,
-		Initiators:         initiators,
+		InitiatorName:      initiator,
 	}
 
 	r := &VServerIgroupsResponse{}
