@@ -56,7 +56,7 @@ func (v VServer) ListExportRules(vServerName string, exportPolicy string) (*Expo
 	req.Base.Name = vServerName
 	req.Params.XMLName = xml.Name{Local: "export-rule-get-iter"}
 	req.Params.VServerExportRuleInfo = VServerExportRuleInfo{
-		PolicyName: exportPolicy,
+		// PolicyName: exportPolicy,
 	}
 
 	r := &ExportRuleListResponse{}
@@ -82,8 +82,8 @@ func (v VServer) DeleteExportRule(vServerName string, policyName string, ruleInd
 	req.Base.Name = vServerName
 	req.Params.XMLName = xml.Name{Local: "export-rule-destroy"}
 	req.Params.VServerExportRuleInfo = VServerExportRuleInfo{
-		// PolicyName: policyName,
-		RuleIndex: ruleIndex,
+		PolicyName: policyName,
+		RuleIndex:  ruleIndex,
 	}
 
 	r := &VServerExportsResponse{}
