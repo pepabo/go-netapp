@@ -39,33 +39,32 @@ type VServerIgroupsResponse struct {
 
 // AddInitiator add an initiator to an igroup
 func (v Vserver) AddInitiator(vServerName string, iGroupName string, initiators *[]string, options *VServerIgroupInfo) (*VServerIgroupsResponse, *http.Response, error) {
-		req := v.newVServerIgroupsRequest()
-		req.Base.Name = vServerName
-		req.Params.XMLName = xml.Name{Local: "igroup-add"}
-		req.Params.VServerIgroupInfo = VServerIgroupInfo{
-			InitiatorGroupName: iGroupName,
-			Initiators: initiators
-		}
+	req := v.newVServerIgroupsRequest()
+	req.Base.Name = vServerName
+	req.Params.XMLName = xml.Name{Local: "igroup-add"}
+	req.Params.VServerIgroupInfo = VServerIgroupInfo{
+		InitiatorGroupName: iGroupName,
+		Initiators:         initiators,
+	}
 
-		r := &VServerIgroupsResponse{}
-		res, err := v.get(req, r)
-		return r, res, err
+	r := &VServerIgroupsResponse{}
+	res, err := v.get(req, r)
+	return r, res, err
 }
 
-RemoveInitiator add an initiator to an igroup
+// RemoveInitiator add an initiator to an igroup
 func (v Vserver) RemoveInitiator(vServerName string, iGroupName string, initiators *[]string) (*VServerIgroupsResponse, *http.Response, error) {
-	 		req := v.newVServerIgroupsRequest()
-		req.Base.Name = vServerName
-		req.Params.XMLName = xml.Name{Local: "igroup-remove"}
-		req.Params.VServerIgroupInfo = VServerIgroupInfo{
-			InitiatorGroupName: iGroupName,
-			Initiators: initiators,
-		}
+	req := v.newVServerIgroupsRequest()
+	req.Base.Name = vServerName
+	req.Params.XMLName = xml.Name{Local: "igroup-remove"}
+	req.Params.VServerIgroupInfo = VServerIgroupInfo{
+		InitiatorGroupName: iGroupName,
+		Initiators:         initiators,
+	}
 
-		r := &VServerIgroupsResponse{}
-		res, err := v.get(req, r)
-		return r, res, err
-	
+	r := &VServerIgroupsResponse{}
+	res, err := v.get(req, r)
+	return r, res, err
 
 }
 
