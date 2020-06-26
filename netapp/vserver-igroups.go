@@ -27,7 +27,7 @@ type VServerIgroupInfo struct {
 	InitiatorGroupName string `xml:"initiator-group-name,omitempty"`
 	InitiatorGroupUUID string `xml:"initiator-group-uuid,omitempty"`
 	//Initiators         *[]string `xml:"initiators>initiator-info,omitempty"`
-	InitiatorName string `xml:"initiator-name,omitempty"`
+	InitiatorName string `xml:"initiator,omitempty"`
 }
 
 // VServerIgroupsResponse creates correct response obj
