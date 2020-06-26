@@ -62,7 +62,7 @@ func (v VServer) RemoveInitiator(vServerName string, iGroupName string, initiato
 	req.Params.VServerIgroupInfo = VServerIgroupInfo{
 		InitiatorGroupName: iGroupName,
 		InitiatorName:      initiator,
-		Force: force
+		Force:              force,
 	}
 
 	r := &VServerIgroupsResponse{}
