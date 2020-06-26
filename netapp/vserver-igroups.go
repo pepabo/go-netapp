@@ -28,7 +28,7 @@ type VServerIgroupInfo struct {
 	InitiatorGroupUUID string `xml:"initiator-group-uuid,omitempty"`
 	//Initiators         *[]string `xml:"initiators>initiator-info,omitempty"`
 	InitiatorName string `xml:"initiator,omitempty"`
-	Force         bool   `xml:"force_remove,omitempty"`
+	Force         bool   `xml:"force,omitempty"`
 }
 
 // VServerIgroupsResponse creates correct response obj
