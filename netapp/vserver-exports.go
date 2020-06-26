@@ -61,7 +61,6 @@ type VServerExportRuleListPagesResponse struct {
 
 // ListExportRules list the rules of an export policy
 func (v VServer) ListExportRules(vServerName string, exportPolicy string, options *VServerExportRuleInfo) (*VServerExportRuleListResponse, *http.Response, error) {
-	v.Name = vServerName
 	v.Params.XMLName = xml.Name{Local: "export-rule-get-iter"}
 	v.Params.VServerExportRuleInfo = VServerExportRuleInfo{
 		PolicyName: exportPolicy,
