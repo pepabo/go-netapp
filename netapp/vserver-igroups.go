@@ -38,9 +38,7 @@ type VServerIgroupsResponse struct {
 }
 
 // AddInitiator add an initiator to an igroup
-func (v Vserver) AddInitiator(vServerName string, iGroupName string, initiators *[]string,
-	options *VServerIgroupInfo) (*VServerIgroupsResponse, *http.Response, error) 
-	{
+func (v Vserver) AddInitiator(vServerName string, iGroupName string, initiators *[]string, options *VServerIgroupInfo) (*VServerIgroupsResponse, *http.Response, error) {
 		req := v.newVServerIgroupsRequest()
 		req.Base.Name = vServerName
 		req.Params.XMLName = xml.Name{Local: "igroup-add"}
@@ -55,8 +53,7 @@ func (v Vserver) AddInitiator(vServerName string, iGroupName string, initiators 
 }
 
 RemoveInitiator add an initiator to an igroup
-func (v Vserver) RemoveInitiator(vServerName string, iGroupName string, initiators *[]string)
- (*VServerIgroupsResponse, *http.Response, error) {
+func (v Vserver) RemoveInitiator(vServerName string, iGroupName string, initiators *[]string) (*VServerIgroupsResponse, *http.Response, error) {
 	 		req := v.newVServerIgroupsRequest()
 		req.Base.Name = vServerName
 		req.Params.XMLName = xml.Name{Local: "igroup-remove"}
