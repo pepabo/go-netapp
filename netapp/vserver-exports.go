@@ -61,7 +61,7 @@ func (v VServer) ListExportRules(vServerName string, exportPolicy string) (*Expo
 
 	r := &ExportRuleListResponse{}
 	res, err := req.get(req, &r)
-	return &r, res, err
+	return r, res, err
 }
 
 // CreateExportRule creates a new export rule for a given vserver
