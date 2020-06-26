@@ -23,8 +23,8 @@ type vServerIgroupInfo struct {
 
 // VServerIgroupInfo sets all different options for the igroup
 type VServerIgroupInfo struct {
-	PortsetName        string    `xml:"initiator-group-portset-name,omitempty`
-	InitiatorGroupName string    `xml:"initiator-group-name,omitempty`
+	PortsetName        string    `xml:"initiator-group-portset-name,omitempty"`
+	InitiatorGroupName string    `xml:"initiator-group-name,omitempty"`
 	InitiatorGroupUUID string    `xml:"initiator-group-uuid,omitempty"`
 	Initiators         *[]string `xml:"initiators>initiator-name,omitempty"`
 }
