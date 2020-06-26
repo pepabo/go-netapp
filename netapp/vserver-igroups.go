@@ -28,6 +28,7 @@ type VServerIgroupInfo struct {
 	InitiatorGroupUUID string `xml:"initiator-group-uuid,omitempty"`
 	//Initiators         *[]string `xml:"initiators>initiator-info,omitempty"`
 	InitiatorName string `xml:"initiator,omitempty"`
+	Force         bool   `xml:"force_remove,omitempty"`
 }
 
 // VServerIgroupsResponse creates correct response obj
@@ -54,13 +55,14 @@ func (v VServer) AddInitiator(vServerName string, iGroupName string, initiator s
 }
 
 // RemoveInitiator add an initiator to an igroup
-func (v VServer) RemoveInitiator(vServerName string, iGroupName string, initiator string) (*VServerIgroupsResponse, *http.Response, error) {
+func (v VServer) RemoveInitiator(vServerName string, iGroupName string, initiator string, force bool) (*VServerIgroupsResponse, *http.Response, error) {
 	req := v.newVServerIgroupsRequest()
 	req.Base.Name = vServerName
 	req.Params.XMLName = xml.Name{Local: "igroup-remove"}
 	req.Params.VServerIgroupInfo = VServerIgroupInfo{
 		InitiatorGroupName: iGroupName,
 		InitiatorName:      initiator,
+		Force: force
 	}
 
 	r := &VServerIgroupsResponse{}
