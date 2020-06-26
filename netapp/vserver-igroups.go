@@ -23,11 +23,11 @@ type vServerIgroupInfo struct {
 
 // VServerIgroupInfo sets all different options for the igroup
 type VServerIgroupInfo struct {
-	PortsetName        string    `xml:"initiator-group-portset-name,omitempty"`
-	InitiatorGroupName string    `xml:"initiator-group-name,omitempty"`
-	InitiatorGroupUUID string    `xml:"initiator-group-uuid,omitempty"`
-	Initiators         *[]string `xml:"initiators>initiator-info,omitempty"`
-	InitiatorName      string    `xml:"initiators>initiator-info>initiator-name,omitempty"`
+	PortsetName        string `xml:"initiator-group-portset-name,omitempty"`
+	InitiatorGroupName string `xml:"initiator-group-name,omitempty"`
+	InitiatorGroupUUID string `xml:"initiator-group-uuid,omitempty"`
+	//Initiators         *[]string `xml:"initiators>initiator-info,omitempty"`
+	InitiatorName string `xml:"initiators>initiator-info>initiator-name,omitempty"`
 }
 
 // VServerIgroupsResponse creates correct response obj
@@ -60,7 +60,6 @@ func (v VServer) RemoveInitiator(vServerName string, iGroupName string, initiato
 	req.Params.XMLName = xml.Name{Local: "igroup-remove"}
 	req.Params.VServerIgroupInfo = VServerIgroupInfo{
 		InitiatorGroupName: iGroupName,
-		Initiators:         initiators,
 	}
 
 	r := &VServerIgroupsResponse{}
