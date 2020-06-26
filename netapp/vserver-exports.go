@@ -13,10 +13,6 @@ type vServerExportsRequest struct {
 	}
 }
 
-type VServerExportRuleQuery struct {
-	VServerExportRuleInfo *LunInfo `xml:"export-rule-info,omitempty"`
-}
-
 // VServerExportRuleInfo sets all different options for Export Rules
 type VServerExportRuleInfo struct {
 	AnonymousUserID           int       `xml:"anonymous-user-id,omitempty"`
@@ -39,36 +35,6 @@ type VServerExportsResponse struct {
 	Results struct {
 		SingleResultBase
 	} `xml:"results"`
-}
-
-type VServerExportRuleListResponse struct {
-	XMLName xml.Name `xml:"netapp"`
-	Results struct {
-		ResultBase
-		AttributesList struct {
-			VserverExportRuleInfo []VServerExportRuleInfo `xml:"export-rule-info"`
-		} `xml:"attributes-list"`
-		NextTag    string `xml:"next-tag"`
-		NumRecords int    `xml:"num-records"`
-	} `xml:"results"`
-}
-
-type VServerExportRuleListPagesResponse struct {
-	Response    *LunListResponse
-	Error       error
-	RawResponse *http.Response
-}
-
-// ListExportRules list the rules of an export policy
-func (v VServer) ListExportRules(vServerName string, exportPolicy string, options *VServerExportRuleInfo) (*VServerExportRuleListResponse, *http.Response, error) {
-	v.Params.XMLName = xml.Name{Local: "export-rule-get-iter"}
-	v.Params.VServerExportRuleInfo = VServerExportRuleInfo{
-		PolicyName: exportPolicy,
-	}
-
-	r := VServerExportRuleListResponse{}
-	res, err := v.get(v, &r)
-	return &r, res, err
 }
 
 // CreateExportRule creates a new export rule for a given vserver
