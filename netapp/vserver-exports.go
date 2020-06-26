@@ -11,11 +11,11 @@ type vServerExportsRequest struct {
 		XMLName               xml.Name
 		VServerExportRuleInfo `xml:",innerxml"`
 	}
-}type  VServerExportRuleQuery struct {
-	VServerExportRuleInfo *LunInfo `xml:"export-rule-info,omitempty"`
 }
 
-
+type VServerExportRuleQuery struct {
+	VServerExportRuleInfo *LunInfo `xml:"export-rule-info,omitempty"`
+}
 
 // VServerExportRuleInfo sets all different options for Export Rules
 type VServerExportRuleInfo struct {
