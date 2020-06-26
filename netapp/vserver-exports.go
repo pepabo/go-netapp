@@ -63,6 +63,20 @@ func (v VServer) DeleteExportRule(vServerName string, policyName string, ruleInd
 	res, err := v.get(req, r)
 	return r, res, err
 }
+// DeleteExportRule removes an export rule for a given vserver, policy and rule index
+func (v VServer) DeleteExportRuleByClientMatch(vServerName string, policyName string clientMatch string) (*VServerExportsResponse, *http.Response, error) {
+	req := v.newVServerExportsRequest()
+	req.Base.Name = vServerName
+	req.Params.XMLName = xml.Name{Local: "export-rule-destroy"}
+	req.Params.VServerExportRuleInfo = VServerExportRuleInfo{
+		PolicyName: policyName,
+		ClientMatch:  clientMatch,
+	}
+
+	r := &VServerExportsResponse{}
+	res, err := v.get(req, r)
+	return r, res, err
+}
 
 func (v VServer) newVServerExportsRequest() *vServerExportsRequest {
 	return &vServerExportsRequest{
