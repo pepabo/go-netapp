@@ -51,14 +51,12 @@ type ExportRuleListResponse struct {
 	} `xml:"results"`
 }
 
-func (v VServer) ListExportRules(vServerName string, exportPolicy string) (*ExportRuleListResponse, *http.Response, error) {
+// ListExportRules lists all export rules on a vserver
+func (v VServer) ListExportRules(vServerName string) (*[]VServerExportRuleInfo, *http.Response, error) {
 	req := v.newVServerExportsRequest()
 	req.Base.Name = vServerName
 	req.Params.XMLName = xml.Name{Local: "export-rule-get-iter"}
-	req.Params.VServerExportRuleInfo = VServerExportRuleInfo{
-		// PolicyName: exportPolicy,
-	}
-
+	req.Params.VServerExportRuleInfo = VServerExportRuleInfo{}
 	r := &ExportRuleListResponse{}
 	res, err := req.get(req, r)
 	return r, res, err
