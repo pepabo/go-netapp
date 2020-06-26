@@ -55,7 +55,7 @@ func (v VServer) ListExportRules(vServerName string, exportPolicy string) (*Expo
 	req := v.newVServerExportsRequest()
 	req.Base.Name = vServerName
 	req.Params.XMLName = xml.Name{Local: "export-rule-get-iter"}
-	req.Params.VServerExportRuleInfo = &{
+	req.Params.VServerExportRuleInfo = &VServerExportRuleInfo{
 		PolicyName: exportPolicy,
 	}
 
