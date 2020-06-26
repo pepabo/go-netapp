@@ -26,7 +26,7 @@ type VServerIgroupInfo struct {
 	PortsetName        string    `xml:"initiator-group-portset-name,omitempty`
 	InitiatorGroupName string    `xml:"initiator-group-name,omitempty`
 	InitiatorGroupUUID string    `xml:"initiator-group-uuid,omitempty"`
-	Initators          *[]string `xml:"initiators>initiator-name,omitempty"`
+	Initiators         *[]string `xml:"initiators>initiator-name,omitempty"`
 }
 
 // VServerIgroupsResponse creates correct response obj
