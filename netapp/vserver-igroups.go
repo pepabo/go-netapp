@@ -54,12 +54,13 @@ func (v VServer) AddInitiator(vServerName string, iGroupName string, initiator s
 }
 
 // RemoveInitiator add an initiator to an igroup
-func (v VServer) RemoveInitiator(vServerName string, iGroupName string, initiators *[]string) (*VServerIgroupsResponse, *http.Response, error) {
+func (v VServer) RemoveInitiator(vServerName string, iGroupName string, initiator string) (*VServerIgroupsResponse, *http.Response, error) {
 	req := v.newVServerIgroupsRequest()
 	req.Base.Name = vServerName
 	req.Params.XMLName = xml.Name{Local: "igroup-remove"}
 	req.Params.VServerIgroupInfo = VServerIgroupInfo{
 		InitiatorGroupName: iGroupName,
+		InitiatorName:      initiator,
 	}
 
 	r := &VServerIgroupsResponse{}
