@@ -11,7 +11,11 @@ type vServerExportsRequest struct {
 		XMLName               xml.Name
 		VServerExportRuleInfo `xml:",innerxml"`
 	}
+}type  VServerExportRuleQuery struct {
+	VServerExportRuleInfo *LunInfo `xml:"export-rule-info,omitempty"`
 }
+
+
 
 // VServerExportRuleInfo sets all different options for Export Rules
 type VServerExportRuleInfo struct {
@@ -44,7 +48,15 @@ type VServerExportRuleListResponse struct {
 		AttributesList struct {
 			VserverExportRuleInfo []VServerExportRuleInfo `xml:"export-rule-info"`
 		} `xml:"attributes-list"`
+		NextTag    string `xml:"next-tag"`
+		NumRecords int    `xml:"num-records"`
 	} `xml:"results"`
+}
+
+type VServerExportRuleListPagesResponse struct {
+	Response    *LunListResponse
+	Error       error
+	RawResponse *http.Response
 }
 
 // ListExportRules list the rules of an export policy
