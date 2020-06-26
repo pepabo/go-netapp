@@ -60,7 +60,7 @@ func (v VServer) ListExportRules(vServerName string, exportPolicy string) (*Expo
 	}
 
 	r := &ExportRuleListResponse{}
-	res, err := req.get(req, &r)
+	res, err := req.get(req, r)
 	return r, res, err
 }
 
