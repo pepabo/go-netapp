@@ -202,6 +202,9 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 	c.VolumeOperations = &VolumeOperation{
 		Base: b,
 	}
+	c.LunOperations = &LunOperation{
+		Base: b,
+	}
 
 	c.VServer = &VServer{
 		Base: b,
