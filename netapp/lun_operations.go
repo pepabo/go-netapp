@@ -12,8 +12,6 @@ const (
 	LunOfflineOperation = "lun-offline"
 	LunDestroyOperation = "lun-destroy"
 	LunCreateOperation  = "lun-create-by-size"
-	LunMapOperation     = "lun-map"
-	LunUnmapOperation   = "lun-unmap"
 )
 
 type LunOperation struct {
@@ -22,8 +20,6 @@ type LunOperation struct {
 		XMLName xml.Name
 		LunPath *lunPath
 		LunCreateOptions
-		LunMapOptions
-		LunUnmapOptions
 	}
 }
 
@@ -47,18 +43,6 @@ type LunCreateOptions struct {
 	UseExactSize            bool   `xml:"use-exact-size,omitempty"`
 }
 
-type LunMapOptions struct {
-	Force          bool   `xml:"force,omitempty"`
-	InitiatorGroup string `xml:"initiator-group,omitempty"`
-	LunId          int    `xml:"lun-id,omitempty"`
-	Path           string `xml:"path,omitempty"`
-}
-
-type LunUnmapOptions struct {
-	InitiatorGroup string `xml:"initiator-group,omitempty"`
-	Path           string `xml:"path,omitempty"`
-}
-
 func (l LunOperation) Create(vserverName string, options *LunCreateOptions) (*SingleResultResponse, *http.Response, error) {
 	l.Params.XMLName = xml.Name{Local: LunCreateOperation}
 	l.Name = vserverName
@@ -66,25 +50,6 @@ func (l LunOperation) Create(vserverName string, options *LunCreateOptions) (*Si
 	r := SingleResultResponse{}
 	res, err := l.get(l, &r)
 	return &r, res, err
-}
-
-func (l LunOperation) Map(vserverName string, options *LunMapOptions) (*SingleResultResponse, *http.Response, error) {
-	l.Params.XMLName = xml.Name{Local: LunMapOperation}
-	l.Name = vserverName
-	l.Params.LunMapOptions = *options
-	r := SingleResultResponse{}
-	res, err := l.get(l, &r)
-	return &r, res, err
-
-}
-func (l LunOperation) Unmap(vserverName string, lunPathName string, options *LunUnmapOptions) (*SingleResultResponse, *http.Response, error) {
-	l.Params.XMLName = xml.Name{Local: LunUnmapOperation}
-	l.Name = vserverName
-	l.Params.LunUnmapOptions = *options
-	r := SingleResultResponse{}
-	res, err := l.get(l, &r)
-	return &r, res, err
-
 }
 
 func (l LunOperation) Operation(vserverName string, lunPathName string, operation string) (*SingleResultResponse, *http.Response, error) {
