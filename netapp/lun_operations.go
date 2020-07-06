@@ -8,8 +8,8 @@ import (
 // LUN Operations
 
 const (
-	LUNOfflineOperation = "lun-offline"
-	LUNDestroyOperation = "lun-destroy"
+	LunOfflineOperation = "lun-offline"
+	LunDestroyOperation = "lun-destroy"
 )
 
 type LunOperation struct {
