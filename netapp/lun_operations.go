@@ -13,6 +13,7 @@ const (
 	LunDestroyOperation = "lun-destroy"
 	LunCreateOperation  = "lun-create-by-size"
 	LunMapOperation     = "lun-map"
+	LunUnmapOperation   = "lun-unmap"
 )
 
 type LunOperation struct {
@@ -62,6 +63,22 @@ func (l LunOperation) Create(vserverName string, options *LunCreateOptions) (*Si
 
 func (l LunOperation) Map(vserverName string, lunPathName string, initiatorGroup string) (*SingleResultResponse, *http.Response, error) {
 	l.Params.XMLName = xml.Name{Local: LunMapOperation}
+	l.Name = vserverName
+	l.Params.LunInitiatorGroup = &lunInitiatorGroup{
+		XMLName:        xml.Name{Local: "initiator-group"},
+		InitiatorGroup: initiatorGroup,
+	}
+	l.Params.LunPath = &lunPath{
+		XMLName: xml.Name{Local: "path"},
+		Path:    lunPathName,
+	}
+	r := SingleResultResponse{}
+	res, err := l.get(l, &r)
+	return &r, res, err
+}
+
+func (l LunOperation) Unmap(vserverName string, lunPathName string, initiatorGroup string) (*SingleResultResponse, *http.Response, error) {
+	l.Params.XMLName = xml.Name{Local: LunUnmapOperation}
 	l.Name = vserverName
 	l.Params.LunInitiatorGroup = &lunInitiatorGroup{
 		XMLName:        xml.Name{Local: "initiator-group"},
