@@ -19,6 +19,7 @@ type LunOperation struct {
 	Params struct {
 		XMLName xml.Name
 		LunPath *lunPath
+		LunCreateOptions
 	}
 }
 
