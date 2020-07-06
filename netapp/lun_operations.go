@@ -68,7 +68,7 @@ func (l LunOperation) Create(vserverName string, options *LunCreateOptions) (*Si
 	return &r, res, err
 }
 
-func (l LunOperation) Map(vserverName string, lunPathName string, options *LunMapOptions) (*SingleResultResponse, *http.Response, error) {
+func (l LunOperation) Map(vserverName string, options *LunMapOptions) (*SingleResultResponse, *http.Response, error) {
 	l.Params.XMLName = xml.Name{Local: LunMapOperation}
 	l.Name = vserverName
 	l.Params.LunMapOptions = *options
