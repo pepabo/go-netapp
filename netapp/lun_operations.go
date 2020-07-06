@@ -12,6 +12,7 @@ const (
 	LunOfflineOperation = "lun-offline"
 	LunDestroyOperation = "lun-destroy"
 	LunCreateOperation  = "lun-create-by-size"
+	LunMapOperation     = "lun-map"
 )
 
 type LunOperation struct {
@@ -63,14 +64,16 @@ func (l LunOperation) Map(vserverName string, lunPathName string, initiatorGroup
 	l.Params.XMLName = xml.Name{Local: LunMapOperation}
 	l.Name = vserverName
 	l.Params.LunInitiatorGroup = &lunInitiatorGroup{
-		XMLName: xml.Name{Local: "initiator-group"},
-		Path:    initiatorGroup,
+		XMLName:        xml.Name{Local: "initiator-group"},
+		InitiatorGroup: initiatorGroup,
 	}
 	l.Params.LunPath = &lunPath{
 		XMLName: xml.Name{Local: "path"},
 		Path:    lunPathName,
 	}
-	l.Params.LunPath = lunPath
+	r := SingleResultResponse{}
+	res, err := l.get(l, &r)
+	return &r, res, err
 }
 
 func (l LunOperation) Operation(vserverName string, lunPathName string, operation string) (*SingleResultResponse, *http.Response, error) {
