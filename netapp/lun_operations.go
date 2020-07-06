@@ -76,7 +76,7 @@ func (l LunOperation) Map(vserverName string, lunPathName string, options *LunMa
 
 }
 func (l LunOperation) Unmap(vserverName string, lunPathName string, options *LunUnmapOptions) (*SingleResultResponse, *http.Response, error) {
-	l.Params.XMLName = xml.Name{Local: LunUnapOperation}
+	l.Params.XMLName = xml.Name{Local: LunUnmapOperation}
 	l.Name = vserverName
 	l.Params.LunUnmapOptions = *options
 	r := SingleResultResponse{}
