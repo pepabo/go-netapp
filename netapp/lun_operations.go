@@ -11,6 +11,7 @@ const (
 	LunOnlineOperation  = "lun-online"
 	LunOfflineOperation = "lun-offline"
 	LunDestroyOperation = "lun-destroy"
+	LunCreateOperation  = "lun-create-by-size"
 )
 
 type LunOperation struct {
