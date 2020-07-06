@@ -35,7 +35,6 @@ type LunCreateOptions struct {
 	PrefixSize              string `xml:"prefix-size,omitempty"`
 	QosAdaptivePolicyGroup  string `xml:"qos-adaptive-policy-group,omitempty"`
 	QosPolicyGroup          string `xml:"qos-policy-group,omitempty"`
-	PrefixSize              string `xml:"prefix-size,omitempty"`
 	SpaceAllocationEnabled  bool   `xml:"space-allocation-enabled,omitempty"`
 	SpaceReservationEnabled bool   `xml:"space-reservation-enabled,omitempty"`
 	UseExactSize            bool   `xml:"use-exact-size,omitempty"`
