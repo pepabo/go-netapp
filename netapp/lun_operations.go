@@ -5,8 +5,7 @@ import (
 	"net/http"
 )
 
-// LUN Operations
-
+// These consts are for defined LUN operations
 const (
 	LunOnlineOperation  = "lun-online"
 	LunOfflineOperation = "lun-offline"
@@ -16,6 +15,7 @@ const (
 	LunUnmapOperation   = "lun-unmap"
 )
 
+// LunOperation is the base struct for volume operations
 type LunOperation struct {
 	Base
 	Params struct {
@@ -36,6 +36,7 @@ type lunInitiatorGroup struct {
 	InitiatorGroup string `xml:",innerxml"`
 }
 
+// LunCreateOptions struct is used for volume creation
 type LunCreateOptions struct {
 	Class                   string `xml:"class,omitempty"`
 	Comment                 string `xml:"comment,omitempty"`
@@ -52,6 +53,7 @@ type LunCreateOptions struct {
 	UseExactSize            bool   `xml:"use-exact-size,omitempty"`
 }
 
+// Create creates a new LUN on a preexisting volume
 func (l LunOperation) Create(vserverName string, options *LunCreateOptions) (*SingleResultResponse, *http.Response, error) {
 	l.Params.XMLName = xml.Name{Local: LunCreateOperation}
 	l.Name = vserverName
@@ -61,6 +63,7 @@ func (l LunOperation) Create(vserverName string, options *LunCreateOptions) (*Si
 	return &r, res, err
 }
 
+// Map maps a LUN to an igroup
 func (l LunOperation) Map(vserverName string, lunPathName string, initiatorGroup string) (*SingleResultResponse, *http.Response, error) {
 	l.Params.XMLName = xml.Name{Local: LunMapOperation}
 	l.Name = vserverName
@@ -77,6 +80,7 @@ func (l LunOperation) Map(vserverName string, lunPathName string, initiatorGroup
 	return &r, res, err
 }
 
+// Unmap unmaps a LUN for an igroup
 func (l LunOperation) Unmap(vserverName string, lunPathName string, initiatorGroup string) (*SingleResultResponse, *http.Response, error) {
 	l.Params.XMLName = xml.Name{Local: LunUnmapOperation}
 	l.Name = vserverName
@@ -93,6 +97,7 @@ func (l LunOperation) Unmap(vserverName string, lunPathName string, initiatorGro
 	return &r, res, err
 }
 
+// Operation runs several operations (from consts defined above with LunOperation* name)
 func (l LunOperation) Operation(vserverName string, lunPathName string, operation string) (*SingleResultResponse, *http.Response, error) {
 	l.Params.XMLName = xml.Name{Local: operation}
 	l.Name = vserverName
