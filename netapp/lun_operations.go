@@ -28,7 +28,7 @@ type lunPath struct {
 func (l LunOperation) Operation(vserverName string, lunPathName string, operation string) (*SingleResultResponse, *http.Response, error) {
 	l.Params.XMLName = xml.Name{Local: operation}
 	l.Name = vserverName
-	elementName := "name"
+	elementName := "path"
 	l.Params.LunPath = &lunPath{
 		XMLName: xml.Name{Local: elementName},
 		Path:    lunPathName,
