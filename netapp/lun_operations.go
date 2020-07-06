@@ -22,6 +22,8 @@ type LunOperation struct {
 		XMLName xml.Name
 		LunPath *lunPath
 		LunCreateOptions
+		LunMapOptions
+		LunUnmapOptions
 	}
 }
 
