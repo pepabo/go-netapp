@@ -40,10 +40,10 @@ type LunCreateOptions struct {
 	UseExactSize            bool   `xml:"use-exact-size,omitempty"`
 }
 
-func (l LunOperation) Create(vserverName string, options *VolumeCreateOptions) (*SingleResultResponse, *http.Response, error) {
-	l.Params.XMLName = xml.Name{Local: VolumeCreateOperation}
+func (l LunOperation) Create(vserverName string, options *LunCreateOptions) (*SingleResultResponse, *http.Response, error) {
+	l.Params.XMLName = xml.Name{Local: LunCreateOperation}
 	l.Name = vserverName
-	l.Params.VolumeCreateOptions = *options
+	l.Params.LunCreateOptions = *options
 	r := SingleResultResponse{}
 	res, err := l.get(l, &r)
 	return &r, res, err
