@@ -13,7 +13,7 @@ const (
 	LunDestroyOperation = "lun-destroy"
 	LunCreateOperation  = "lun-create-by-size"
 	LunMapOperation     = "lun-map"
-	LunUnmapOpertation  = "lun-unmap"
+	LunUnmapOperation   = "lun-unmap"
 )
 
 type LunOperation struct {
