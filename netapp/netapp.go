@@ -52,6 +52,7 @@ type Client struct {
 	Volume           *Volume
 	VolumeSpace      *VolumeSpace
 	VolumeOperations *VolumeOperation
+	LunOperations    *LunOperation
 	VServer          *VServer
 }
 
