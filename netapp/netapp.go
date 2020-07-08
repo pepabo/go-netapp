@@ -52,6 +52,7 @@ type Client struct {
 	Volume           *Volume
 	VolumeSpace      *VolumeSpace
 	VolumeOperations *VolumeOperation
+	LunOperations    *LunOperation
 	VServer          *VServer
 }
 
@@ -200,6 +201,9 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 	}
 
 	c.VolumeOperations = &VolumeOperation{
+		Base: b,
+	}
+	c.LunOperations = &LunOperation{
 		Base: b,
 	}
 
