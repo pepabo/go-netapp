@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"crypto/tls"
+	"crypto/x509"
 	"encoding/xml"
 	"fmt"
 	"io/ioutil"
@@ -60,6 +61,9 @@ type ClientOptions struct {
 	BasicAuthUser     string
 	BasicAuthPassword string
 	SSLVerify         bool
+	CAFile            string
+	CertFile          string
+	KeyFile           string
 	Debug             bool
 	Timeout           time.Duration
 }
@@ -72,6 +76,64 @@ func DefaultOptions() *ClientOptions {
 	}
 }
 
+// readCAFile reads the CA cert file from disk.
+func readCAFile(f string) ([]byte, error) {
+	data, err := ioutil.ReadFile(f)
+	if err != nil {
+		return nil, fmt.Errorf("unable to load specified CA cert %s: %s", f, err)
+	}
+	return data, nil
+}
+
+func updateRootCA(cfg *tls.Config, b []byte) bool {
+	caCertPool := x509.NewCertPool()
+	if !caCertPool.AppendCertsFromPEM(b) {
+		return false
+	}
+	cfg.RootCAs = caCertPool
+	return true
+}
+
+// getClientCertificate reads the pair of client cert and key from disk and returns a tls.Certificate.
+func (c *ClientOptions) getClientCertificate(*tls.CertificateRequestInfo) (*tls.Certificate, error) {
+	cert, err := tls.LoadX509KeyPair(c.CertFile, c.KeyFile)
+	if err != nil {
+		return nil, fmt.Errorf("unable to use specified client cert (%s) & key (%s): %s", c.CertFile, c.KeyFile, err)
+	}
+	return &cert, nil
+}
+
+func NewTLSConfig(options *ClientOptions) (*tls.Config, error) {
+	tlsConfig := &tls.Config{InsecureSkipVerify: options.SSLVerify}
+
+	// If a CA cert is provided then let's read it in so we can validate the
+	// scrape target's certificate properly.
+	if len(options.CAFile) > 0 {
+		b, err := readCAFile(options.CAFile)
+		if err != nil {
+			return nil, err
+		}
+		if !updateRootCA(tlsConfig, b) {
+			return nil, fmt.Errorf("unable to use specified CA cert %s", options.CAFile)
+		}
+	}
+
+	// If a client cert & key is provided then configure TLS config accordingly.
+	if len(options.CertFile) > 0 && len(options.KeyFile) == 0 {
+		return nil, fmt.Errorf("client cert file %q specified without client key file", options.CertFile)
+	} else if len(options.KeyFile) > 0 && len(options.CertFile) == 0 {
+		return nil, fmt.Errorf("client key file %q specified without client cert file", options.KeyFile)
+	} else if len(options.CertFile) > 0 && len(options.KeyFile) > 0 {
+		// Verify that client cert and key are valid.
+		if _, err := options.getClientCertificate(nil); err != nil {
+			return nil, err
+		}
+		tlsConfig.GetClientCertificate = options.getClientCertificate
+	}
+
+	return tlsConfig, nil
+}
+
 func NewClient(endpoint string, version string, options *ClientOptions) *Client {
 	if options == nil {
 		options = DefaultOptions()
@@ -81,12 +143,15 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 		options.Timeout = 60 * time.Second
 	}
 
+	tlsConfig, err := NewTLSConfig(options)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	httpClient := &http.Client{
 		Timeout: options.Timeout,
 		Transport: &http.Transport{
-			TLSClientConfig: &tls.Config{
-				InsecureSkipVerify: !options.SSLVerify,
-			},
+			TLSClientConfig: tlsConfig,
 		},
 	}
 	if !strings.HasSuffix(endpoint, "/") {
