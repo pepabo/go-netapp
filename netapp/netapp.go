@@ -16,7 +16,7 @@ import (
 )
 
 const (
-	libraryVersion = "1"
+	libraryVersion = "1.1"
 	ServerURL      = `/servlets/netapp.servlets.admin.XMLrequest_filer`
 	userAgent      = "go-netapp/" + libraryVersion
 	XMLNs          = "http://www.netapp.com/filer/admin"
