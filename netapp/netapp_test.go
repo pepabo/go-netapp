@@ -54,7 +54,7 @@ func createTestClientWithFixtures(t *testing.T) (c *netapp.Client, teardownFn fu
 		w.Write(responseFixture)
 	})
 
-	c = netapp.NewClient(baseURL, "1.10", nil)
+	c, _ = netapp.NewClient(baseURL, "1.10", nil)
 	log.SetOutput(ioutil.Discard)
 	return c, teardown
 }
@@ -98,7 +98,7 @@ func debugItems(v1 interface{}, v2 interface{}) {
 }
 
 func TestClientCerts(t *testing.T) {
-	c := netapp.NewClient("", "1.10", &netapp.ClientOptions{
+	c, _ := netapp.NewClient("", "1.10", &netapp.ClientOptions{
 		CertFile: "test_cert.pem",
 		KeyFile:  "test_key.pem",
 	},
@@ -110,7 +110,7 @@ func TestClientCerts(t *testing.T) {
 }
 
 func TestMissingClientCertArgs(t *testing.T) {
-	c := netapp.NewClient("", "1.10", &netapp.ClientOptions{
+	c, _ := netapp.NewClient("", "1.10", &netapp.ClientOptions{
 		CertFile: "test_cert.pem",
 	},
 	)
@@ -119,7 +119,7 @@ func TestMissingClientCertArgs(t *testing.T) {
 		t.Error(`NewClient with invalid client key arguments should fail`)
 	}
 
-	c = netapp.NewClient("", "1.10", &netapp.ClientOptions{
+	c, _ = netapp.NewClient("", "1.10", &netapp.ClientOptions{
 		KeyFile: "test_key.pem",
 	},
 	)
@@ -129,7 +129,7 @@ func TestMissingClientCertArgs(t *testing.T) {
 	}
 }
 func TestBadClientCertArgs(t *testing.T) {
-	c := netapp.NewClient("", "1.10", &netapp.ClientOptions{
+	c, _ := netapp.NewClient("", "1.10", &netapp.ClientOptions{
 		CertFile: "test_certxxxxxxx.pem",
 		KeyFile:  "test_cert.pem",
 	},
@@ -139,7 +139,7 @@ func TestBadClientCertArgs(t *testing.T) {
 		t.Error(`NewClient with invalid client key arguments should fail`)
 	}
 
-	c = netapp.NewClient("", "1.10", &netapp.ClientOptions{
+	c, _ = netapp.NewClient("", "1.10", &netapp.ClientOptions{
 		CertFile: "test_cert.pem",
 		KeyFile:  "test_keyxxxxxx.pem",
 	},
@@ -151,7 +151,7 @@ func TestBadClientCertArgs(t *testing.T) {
 
 }
 func TestCACert(t *testing.T) {
-	c := netapp.NewClient("", "1.10", &netapp.ClientOptions{
+	c, _ := netapp.NewClient("", "1.10", &netapp.ClientOptions{
 		CAFile: "test_cert.pem",
 	},
 	)
@@ -161,7 +161,7 @@ func TestCACert(t *testing.T) {
 	}
 }
 func TestBadCACert(t *testing.T) {
-	c := netapp.NewClient("", "1.10", &netapp.ClientOptions{
+	c, _ := netapp.NewClient("", "1.10", &netapp.ClientOptions{
 		CAFile: "test_certxxxxxxxxx.pem",
 	},
 	)

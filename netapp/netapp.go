@@ -16,7 +16,7 @@ import (
 )
 
 const (
-	libraryVersion = "1.1"
+	libraryVersion = "2.0.0"
 	ServerURL      = `/servlets/netapp.servlets.admin.XMLrequest_filer`
 	userAgent      = "go-netapp/" + libraryVersion
 	XMLNs          = "http://www.netapp.com/filer/admin"
@@ -76,7 +76,7 @@ func DefaultOptions() *ClientOptions {
 	}
 }
 
-func NewClient(endpoint string, version string, options *ClientOptions) *Client {
+func NewClient(endpoint string, version string, options *ClientOptions) (*Client, error) {
 	if options == nil {
 		options = DefaultOptions()
 	}
@@ -85,10 +85,9 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 		options.Timeout = 60 * time.Second
 	}
 
-	tlsConfig, err := NewTLSConfig(options)
+	tlsConfig, err := newTLSConfig(options)
 	if err != nil {
-		fmt.Println(err)
-		return nil
+		return nil, err
 	}
 
 	httpClient := &http.Client{
@@ -219,7 +218,7 @@ func NewClient(endpoint string, version string, options *ClientOptions) *Client 
 		Base: b,
 	}
 
-	return c
+	return c, nil
 }
 
 func (c *Client) NewRequest(method string, body interface{}) (*http.Request, error) {
@@ -327,7 +326,7 @@ func getClientCertificate(options *ClientOptions) (*tls.Certificate, error) {
 	return &cert, nil
 }
 
-func NewTLSConfig(options *ClientOptions) (*tls.Config, error) {
+func newTLSConfig(options *ClientOptions) (*tls.Config, error) {
 	tlsConfig := &tls.Config{InsecureSkipVerify: options.SSLVerify}
 
 	// If a CA cert is provided then let's read it in so we can validate the
