@@ -319,10 +319,10 @@ func updateRootCA(cfg *tls.Config, b []byte) bool {
 }
 
 // getClientCertificate reads the pair of client cert and key from disk and returns a tls.Certificate.
-func (c *ClientOptions) getClientCertificate(*tls.CertificateRequestInfo) (*tls.Certificate, error) {
-	cert, err := tls.LoadX509KeyPair(c.CertFile, c.KeyFile)
+func getClientCertificate(options *ClientOptions) (*tls.Certificate, error) {
+	cert, err := tls.LoadX509KeyPair(options.CertFile, options.KeyFile)
 	if err != nil {
-		return nil, fmt.Errorf("unable to use specified client cert (%s) & key (%s): %s", c.CertFile, c.KeyFile, err)
+		return nil, fmt.Errorf("unable to use specified client cert (%s) & key (%s): %s", options.CertFile, options.KeyFile, err)
 	}
 	return &cert, nil
 }
@@ -345,14 +345,18 @@ func NewTLSConfig(options *ClientOptions) (*tls.Config, error) {
 	// If a client cert & key is provided then configure TLS config accordingly.
 	if len(options.CertFile) > 0 && len(options.KeyFile) == 0 {
 		return nil, fmt.Errorf("client cert file %q specified without client key file", options.CertFile)
-	} else if len(options.KeyFile) > 0 && len(options.CertFile) == 0 {
+	}
+
+	if len(options.KeyFile) > 0 && len(options.CertFile) == 0 {
 		return nil, fmt.Errorf("client key file %q specified without client cert file", options.KeyFile)
-	} else if len(options.CertFile) > 0 && len(options.KeyFile) > 0 {
-		// Verify that client cert and key are valid.
-		if _, err := options.getClientCertificate(nil); err != nil {
+	}
+
+	if len(options.CertFile) > 0 && len(options.KeyFile) > 0 {
+		cert, err := getClientCertificate(options)
+		if err != nil {
 			return nil, err
 		}
-		tlsConfig.GetClientCertificate = options.getClientCertificate
+		tlsConfig.Certificates = []tls.Certificate{*cert}
 	}
 
 	return tlsConfig, nil
