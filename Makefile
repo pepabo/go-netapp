@@ -20,7 +20,7 @@ lint: ## Exec golint
 	cd $(PACKAGE_DIR) && golint -min_confidence 1.1 -set_exit_status
 
 
-ci: test lint
+ci: depsdev test lint
 
 release_major: releasedeps
 	git semv major --bump
