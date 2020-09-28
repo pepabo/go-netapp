@@ -54,7 +54,7 @@ func createTestClientWithFixtures(t *testing.T) (c *netapp.Client, teardownFn fu
 		w.Write(responseFixture)
 	})
 
-	c = netapp.NewClient(baseURL, "1.10", nil)
+	c, _ = netapp.NewClient(baseURL, "1.10", nil)
 	log.SetOutput(ioutil.Discard)
 	return c, teardown
 }
@@ -95,4 +95,78 @@ func debugItems(v1 interface{}, v2 interface{}) {
 	val1 := reflect.ValueOf(v1)
 	val2 := reflect.ValueOf(v2)
 	fmt.Printf("v1: %v, v2: %v", val1, val2)
+}
+
+func TestClientCerts(t *testing.T) {
+	c, _ := netapp.NewClient("", "1.10", &netapp.ClientOptions{
+		CertFile: "test_cert.pem",
+		KeyFile:  "test_key.pem",
+	},
+	)
+
+	if c == nil {
+		t.Error(`NewClient with certs failed`)
+	}
+}
+
+func TestMissingClientCertArgs(t *testing.T) {
+	c, _ := netapp.NewClient("", "1.10", &netapp.ClientOptions{
+		CertFile: "test_cert.pem",
+	},
+	)
+
+	if c != nil {
+		t.Error(`NewClient with invalid client key arguments should fail`)
+	}
+
+	c, _ = netapp.NewClient("", "1.10", &netapp.ClientOptions{
+		KeyFile: "test_key.pem",
+	},
+	)
+
+	if c != nil {
+		t.Error(`NewClient with invalid client cert argument should fail`)
+	}
+}
+func TestBadClientCertArgs(t *testing.T) {
+	c, _ := netapp.NewClient("", "1.10", &netapp.ClientOptions{
+		CertFile: "test_certxxxxxxx.pem",
+		KeyFile:  "test_cert.pem",
+	},
+	)
+
+	if c != nil {
+		t.Error(`NewClient with invalid client key arguments should fail`)
+	}
+
+	c, _ = netapp.NewClient("", "1.10", &netapp.ClientOptions{
+		CertFile: "test_cert.pem",
+		KeyFile:  "test_keyxxxxxx.pem",
+	},
+	)
+
+	if c != nil {
+		t.Error(`NewClient with invalid client cert argument should fail`)
+	}
+
+}
+func TestCACert(t *testing.T) {
+	c, _ := netapp.NewClient("", "1.10", &netapp.ClientOptions{
+		CAFile: "test_cert.pem",
+	},
+	)
+
+	if c == nil {
+		t.Error(`NewClient with CAFile failed`)
+	}
+}
+func TestBadCACert(t *testing.T) {
+	c, _ := netapp.NewClient("", "1.10", &netapp.ClientOptions{
+		CAFile: "test_certxxxxxxxxx.pem",
+	},
+	)
+
+	if c != nil {
+		t.Error(`NewClient with invalid CAFile arguments should fail`)
+	}
 }
