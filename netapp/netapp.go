@@ -327,7 +327,7 @@ func getClientCertificate(options *ClientOptions) (*tls.Certificate, error) {
 }
 
 func newTLSConfig(options *ClientOptions) (*tls.Config, error) {
-	tlsConfig := &tls.Config{InsecureSkipVerify: options.SSLVerify}
+	tlsConfig := &tls.Config{InsecureSkipVerify: !options.SSLVerify}
 
 	// If a CA cert is provided then let's read it in so we can validate the
 	// scrape target's certificate properly.
