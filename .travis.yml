@@ -7,6 +7,8 @@ go:
   - "1.11"
 
 go_import_path: github.com/pepabo/go-netapp
+env:
+  - GO111MODULE=auto
 
 # Only build pull requests, pushes to the master branch, and branches
 # starting with `test-`. This is a convenient way to push branches to
