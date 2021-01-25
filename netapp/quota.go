@@ -191,6 +191,20 @@ func (q *Quota) Status(serverName, volumeName string) (*QuotaStatusResponse, *ht
 	return &r, res, err
 }
 
+func (q *Quota) Resize(serverName, volumeName string) (*QuotaStatusResponse, *http.Response, error) {
+	q.Name = serverName
+	q.Params.XMLName = xml.Name{Local: "quota-resize"}
+	q.Params.QuotaOptions = &QuotaOptions{
+		QuotaEntry: &QuotaEntry{
+			Volume: volumeName,
+		},
+	}
+
+	r := QuotaStatusResponse{}
+	res, err := q.get(q, &r)
+	return &r, res, err
+}
+
 type QuotaReport struct {
 	Base
 	Params struct {
