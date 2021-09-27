@@ -5,12 +5,16 @@ golang's netapp client
 
 ```golang
 
-c := netapp.NewClient(
+c, err := netapp.NewClient(
     <your endpoint>,
     <your version>,
     &netapp.ClientOptions{
     },
 )
+if err != nil {
+        fmt.Fprintf(os.Stderr, "error: %v\n", err)
+        os.Exit(1)
+}
 
 qRes, _, err := c.QuotaReport.Report(&netapp.QuotaReportOptions{
         MaxRecords: 1,

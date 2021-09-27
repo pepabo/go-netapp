@@ -15,7 +15,7 @@ type StorageDisk struct {
 
 type StorageDiskInfo struct {
 	DiskInventoryInfo *DiskInventoryInfo `xml:"disk-inventory-info,omitempty"`
-	DiskName          string            `xml:"disk-name,omitempty"`
+	DiskName          string             `xml:"disk-name,omitempty"`
 	DiskOwnershipInfo *DiskOwnershipInfo `xml:"disk-ownership-info,omitempty"`
 }
 
@@ -29,10 +29,10 @@ type DiskInventoryInfo struct {
 	FirmwareRevision               string `xml:"firmware-revision,omitempty"`
 	GrownDefectListCount           int    `xml:"grown-defect-list-count,omitempty"`
 	HealthMonitorTimeInterval      int    `xml:"health-monitor-time-interval,omitempty"`
-	ImportInProgress               *bool   `xml:"import-in-progress,omitempty"`
-	IsDynamicallyQualified         *bool   `xml:"is-dynamically-qualified,omitempty"`
-	IsMultidiskCarrier             *bool   `xml:"is-multidisk-carrier,omitempty"`
-	IsShared                       *bool   `xml:"is-shared,omitempty"`
+	ImportInProgress               *bool  `xml:"import-in-progress,omitempty"`
+	IsDynamicallyQualified         *bool  `xml:"is-dynamically-qualified,omitempty"`
+	IsMultidiskCarrier             *bool  `xml:"is-multidisk-carrier,omitempty"`
+	IsShared                       *bool  `xml:"is-shared,omitempty"`
 	MediaScrubCount                int    `xml:"media-scrub-count,omitempty"`
 	MediaScrubLastDoneTimeInterval int    `xml:"media-scrub-last-done-time-interval,omitempty"`
 	Model                          string `xml:"model,omitempty"`
@@ -54,7 +54,7 @@ type DiskOwnershipInfo struct {
 	DrHomeNodeName   string `xml:"dr-home-node-name,omitempty"`
 	HomeNodeId       int    `xml:"home-node-id,omitempty"`
 	HomeNodeName     string `xml:"home-node-name,omitempty"`
-	IsFailed         *bool   `xml:"is-failed,omitempty"`
+	IsFailed         *bool  `xml:"is-failed,omitempty"`
 	OwnerNodeId      int    `xml:"owner-node-id,omitempty"`
 	OwnerNodeName    string `xml:"owner-node-name,omitempty"`
 	Pool             int    `xml:"pool,omitempty"`
@@ -82,8 +82,8 @@ type StorageDiskInfoPageResponse struct {
 type StorageDiskOptions struct {
 	DesiredAttributes *StorageDiskInfo `xml:"desired-attributes>storage-disk-info,omitempty"`
 	Query             *StorageDiskInfo `xml:"query>storage-disk-info,omitempty"`
-	MaxRecords int    `xml:"max-records,omitempty"`
-	Tag        string `xml:"tag,omitempty"`
+	MaxRecords        int              `xml:"max-records,omitempty"`
+	Tag               string           `xml:"tag,omitempty"`
 }
 
 func (s *StorageDisk) StorageDiskGetIter(options *StorageDiskOptions) (*StorageDiskGetIterResponse, *http.Response, error) {
