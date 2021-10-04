@@ -24,38 +24,39 @@ const (
 
 // A Client manages communication with the GitHub API.
 type Client struct {
-	client           *http.Client
-	BaseURL          *url.URL
-	UserAgent        string
-	options          *ClientOptions
-	ResponseTimeout  time.Duration
-	Aggregate        *Aggregate
-	AggregateSpace   *AggregateSpace
-	AggregateSpares  *AggregateSpares
-	Certificate      *Certificate
-	Cf               *Cf
-	ClusterIdentity  *ClusterIdentity
-	Diagnosis        *Diagnosis
-	Fcp              *Fcp
-	Fcport           *Fcport
-	Job              *Job
-	Lun              *Lun
-	Net              *Net
-	Perf             *Perf
-	Qtree            *Qtree
-	QosPolicy        *QosPolicy
-	Quota            *Quota
-	QuotaReport      *QuotaReport
-	QuotaStatus      *QuotaStatus
-	Snapshot         *Snapshot
-	Snapmirror       *Snapmirror
-	StorageDisk      *StorageDisk
-	System           *System
-	Volume           *Volume
-	VolumeSpace      *VolumeSpace
-	VolumeOperations *VolumeOperation
-	LunOperations    *LunOperation
-	VServer          *VServer
+	client             *http.Client
+	BaseURL            *url.URL
+	UserAgent          string
+	options            *ClientOptions
+	ResponseTimeout    time.Duration
+	Aggregate          *Aggregate
+	AggregateSpace     *AggregateSpace
+	AggregateSpares    *AggregateSpares
+	Certificate        *Certificate
+	Cf                 *Cf
+	ClusterIdentity    *ClusterIdentity
+	Diagnosis          *Diagnosis
+	EnvironmentSensors *EnvironmentSensors
+	Fcp                *Fcp
+	Fcport             *Fcport
+	Job                *Job
+	Lun                *Lun
+	Net                *Net
+	Perf               *Perf
+	Qtree              *Qtree
+	QosPolicy          *QosPolicy
+	Quota              *Quota
+	QuotaReport        *QuotaReport
+	QuotaStatus        *QuotaStatus
+	Snapshot           *Snapshot
+	Snapmirror         *Snapmirror
+	StorageDisk        *StorageDisk
+	System             *System
+	Volume             *Volume
+	VolumeSpace        *VolumeSpace
+	VolumeOperations   *VolumeOperation
+	LunOperations      *LunOperation
+	VServer            *VServer
 }
 
 type ClientOptions struct {
@@ -141,6 +142,10 @@ func NewClient(endpoint string, version string, options *ClientOptions) (*Client
 	}
 
 	c.Diagnosis = &Diagnosis{
+		Base: b,
+	}
+
+	c.EnvironmentSensors = &EnvironmentSensors{
 		Base: b,
 	}
 
